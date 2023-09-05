@@ -1,0 +1,31 @@
+<script setup>
+const props = defineProps({
+  client: String,
+})
+</script>
+
+<template>
+  <div class="c-infos-clients-item">
+    <h3 class="c-infos-clients-item__title o-title">{{ client }}</h3>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.c-infos-clients-item {
+  background-color: $bright-grey;
+  padding: 2.4rem;
+  border-radius: 0.4rem;
+  min-height: 20rem;
+  display: flex;
+  align-items: flex-end;
+  @include mq($until: small) {
+    min-height: 15rem;
+  }
+  @include mq($until: tablet) {
+    min-height: 10rem;
+  }
+  &__title {
+    max-width: 10ch;
+  }
+}
+</style>

@@ -1,0 +1,28 @@
+/* Objects */
+.o-title {
+  font-size: 5.4rem;
+  line-height: 120%;
+  @include mq($until: medium) {
+    font-size: 4rem;
+  }
+  @include mq($until: desktop) {
+    font-size: 3.2rem;
+  }
+  @include mq($until: mobile) {
+    font-size: 2.8rem;
+  }
+}
+
+.o-section-title {
+  font-size: 16.4rem;
+  line-height: 100%;
+  @include mq($until: medium) {
+    font-size: 10rem;
+  }
+  @include mq($until: desktop) {
+    font-size: 6.4rem;
+  }
+  @include mq($until: mobile) {
+    font-size: 3.2rem;
+  }
+}

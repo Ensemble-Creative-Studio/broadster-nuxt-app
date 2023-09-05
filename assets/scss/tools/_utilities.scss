@@ -1,0 +1,17 @@
+/* Utilities */
+.u-grid {
+  @include grid(12, 2.4rem, 0);
+  @include mq($until: tablet) {
+    column-gap: 1.2rem;
+  }
+}
+
+.u-wrapper {
+  padding: 0 2.4rem;
+  margin: 0 auto;
+  max-width: 100%;
+  width: auto;
+  @include mq($until: tablet) {
+    padding: 0 1.2rem;
+  }
+}

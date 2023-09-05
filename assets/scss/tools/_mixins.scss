@@ -1,0 +1,29 @@
+@mixin grid($col, $col-gap, $row-gap) {
+  align-items: start;
+  display: grid;
+  grid-template-columns: repeat($col, 1fr);
+  column-gap: $col-gap;
+  row-gap: $row-gap;
+}
+
+@mixin inset($top, $right: $top, $bottom: $top, $left: $right) {
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin reset-appearance() {
+  appearance: none;
+  border: none;
+  border-radius: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  resize: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  font: inherit;
+  letter-spacing: inherit;
+}
