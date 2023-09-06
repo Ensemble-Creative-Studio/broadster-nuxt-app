@@ -30,9 +30,16 @@ watch(
 </script>
 
 <template>
-  <div>
-    <Header />
+  <div class="l-app">
+    <h2 class="o-title">Website under construction</h2>
+    <!-- <Header />
     <NuxtPage />
-    <Footer />
+    <Footer /> -->
   </div>
 </template>
+
+<style lang="scss" scoped>
+.l-app {
+  padding: 2rem;
+}
+</style>
