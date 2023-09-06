@@ -1,6 +1,4 @@
 <script setup>
-import anime from 'animejs'
-
 const index = ref(0)
 
 // Sources
@@ -29,28 +27,6 @@ onMounted(() => {
     const previousIndex = computed(() => {
       return index.value - 1 < 0 ? videos.length - 1 : index.value - 1
     })
-
-    const tl = anime.timeline({
-      easing: 'easeInOutQuad',
-      duration: 500,
-    })
-
-    tl.add({
-      targets: $baselines.value[index.value],
-      opacity: [0, 1],
-      translateY: [50, 0],
-      complete: function (anim) {
-        anim.animatables[0].target.style.transform = 'translateY(50px)'
-        anim.animatables[0].target.style.opacity = '0'
-      },
-    }).add(
-      {
-        targets: $baselines.value[previousIndex.value],
-        opacity: [1, 0],
-        translateY: [0, -50],
-      },
-      '+=1250'
-    )
 
     index.value = (index.value + 1) % videos.length
   }, 2500)

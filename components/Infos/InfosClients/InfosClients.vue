@@ -5,7 +5,7 @@ const clients = [
   'M6',
   'M9',
   'Netflix',
-  'CW Chanel ',
+  'CW Chanel',
   'RMC Story',
   'RTL TVI',
   'RTS',

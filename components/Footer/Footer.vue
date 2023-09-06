@@ -36,7 +36,8 @@
   }
   &-row {
     grid-column: auto / span 4;
-    background-color: $bright-grey;
+    background-color: $black;
+    color: $white;
     border-radius: 0.4rem;
     padding: 3.6rem;
     @include mq($until: tablet) {
