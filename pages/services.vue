@@ -28,11 +28,12 @@ const sections = [
       video="https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a"
     />
     <ServicesSection
-      v-for="section in sections"
+      v-for="(section, i) in sections"
       class="l-services__section"
       :title="section.title"
       :layout="section.layout"
       :isGrey="section.isGrey"
+      :key="i"
     />
   </div>
 </template>
