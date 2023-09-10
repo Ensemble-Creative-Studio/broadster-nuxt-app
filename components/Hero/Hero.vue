@@ -5,8 +5,7 @@ const props = defineProps({
     required: true,
   },
   video: {
-    type: String,
-    required: true,
+    type: String
   },
 })
 </script>
@@ -14,7 +13,7 @@ const props = defineProps({
 <template>
   <div class="c-hero">
     <h1 class="c-hero__title o-section-title">{{ title }}</h1>
-    <div class="c-hero-video">
+    <div v-if="video" class="c-hero-video">
       <video :src="video" class="c-hero-video__source" autoplay muted loop playsinline></video>
     </div>
   </div>

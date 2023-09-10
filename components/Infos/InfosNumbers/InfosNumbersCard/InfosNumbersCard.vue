@@ -8,18 +8,6 @@ const props = defineProps({
     required: true,
   },
 })
-
-const test = ref(0)
-
-onMounted(() => {
-  const raf = () => {
-    if (test.value < props.number) {
-      test.value += 1
-      requestAnimationFrame(raf)
-    }
-  }
-  raf()
-})
 </script>
 
 <template>
@@ -35,7 +23,7 @@ onMounted(() => {
       ></video>
     </div>
     <footer>
-      <h3 class="o-section-title">{{ test }}</h3>
+      <h3 class="o-section-title">{{ number }}</h3>
       <p class="c-infos-numbers-card__baseline o-title">{{ baseline }}</p>
     </footer>
   </div>

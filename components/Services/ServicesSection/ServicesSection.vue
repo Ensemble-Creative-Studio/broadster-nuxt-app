@@ -150,7 +150,7 @@ const props = defineProps({
     &__list {
       margin-top: 1.2rem;
       display: flex;
-      align-items: start;
+      align-items: flex-start;
     }
     &__tag {
       border: 0.1rem solid $white;

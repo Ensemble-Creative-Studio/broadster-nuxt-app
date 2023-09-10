@@ -30,7 +30,8 @@ const props = defineProps({
 <style lang="scss" scoped>
 .c-index-summary-card {
   padding: 2.4rem;
-  background-color: $bright-grey;
+  background-color: $black;
+  color: $white;
   border-radius: 0.4rem;
   @include mq($until: tablet) {
     grid-column: 1 / -1;

@@ -23,10 +23,10 @@ const clients = [
       <h2 class="o-title">Clients</h2>
       <div class="c-infos-clients__grid">
         <InfosClientsItem
-          v-for="client in clients"
-          :key="client"
+          v-for="(client, i) in clients"
           :client="client"
           class="c-infos-clients__item"
+          :key="i"
         />
       </div>
     </div>

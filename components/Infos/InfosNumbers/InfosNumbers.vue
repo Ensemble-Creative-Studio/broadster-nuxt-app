@@ -20,7 +20,12 @@ const items = [
     <div class="c-infos-numbers__container u-wrapper">
       <h2 class="o-title">Broadster depuis sa création</h2>
       <div class="c-infos-numbers__grid">
-        <InfosNumbersCard v-for="item in items" :number="item.number" :baseline="item.baseline" />
+        <InfosNumbersCard
+          v-for="(item, i) in items"
+          :number="item.number"
+          :baseline="item.baseline"
+          :key="i"
+        />
       </div>
     </div>
   </div>

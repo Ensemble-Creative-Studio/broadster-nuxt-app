@@ -56,6 +56,7 @@ onUnmounted(() => {
         v-for="(baseline, i) in baselines"
         class="c-slideshow-footer__baseline o-title"
         ref="$baselines"
+        :key="i"
       >
         {{ baseline }}
       </h2>

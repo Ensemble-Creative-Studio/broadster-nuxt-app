@@ -19,10 +19,11 @@ const blocks = [
   <div class="c-index-summary">
     <div class="c-index-summary__grid u-wrapper">
       <IndexSummaryCard
-        v-for="block in blocks"
+        v-for="(block, i) in blocks"
         :title="block.title"
         :slug="block.slug"
         class="c-index-summary__card"
+        :key="i"
       />
     </div>
   </div>
