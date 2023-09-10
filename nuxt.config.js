@@ -2,7 +2,7 @@
 
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  modules: ['@nuxtjs/sanity', '@vueuse/nuxt'],
+  modules: ['@nuxtjs/sanity', '@vueuse/nuxt', 'nuxt-lazy-load'],
   sanity: {
     projectId: 'some-id',
   },
