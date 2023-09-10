@@ -37,6 +37,16 @@ body {
   }
 }
 
+video {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  &.isLoaded {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 ::selection {
   background-color: $black;
   color: $white;

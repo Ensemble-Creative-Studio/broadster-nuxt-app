@@ -26,3 +26,48 @@
     font-size: 3.2rem;
   }
 }
+
+.o-thumbnail-title {
+  font-size: 2.8rem;
+  line-height: 120%;
+  @include mq($until: medium) {
+    font-size: 2.4rem;
+  }
+  @include mq($until: desktop) {
+    font-size: 2rem;
+  }
+  //TODO: double check this
+  @include mq($until: mobile) {
+    font-size: 1.6rem;
+  }
+}
+
+.o-button {
+  padding: 1rem;
+  color: $white;
+  border: 0.1rem solid $white;
+  border-radius: 0.4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  cursor: pointer;
+  &.-has-white-background {
+    background-color: $white;
+    color: $black;
+  }
+  &.-has-white-outline {
+    background-color: transparent;
+    color: $white;
+  }
+  &.-has-dark-grey-background {
+    background-color: rgba($dark-grey, 0.9);
+    border: 0.1rem solid $dark-grey;
+  }
+  &.-has-icon {
+    display: flex;
+    align-items: center;
+  }
+  &.-is-disabled {
+    cursor: not-allowed;
+    color: $medium-grey;
+  }
+}

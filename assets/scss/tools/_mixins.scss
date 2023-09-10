@@ -1,5 +1,5 @@
 @mixin grid($col, $col-gap, $row-gap) {
-  align-items: start;
+  align-items: flex-start;
   display: grid;
   grid-template-columns: repeat($col, 1fr);
   column-gap: $col-gap;
