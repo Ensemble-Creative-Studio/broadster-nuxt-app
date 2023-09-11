@@ -4,9 +4,11 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ['@nuxtjs/sanity', '@vueuse/nuxt', 'nuxt-lazy-load'],
   sanity: {
-    projectId: 'some-id',
+    projectId: '47htvf4t',
+    dataset: 'production',
+    apiVersion: '2023-09-11',
   },
-  css: ['@/assets/scss/index.scss', '@/assets/fonts/TheFuture/style.css'],
+  css: ['@/assets/scss/index.scss', '@/assets/fonts/the-future/style.css'],
   vite: {
     css: {
       preprocessorOptions: {
