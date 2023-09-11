@@ -1,12 +1,28 @@
+<script setup>
+const query = groq`*[_type == "infos"][0]
+  {
+    title,
+    videoUrl,
+    placeholderImage,
+    //TODO: rename sections to blocks in Sanity
+    sections,
+    history[],
+    clients[]
+  }
+`
+
+const { data: infos } = useSanityQuery(query)
+</script>
+
 <template>
   <div class="l-infos">
     <Hero
       title="Infos"
-      video="https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a"
+      :video="infos?.videoUrl"
     />
-    <InfosSection />
-    <InfosNumbers class="l-infos__numbers" />
-    <InfosClients class="l-infos__clients" />
+    <InfosSection :blocks="infos?.sections" />
+    <InfosNumbers :history="infos?.history" class="l-infos__numbers" />
+    <InfosClients :clients="infos?.clients" class="l-infos__clients" />
   </div>
 </template>
 

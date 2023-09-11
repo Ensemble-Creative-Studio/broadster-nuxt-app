@@ -1,86 +1,44 @@
 <script setup>
-const sections = [
+const query = groq`*[_type == "productions"][0]
   {
-    title: 'Série documentaire',
-    featuredFilm: {
-      title: 'FeaturedFilm Title',
-      url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
+    title,
+    sections[]{
+      ...,
+      featuredFilm->{
+        title,
+        videoUrl,
+        description,
+        categories[]->{
+          title,
+        },
+        credits,
+        duration,
+        genre
+      },
+      films[]->{
+        title,
+        videoUrl,
+        description,
+        categories[]->{
+          title,
+        },
+        credits,
+        duration
+      },
     },
-    films: [
-      {
-        title: 'Film 1',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 2',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 3',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 4',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-    ],
-  },
-  {
-    title: 'Documentaire unitaire',
-    featuredFilm: {
-      title: 'FeaturedFilm Title',
-      url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-    },
-    films: [
-      {
-        title: 'Film 1',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 2',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 3',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 4',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-    ],
-  },
-  {
-    title: 'Documentaire corporate',
-    featuredFilm: {
-      title: 'FeaturedFilm Title',
-      url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-    },
-    films: [
-      {
-        title: 'Film 1',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 2',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 3',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-      {
-        title: 'Film 4',
-        url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-      },
-    ],
-  },
-]
+  }
+`
+
+const { data: productions } = useSanityQuery(query)
 </script>
 
 <template>
   <div class="l-productions">
     <Hero title="Productions" />
-    <ProductionsSection v-for="(section, i) in sections" :section="section" :key="i" />
+    <ProductionsSection
+      v-for="section in productions?.sections"
+      :section="section"
+      :key="section._key"
+    />
   </div>
 </template>
