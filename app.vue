@@ -1,6 +1,7 @@
 <script setup>
 import Lenis from '@studio-freight/lenis'
 const route = useRoute()
+const isVideoPlayerOpen = useState('isVideoPlayerOpen')
 
 let lenis
 let raf
@@ -27,19 +28,25 @@ watch(
     })
   }
 )
+
+onBeforeUnmount(() => {
+  lenis.destroy()
+  cancelAnimationFrame(raf)
+})
 </script>
 
 <template>
   <div class="l-app">
-    <h2 class="o-title">Website under construction</h2>
-    <!-- <Header />
+    <!-- <h2 class="o-title">Website under construction</h2> -->
+    <VideoPlayer v-if="isVideoPlayerOpen" />
+    <Header />
     <NuxtPage />
-    <Footer /> -->
+    <Footer />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.l-app {
-  padding: 2rem;
-}
+// .l-app {
+//   padding: 2rem;
+// }
 </style>
