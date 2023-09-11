@@ -50,6 +50,7 @@
   text-transform: uppercase;
   font-size: 1.2rem;
   cursor: pointer;
+  font-family: $the-future-mono;
   &.-has-white-background {
     background-color: $white;
     color: $black;
