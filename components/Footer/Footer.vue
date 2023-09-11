@@ -40,6 +40,7 @@
     color: $white;
     border-radius: 0.4rem;
     padding: 3.6rem;
+    font-family: $the-future-mono;
     @include mq($until: tablet) {
       grid-column: 1 / -1;
       padding: 1.2rem;

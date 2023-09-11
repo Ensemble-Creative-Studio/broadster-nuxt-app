@@ -1,26 +1,31 @@
+<script setup>
+const props = defineProps({
+  blocks: {
+    type: Object,
+    required: true,
+  },
+})
+</script>
+
 <template>
   <div class="c-infos-section">
     <div class="c-infos-section__container u-wrapper">
       <div class="c-infos-section__grid">
         <div class="c-infos-section-block -has-big-text">
-          <h3 class="o-title">
-            “Cultiver notre curiosité pour la partager au plus grand nombre et amplifier vos
-            histoires“
-          </h3>
-          <footer>
-            <p>
-              Fondé en 2016 et dirigé par Aurélien Combelles, Broadster est un groupe indépendant
-              d’audiovisuel spécialisé dans la production et la conception de documentaires pour le
-              marché Français et International. Broadster intègre tous les métiers de la conception
-              et production et collabore avec les talents qui partagent la même ambition « Cultiver
-              notre curiosité pour la partager au plus grand nombre ».
-            </p>
+          <div>
+            <h3 class="c-infos-section-block__title o-title">
+              {{ props.blocks.presentation.quote }}
+            </h3>
+            <p class="c-infos-section-block__author" v-html="props.blocks.presentation.author"></p>
+          </div>
+          <footer class="c-infos-section-block__footer">
+            <SanityContent :blocks="props.blocks.presentation.text" />
           </footer>
         </div>
         <div class="c-infos-section-block -has-small-video">
           <video
             class="c-infos-section__source"
-            src="https://player.vimeo.com/progressive_redirect/playback/847355973/rendition/1080p/file.mp4?loc=external&signature=47ac414eb6ae8d2f123245b4ecc0d7e2d758146fdb1377231d8ab55be0ccfca7"
+            :src="props.blocks.video1?.url"
             autoplay
             muted
             loop
@@ -30,7 +35,7 @@
         <div class="c-infos-section-block -has-small-video">
           <video
             class="c-infos-section__source"
-            src="https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a"
+            :src="props.blocks.video2?.url"
             autoplay
             muted
             loop
@@ -72,6 +77,17 @@
         background-color: $white;
         color: $black;
       }
+    }
+    &__title {
+      max-width: 19ch;
+      width: auto;
+    }
+    &__author {
+      margin-top: 2rem;
+    }
+    &__footer {
+      max-width: 50ch;
+      width: auto;
     }
   }
 }

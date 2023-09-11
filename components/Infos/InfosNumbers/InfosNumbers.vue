@@ -1,18 +1,10 @@
 <script setup>
-const items = [
-  {
-    number: 40,
-    baseline: 'Documentaires',
+const props = defineProps({
+  history: {
+    type: Object,
+    required: true,
   },
-  {
-    number: 40,
-    baseline: 'Créations originales',
-  },
-  {
-    number: 700,
-    baseline: 'Vidéos corporate',
-  },
-]
+})
 </script>
 
 <template>
@@ -21,9 +13,8 @@ const items = [
       <h2 class="o-title">Broadster depuis sa création</h2>
       <div class="c-infos-numbers__grid">
         <InfosNumbersCard
-          v-for="(item, i) in items"
-          :number="item.number"
-          :baseline="item.baseline"
+          v-for="(item, i) in history"
+          :data="item"
           :key="i"
         />
       </div>

@@ -3,11 +3,7 @@
 // import { useFullscreen } from '@vueuse/core'
 // const { isFullscreen, enter, exit, toggle } = useFullscreen()
 
-const video = {
-  title: 'Video Title',
-  url: 'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-}
-
+const currentFilm = useState('currentFilm')
 const isVideoPlayerOpen = useState('isVideoPlayerOpen', () => false)
 const isCreditsOpen = ref(false)
 
@@ -105,17 +101,6 @@ watch(
   }
 )
 
-// watch(
-//   (() => isFullscreen.value,
-//   (value) => {
-//     if (value) {
-
-//     } else {
-
-//     }
-//   })
-// )
-
 onBeforeUnmount(() => {
   window.cancelAnimationFrame(raf)
   $video.value = null
@@ -129,7 +114,10 @@ onBeforeUnmount(() => {
       '-is-open': isVideoPlayerOpen,
     }"
   >
-    <VideoPlayerCredits v-show="isCreditsOpen" />
+    <VideoPlayerCredits
+      v-show="isCreditsOpen"
+      :data="currentFilm"
+    />
     <button
       class="c-video-player-credits-button o-button -has-dark-grey-background"
       @click="onToggleCreditsClick"
@@ -146,7 +134,7 @@ onBeforeUnmount(() => {
     <div class="c-video-player__thumbnail"></div>
     <video
       ref="$video"
-      :src="video.url"
+      :src="currentFilm?.videoUrl"
       class="c-video-player__video"
       playsinline
       @loadeddata="onVideoLoadedData"

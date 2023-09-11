@@ -1,28 +1,36 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  },
+})
+</script>
 
 <template>
   <div class="c-video-player-credits">
     <div class="c-video-player-credits__container u-wrapper">
       <div class="c-video-player-credits__grid">
         <h2 class="c-video-player-credits__title o-thumbnail-title">
-          Drôles de Belges, font-ils mieux l'humour que les autres ?
+          {{ data.title }}
         </h2>
-        <p class="c-video-player-credits__description">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis veniam temporibus omnis
-          a minus reprehenderit explicabo enim nulla delectus quod.
-        </p>
+        <p class="c-video-player-credits__description" v-html="data.description"></p>
         <ul class="c-video-player-credits__details">
           <li class="c-video-player-credits__item">
-            <span class="o-button -has-white-outline">Test</span>
-            <p class="c-video-player-credits__text">France / Belgique et Suisse</p>
+            <span class="o-button -has-white-outline">Diffusion</span>
+            <p class="c-video-player-credits__text" v-html="data.credits.diffusion"></p>
           </li>
           <li class="c-video-player-credits__item">
-            <span class="o-button -has-white-outline">Test</span>
-            <p class="c-video-player-credits__text">France / Belgique et Suisse</p>
+            <span class="o-button -has-white-outline">Durée</span>
+            <p class="c-video-player-credits__text" v-html="data.duration"></p>
           </li>
           <li class="c-video-player-credits__item">
-            <span class="o-button -has-white-outline">Test</span>
-            <p class="c-video-player-credits__text">France / Belgique et Suisse</p>
+            <span class="o-button -has-white-outline">Genre</span>
+            <p class="c-video-player-credits__text" v-html="data.genre"></p>
+          </li>
+          <li class="c-video-player-credits__item">
+            <span class="o-button -has-white-outline">Réalisation</span>
+            <p class="c-video-player-credits__text" v-html="data.credits.realisation"></p>
           </li>
         </ul>
       </div>

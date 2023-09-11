@@ -1,20 +1,10 @@
 <script setup>
-const clients = [
-  'Canal +',
-  'TV5 Monde',
-  'M6',
-  'M9',
-  'Netflix',
-  'CW Chanel',
-  'RMC Story',
-  'RTL TVI',
-  'RTS',
-  'Paris Première',
-  'Studio',
-  'L’Oréal',
-  'Chargeurs',
-  'Start people',
-]
+const props = defineProps({
+  clients: {
+    type: Array,
+    required: true,
+  },
+})
 </script>
 
 <template>

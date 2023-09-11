@@ -12,27 +12,29 @@ const props = defineProps({
 
 const $film = ref(null)
 const $video = ref(null)
-const isFilmHovered = ref(false)
+const isHovered = ref(false)
 const isFeatured = computed(() => props.class.includes('-is-featured'))
+
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
+const currentFilm = useState('currentFilm', () => {})
 
 function onMouseOver() {
   if (!isFeatured.value) {
     $video.value.play()
-    isFilmHovered.value = true
+    isHovered.value = true
   }
 }
 
 function onMouseLeave() {
   if (!isFeatured.value) {
     $video.value.pause()
-    isFilmHovered.value = false
+    isHovered.value = false
   }
 }
 
 function onClick() {
-  console.log('Open video player')
   isVideoPlayerOpen.value = true
+  currentFilm.value = props.film
 }
 </script>
 
@@ -42,7 +44,7 @@ function onClick() {
     :class="[
       'c-film',
       {
-        '-is-hovered': isFilmHovered,
+        '-is-hovered': isHovered,
       },
       props.class,
     ]"
@@ -54,7 +56,7 @@ function onClick() {
       <div class="c-film__thumbnail"></div>
       <video
         ref="$video"
-        :src="film.url"
+        :src="film.videoUrl"
         class="c-film__video"
         muted
         loop
@@ -63,10 +65,7 @@ function onClick() {
       ></video>
       <div class="c-film__meta">
         <h3 class="c-film__title o-thumbnail-title">{{ film.title }}</h3>
-        <p class="c-film__description">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas consequuntur optio,
-          temporibus illum possimus molestiae at nesciunt provident voluptatibus omnis!
-        </p>
+        <p class="c-film__description" v-html="film.description"></p>
         <footer class="c-film__footer">
           <button
             class="c-film-play-button o-button -has-white-background -has-icon"
@@ -83,8 +82,12 @@ function onClick() {
             </svg>
             <span class="c-film-play-button__text">Play</span>
           </button>
-          <span class="o-button -has-dark-grey-background">Doc-fiction</span>
-          <span class="o-button -has-dark-grey-background">4x50min</span>
+          <span class="o-button -has-dark-grey-background" v-for="category in film.categories">
+            {{ category.title }}
+          </span>
+          <span class="o-button -has-dark-grey-background">
+            {{ film.duration }}
+          </span>
         </footer>
       </div>
     </div>

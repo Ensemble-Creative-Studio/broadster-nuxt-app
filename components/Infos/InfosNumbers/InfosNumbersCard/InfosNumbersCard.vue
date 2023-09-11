@@ -1,10 +1,7 @@
 <script setup>
 const props = defineProps({
-  number: {
-    required: true,
-  },
-  baseline: {
-    type: String,
+  data: {
+    type: Object,
     required: true,
   },
 })
@@ -14,7 +11,7 @@ const props = defineProps({
   <div class="c-infos-numbers-card">
     <div class="c-infos-numbers-card__thumbnail">
       <video
-        src="https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a"
+        :src="data.videoUrl"
         alt=""
         muted
         loop
@@ -23,8 +20,8 @@ const props = defineProps({
       ></video>
     </div>
     <footer>
-      <h3 class="o-section-title">{{ number }}</h3>
-      <p class="c-infos-numbers-card__baseline o-title">{{ baseline }}</p>
+      <h3 class="o-section-title">{{ data.number }}</h3>
+      <p class="c-infos-numbers-card__text o-title">{{ data.text }}</p>
     </footer>
   </div>
 </template>
@@ -50,7 +47,7 @@ const props = defineProps({
       margin: 0;
     }
   }
-  &__baseline {
+  &__text {
     min-height: 13rem;
     display: flex;
     flex-direction: column;

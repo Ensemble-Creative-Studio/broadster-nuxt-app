@@ -1,16 +1,8 @@
 <script setup>
 const props = defineProps({
-  layout: {
-    type: String,
-    default: 'smb',
-  },
-  title: {
-    type: String,
-    default: 'Section Title',
-  },
-  isGrey: {
-    type: Boolean,
-    default: false,
+  section: {
+    type: Object,
+    required: true,
   },
 })
 </script>
@@ -19,18 +11,17 @@ const props = defineProps({
   <div
     class="c-services-section"
     :class="[
-      layout === 'sbm'
+      section.layout === 'sbm'
         ? '-is-sbm'
-        : layout === 'smb'
+        : section.layout === 'smb'
         ? '-is-smb'
-        : layout === 'bsm'
+        : section.layout === 'bsm'
         ? '-is-bsm'
-        : '',
-      isGrey ? '-is-grey' : '',
+        : '-is-smb',
     ]"
   >
     <div class="c-services-section__container u-wrapper">
-      <h2 class="o-title">{{ $props.title }}</h2>
+      <h2 class="o-title">{{ section.title }}</h2>
       <div class="c-services-section__grid">
         <div class="c-services-section-block -has-small-video">
           <video
@@ -43,17 +34,16 @@ const props = defineProps({
           ></video>
         </div>
         <div class="c-services-section-block -has-medium-text">
-          <p>
-            Broadster imagine, développe et conçoit des documentaires pour le marché Français et
-            International. Le cœur de notre métier est de mettre en lumière des histoires
-            inspirantes et des personnages uniques qui sauront attirer un large public.
-          </p>
+          <SanityContent :blocks="section.presentation.text" />
           <footer>
-            <h3>Expertises</h3>
+            <h3>{{ section.presentation.label }}</h3>
             <ul class="c-services-section-block__list">
-              <li class="c-services-section-block__tag">Création originale</li>
-              <li class="c-services-section-block__tag">Narration</li>
-              <li class="c-services-section-block__tag">Production</li>
+              <li
+                v-for="item in section.presentation.expertises"
+                class="c-services-section-block__tag o-button"
+              >
+                {{ item }}
+              </li>
             </ul>
           </footer>
         </div>
@@ -94,7 +84,6 @@ const props = defineProps({
       color: $white;
       padding: 3.6rem 9.6rem 3.6rem 3.6rem;
       font-size: 2rem;
-      line-height: 145%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -147,20 +136,19 @@ const props = defineProps({
         order: 3;
       }
     }
+    &__text {
+      line-height: 145%;
+    }
     &__list {
-      margin-top: 1.2rem;
       display: flex;
       align-items: flex-start;
+      flex-wrap: wrap;
     }
     &__tag {
-      border: 0.1rem solid $white;
-      padding: 1.2rem;
-      font-size: 1.2rem;
-      line-height: 150%;
-      border-radius: 0.4rem;
-      text-transform: uppercase;
+      margin-top: 1.2rem;
       #{$self}.-is-grey & {
         border: 0.1rem solid $black;
+        color: $black;
       }
       &:not(:last-child) {
         margin-right: 1.2rem;
