@@ -24,6 +24,9 @@ const props = defineProps({
   height: 100svh;
   width: 100%;
   position: relative;
+  @include mq($until: tablet) {
+    height: 75svh;
+  }
   &__title {
     position: absolute;
     top: 50%;
@@ -39,7 +42,7 @@ const props = defineProps({
     border-radius: 1.2rem;
     overflow: hidden;
     aspect-ratio: 1 / 1;
-    height: 40rem;
+    height: min(60vw, 40rem);
     width: auto;
   }
 }

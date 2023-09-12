@@ -37,6 +37,7 @@
     display: flex;
     align-items: center;
     font-size: 2rem;
+    font-weight: $fw-medium;
     @include mq($until: tablet) {
       font-size: 1.6rem;
     }

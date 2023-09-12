@@ -35,7 +35,7 @@ const props = defineProps({
         </div>
         <div class="c-services-section-block -has-medium-text">
           <SanityContent :blocks="section.presentation.text" />
-          <footer>
+          <footer class="c-services-section-block__footer">
             <h3>{{ section.presentation.label }}</h3>
             <ul class="c-services-section-block__list">
               <li
@@ -66,7 +66,7 @@ const props = defineProps({
 .c-services-section {
   $self: &;
   &__grid {
-    @include grid(12, 1.2rem, 0);
+    @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;
     margin-top: 1.2rem;
   }
@@ -75,8 +75,14 @@ const props = defineProps({
     height: 63.9rem;
     border-radius: 0.8rem;
     overflow: hidden;
+    @include mq($until: desktop) {
+      height: auto;
+    }
     &.-has-small-video {
       grid-column: auto / span 2;
+      @include mq($until: desktop) {
+        grid-column: auto / span 3;
+      }
     }
     &.-has-medium-text {
       grid-column: auto / span 4;
@@ -87,6 +93,17 @@ const props = defineProps({
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      @include mq($until: medium) {
+        padding: 3.6rem;
+      }
+      @include mq($until: desktop) {
+        grid-column: auto / span 12;
+        height: auto;
+      }
+      @include mq($until: tablet) {
+        font-size: 1.7rem;
+        padding: 2.4rem;
+      }
       ::selection {
         background-color: $white;
         color: $black;
@@ -102,6 +119,9 @@ const props = defineProps({
     }
     &.-has-big-video {
       grid-column: auto / span 6;
+      @include mq($until: desktop) {
+        grid-column: auto / span 9;
+      }
     }
     #{$self}.-is-sbm & {
       &.-has-small-video {
@@ -120,9 +140,15 @@ const props = defineProps({
       }
       &.-has-medium-text {
         order: 2;
+        @include mq($until: desktop) {
+          order: 3;
+        }
       }
       &.-has-big-video {
         order: 3;
+        @include mq($until: desktop) {
+          order: 2;
+        }
       }
     }
     #{$self}.-is-bsm & {
@@ -136,8 +162,10 @@ const props = defineProps({
         order: 3;
       }
     }
-    &__text {
-      line-height: 145%;
+    &__footer {
+      @include mq($until: desktop) {
+        margin-top: 7rem;
+      }
     }
     &__list {
       display: flex;
