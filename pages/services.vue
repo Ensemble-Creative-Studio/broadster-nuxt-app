@@ -11,17 +11,16 @@ const query = groq`*[_type == "services"][0]
 `
 
 const { data: services } = useSanityQuery(query)
-console.log(services.value);
 </script>
 
 <template>
   <div class="l-services">
     <Hero
       title="Services"
-      :video="services.videoUrl"
+      :video="services?.videoUrl"
     />
     <ServicesSection
-      v-for="(section, i) in services.sections"
+      v-for="(section, i) in services?.sections"
       class="l-services__section"
       :section="section"
       :key="i"
