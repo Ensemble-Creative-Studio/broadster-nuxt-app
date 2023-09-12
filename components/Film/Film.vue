@@ -163,16 +163,20 @@ onMounted(() => {
   }
   &__title {
     max-width: 35ch;
-    transform: translateY(0%);
-    position: absolute;
-    bottom: 100%;
-    left: 0;
+    #{$self}:not(.-is-featured) & {
+      will-change: transform;
+      transform: translateY(0%);
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+    }
   }
   &__description {
     margin-top: 1.2rem;
     max-width: 50ch;
-    transition: transform 0.5s ease-in-out;
     #{$self}:not(.-is-featured) & {
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
       transform: translateY(calc(50%));
     }
     #{$self}:hover:not(.-is-featured) & {
@@ -184,8 +188,9 @@ onMounted(() => {
     flex-wrap: wrap;
     align-items: stretch;
     margin-top: 1.8rem;
-    transition: transform 0.5s ease-in-out;
     #{$self}:not(.-is-featured) & {
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
       transform: translateY(calc(50%));
     }
     #{$self}:hover:not(.-is-featured) & {
