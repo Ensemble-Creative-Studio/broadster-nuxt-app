@@ -19,6 +19,7 @@
     "@nuxtjs/sanity": "^1.8.0",
     "@studio-freight/lenis": "^1.0.19",
     "animejs": "^3.2.1",
-    "nuxt-lazy-load": "^3.0.4"
+    "nuxt-lazy-load": "^3.0.4",
+    "swiper": "^8.4.7"
   }
 }
