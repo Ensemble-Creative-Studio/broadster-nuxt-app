@@ -65,7 +65,7 @@ function onClick() {
       ></video>
       <div class="c-film__meta">
         <h3 class="c-film__title o-thumbnail-title">{{ film.title }}</h3>
-        <p class="c-film__description" v-html="film.description"></p>
+        <p class="c-film__description" v-html="film.shortDescription"></p>
         <footer class="c-film__footer">
           <button
             class="c-film-play-button o-button -has-white-background -has-icon"
@@ -136,28 +136,65 @@ function onClick() {
   &__video {
     z-index: -2;
   }
-  &__meta {
-    transition: transform 0.5s ease-in-out;
-    transform: translateY(calc(100% - 2.4rem));
-    #{$self}.-is-hovered & {
+  // &__meta {
+  //   transition: transform 0.5s ease-in-out;
+  //   transform: translateY(calc(100% - 2.4rem));
+  //   #{$self}.-is-hovered & {
+  //     transform: translateY(0%);
+  //   }
+  //   #{$self}.-is-featured & {
+  //     transform: translateY(0%);
+  //   }
+  // }
+  &__title,
+  &__description {
+    color: $white;
+    #{$self}:not(.-is-featured) & {
+      position: absolute;
+    }
+  }
+  &__title {
+    max-width: 35ch;
+    transform: translateY(0%);
+    #{$self}:not(.-is-featured) & {
+      bottom: 3.6rem;
       transform: translateY(0%);
     }
-    #{$self}.-is-featured & {
-      transform: translateY(0%);
+    #{$self}.-is-hovered:not(.-is-featured) & {
+      bottom: 0;
+    }
+    #{$self}.-is-hovered & {
+      position: relative;
     }
   }
   &__description {
-    margin-top: 2.8rem;
-  }
-  &__description,
-  &__title {
-    color: $white;
+    margin-top: 1.2rem;
+    #{$self}:not(.-is-featured) & {
+      bottom: 3.6rem;
+      transform: translateY(200%);
+    }
+    #{$self}.-is-hovered:not(.-is-featured) & {
+      bottom: 0;
+    }
+    #{$self}.-is-hovered & {
+      position: relative;
+      transform: translateY(0%);
+    }
   }
   &__footer {
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
     margin-top: 1.8rem;
+    #{$self}:not(.-is-featured) & {
+      position: absolute;
+      transform: translateY(100%);
+    }
+    #{$self}.-is-hovered & {
+      position: relative;
+      transform: translateY(0%);
+    }
+
     & > *:not(:last-child) {
       margin-right: 1rem;
     }
