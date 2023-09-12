@@ -11,6 +11,7 @@ const props = defineProps({
 })
 
 const $film = ref(null)
+const $filmMeta = ref(null)
 const $video = ref(null)
 const isHovered = ref(false)
 const isFeatured = computed(() => props.class.includes('-is-featured'))
@@ -36,6 +37,10 @@ function onClick() {
   isVideoPlayerOpen.value = true
   currentFilm.value = props.film
 }
+
+onMounted(() => {
+  console.log($filmMeta.value.clientHeight)
+})
 </script>
 
 <template>
@@ -63,7 +68,14 @@ function onClick() {
         playsinline
         :autoplay="isFeatured"
       ></video>
-      <div class="c-film__meta">
+      <div
+        ref="$filmMeta"
+        class="c-film__meta"
+        :style="{
+          transform:
+            isHovered && !isFeatured ? `translateY(calc(100% - ${$filmMeta?.clientHeight}px))` : '',
+        }"
+      >
         <h3 class="c-film__title o-thumbnail-title">{{ film.title }}</h3>
         <p class="c-film__description" v-html="film.shortDescription"></p>
         <footer class="c-film__footer">
@@ -136,49 +148,35 @@ function onClick() {
   &__video {
     z-index: -2;
   }
-  // &__meta {
-  //   transition: transform 0.5s ease-in-out;
-  //   transform: translateY(calc(100% - 2.4rem));
-  //   #{$self}.-is-hovered & {
-  //     transform: translateY(0%);
-  //   }
-  //   #{$self}.-is-featured & {
-  //     transform: translateY(0%);
-  //   }
-  // }
+  &__meta {
+    position: absolute;
+    bottom: 3.6rem;
+    left: 3.6rem;
+    #{$self}:not(.-is-featured) & {
+      transition: transform 0.5s ease-in-out;
+      transform: translateY(calc(100%));
+    }
+  }
   &__title,
   &__description {
     color: $white;
-    #{$self}:not(.-is-featured) & {
-      position: absolute;
-    }
   }
   &__title {
     max-width: 35ch;
     transform: translateY(0%);
-    #{$self}:not(.-is-featured) & {
-      bottom: 3.6rem;
-      transform: translateY(0%);
-    }
-    #{$self}.-is-hovered:not(.-is-featured) & {
-      bottom: 0;
-    }
-    #{$self}.-is-hovered & {
-      position: relative;
-    }
+    position: absolute;
+    bottom: 100%;
+    left: 0;
   }
   &__description {
     margin-top: 1.2rem;
+    max-width: 50ch;
+    transition: transform 0.5s ease-in-out;
     #{$self}:not(.-is-featured) & {
-      bottom: 3.6rem;
-      transform: translateY(200%);
+      transform: translateY(calc(50%));
     }
-    #{$self}.-is-hovered:not(.-is-featured) & {
-      bottom: 0;
-    }
-    #{$self}.-is-hovered & {
-      position: relative;
-      transform: translateY(0%);
+    #{$self}:hover:not(.-is-featured) & {
+      transform: translateY(calc(0%));
     }
   }
   &__footer {
@@ -186,13 +184,12 @@ function onClick() {
     flex-wrap: wrap;
     align-items: stretch;
     margin-top: 1.8rem;
+    transition: transform 0.5s ease-in-out;
     #{$self}:not(.-is-featured) & {
-      position: absolute;
-      transform: translateY(100%);
+      transform: translateY(calc(50%));
     }
-    #{$self}.-is-hovered & {
-      position: relative;
-      transform: translateY(0%);
+    #{$self}:hover:not(.-is-featured) & {
+      transform: translateY(calc(0%));
     }
 
     & > *:not(:last-child) {
