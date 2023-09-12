@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     dataset: 'production',
     apiVersion: '2023-09-11',
   },
-  css: ['@/assets/scss/index.scss'],
+  css: ['@/assets/scss/index.scss', '@/assets/fonts/the-future/style.css'],
   vite: {
     css: {
       preprocessorOptions: {
