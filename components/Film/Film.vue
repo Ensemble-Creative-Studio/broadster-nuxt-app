@@ -56,7 +56,7 @@ function onClick() {
       <div class="c-film__thumbnail"></div>
       <video
         ref="$video"
-        :src="film.videoUrl"
+        :src="film?.loopUrl"
         class="c-film__video"
         muted
         loop
@@ -138,7 +138,7 @@ function onClick() {
   }
   &__meta {
     transition: transform 0.5s ease-in-out;
-    transform: translateY(85%);
+    transform: translateY(calc(100% - 2.4rem));
     #{$self}.-is-hovered & {
       transform: translateY(0%);
     }

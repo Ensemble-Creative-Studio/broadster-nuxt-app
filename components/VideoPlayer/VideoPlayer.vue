@@ -101,6 +101,10 @@ watch(
   }
 )
 
+onMounted(() => {
+  onTogglePlayClick()
+}),
+
 onBeforeUnmount(() => {
   window.cancelAnimationFrame(raf)
   $video.value = null

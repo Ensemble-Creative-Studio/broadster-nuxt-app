@@ -1,20 +1,24 @@
 <script setup>
+const query = groq`*[_type == "home"][0]
+  {
+    featuredFilms[]{
+      film->{
+        categories[]->{
+          title,
+        },
+        title,
+        description,
+        loopUrl,
+      },
+      baseline,
+    },
+  }
+`
+
+const { data: home } = useSanityQuery(query)
+console.log(home.value);
+
 const index = ref(0)
-
-// Sources
-const videos = [
-  'https://player.vimeo.com/progressive_redirect/playback/847355973/rendition/1080p/file.mp4?loc=external&signature=47ac414eb6ae8d2f123245b4ecc0d7e2d758146fdb1377231d8ab55be0ccfca7',
-  'https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a',
-  'https://player.vimeo.com/progressive_redirect/playback/847356001/rendition/720p/file.mp4?loc=external&signature=033c82e6182f6b278fc1d97adf1270512e5cae1ce26eed7e8b20c3fac46306ad',
-]
-
-// Baselines
-const $baselines = ref([])
-const baselines = [
-  'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
-  'Cultiver notre curiosité pour créer des documentaires captivants.',
-  'Raconter vos engagements avec la force narrative du documentaire.',
-]
 
 // Calculate the desired height for container
 const aspectRatios = [1.73, 2.25, 0.6]
@@ -25,10 +29,10 @@ let interval
 onMounted(() => {
   interval = setInterval(() => {
     const previousIndex = computed(() => {
-      return index.value - 1 < 0 ? videos.length - 1 : index.value - 1
+      return index.value - 1 < 0 ? home.value?.featuredFilms?.length - 1 : index.value - 1
     })
 
-    index.value = (index.value + 1) % videos.length
+    index.value = (index.value + 1) % home.value?.featuredFilms?.length
   }, 2500)
 })
 
@@ -41,24 +45,24 @@ onUnmounted(() => {
   <div class="c-slideshow">
     <div class="c-slideshow-video" :class="modifiers[index]">
       <video
-        v-for="(video, i) in videos"
+        v-for="(item, i) in home?.featuredFilms"
         class="c-slideshow-video__source"
         :class="i === index ? '-is-visible' : ''"
-        :src="video"
+        :src="item.film.loopUrl"
         autoplay
         muted
         loop
-        playsinline=""
+        playsinline
       ></video>
     </div>
     <footer class="c-slideshow-footer">
       <h2
-        v-for="(baseline, i) in baselines"
+        v-for="(item, i) in home?.featuredFilms"
         class="c-slideshow-footer__baseline o-title"
         ref="$baselines"
         :key="i"
       >
-        {{ baseline }}
+        {{ item.film.baseline }}
       </h2>
     </footer>
   </div>

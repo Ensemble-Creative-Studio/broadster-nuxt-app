@@ -2,7 +2,6 @@
 const props = defineProps({
   history: {
     type: Object,
-    required: true,
   },
 })
 </script>

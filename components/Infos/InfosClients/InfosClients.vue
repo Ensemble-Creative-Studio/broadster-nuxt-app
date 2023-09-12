@@ -2,7 +2,6 @@
 const props = defineProps({
   clients: {
     type: Array,
-    required: true,
   },
 })
 </script>

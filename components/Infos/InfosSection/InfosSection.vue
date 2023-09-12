@@ -2,7 +2,6 @@
 const props = defineProps({
   blocks: {
     type: Object,
-    required: true,
   },
 })
 </script>
@@ -14,18 +13,18 @@ const props = defineProps({
         <div class="c-infos-section-block -has-big-text">
           <div>
             <h3 class="c-infos-section-block__title o-title">
-              {{ props.blocks.presentation.quote }}
+              {{ blocks?.presentation?.quote }}
             </h3>
-            <p class="c-infos-section-block__author" v-html="props.blocks.presentation.author"></p>
+            <p class="c-infos-section-block__author" v-html="blocks?.presentation?.author"></p>
           </div>
           <footer class="c-infos-section-block__footer">
-            <SanityContent :blocks="props.blocks.presentation.text" />
+            <SanityContent :blocks="blocks?.presentation?.text" />
           </footer>
         </div>
         <div class="c-infos-section-block -has-small-video">
           <video
             class="c-infos-section__source"
-            :src="props.blocks.video1?.url"
+            :src="blocks?.video1?.url"
             autoplay
             muted
             loop
@@ -35,7 +34,7 @@ const props = defineProps({
         <div class="c-infos-section-block -has-small-video">
           <video
             class="c-infos-section__source"
-            :src="props.blocks.video2?.url"
+            :src="blocks?.video2?.url"
             autoplay
             muted
             loop
@@ -65,7 +64,7 @@ const props = defineProps({
     }
     &.-has-big-text {
       grid-column: auto / span 6;
-      background-color: $black;
+      background-color: $very-dark;
       color: $white;
       padding: 2.4rem;
       font-size: 2rem;

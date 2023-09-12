@@ -12,7 +12,8 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .c-infos-clients-item {
-  background-color: $bright-grey;
+  background-color: $very-dark;
+  color: $white;
   padding: 2.4rem;
   border-radius: 0.4rem;
   min-height: 20rem;

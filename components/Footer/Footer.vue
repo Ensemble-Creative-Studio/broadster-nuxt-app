@@ -36,7 +36,7 @@
   }
   &-row {
     grid-column: auto / span 4;
-    background-color: $black;
+    background-color: $very-dark;
     color: $white;
     border-radius: 0.4rem;
     padding: 3.6rem;

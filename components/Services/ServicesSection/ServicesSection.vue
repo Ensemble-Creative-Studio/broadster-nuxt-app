@@ -80,7 +80,7 @@ const props = defineProps({
     }
     &.-has-medium-text {
       grid-column: auto / span 4;
-      background-color: $black;
+      background-color: $very-dark;
       color: $white;
       padding: 3.6rem 9.6rem 3.6rem 3.6rem;
       font-size: 2rem;
@@ -95,7 +95,7 @@ const props = defineProps({
         background-color: $bright-grey;
         color: $black;
         ::selection {
-          background-color: $black;
+          background-color: $very-dark;
           color: $white;
         }
       }

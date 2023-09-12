@@ -1,4 +1,7 @@
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+
 const props = defineProps({
   section: {
     type: Object,
@@ -13,12 +16,11 @@ const props = defineProps({
       <Film :film="section.featuredFilm" class="c-productions-section__film -is-featured" />
       <h2 class="c-productions-section__title o-title">{{ section.title }}</h2>
       <div class="c-productions-section__slider">
-        <Film
-          v-for="(film, i) in section.films"
-          :film="film"
-          :key="i"
-          class="c-productions-section__film"
-        />
+        <Swiper :space-between="12" :grab-cursor="true" :free-mode="true" :slides-per-view="2.5">
+          <SwiperSlide v-for="(film, i) in section.films" class="slider__item" :key="i">
+            <Film :film="film" class="c-productions-section__film" />
+          </SwiperSlide>
+        </Swiper>
       </div>
     </div>
   </div>
@@ -35,11 +37,11 @@ const props = defineProps({
   }
   &__slider {
     display: flex;
+    overflow-x: visible !important;
     margin-top: 2.4rem;
   }
   &__film {
     aspect-ratio: 666 / 435;
-    min-width: 66.6rem;
     &:not(:last-child) {
       margin-right: 1.2rem;
     }

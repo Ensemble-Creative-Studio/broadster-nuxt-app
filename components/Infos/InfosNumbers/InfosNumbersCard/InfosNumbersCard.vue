@@ -29,7 +29,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .c-infos-numbers-card {
   padding: 2.4rem;
-  background-color: $black;
+  background-color: $very-dark;
   grid-column: auto / span 4;
   border-radius: 0.4rem;
   color: $white;
