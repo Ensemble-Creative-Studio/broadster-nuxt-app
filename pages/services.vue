@@ -15,10 +15,7 @@ const { data: services } = useSanityQuery(query)
 
 <template>
   <div class="l-services">
-    <Hero
-      title="Services"
-      :video="services?.videoUrl"
-    />
+    <Hero title="Services" :video="services?.videoUrl" />
     <ServicesSection
       v-for="(section, i) in services?.sections"
       class="l-services__section"
@@ -32,6 +29,9 @@ const { data: services } = useSanityQuery(query)
 .l-services {
   &__section {
     margin-top: 28rem;
+    @include mq($until: tablet) {
+      margin-top: 6rem;
+    }
     &:last-child {
       margin-bottom: 1.2rem;
     }
