@@ -8,7 +8,8 @@ const query = groq`*[_type == "productions"][0]
         title,
         loopUrl,
         videoUrl,
-        description,
+        shortDescription,
+        fullDescription,
         categories[]->{
           title,
         },
@@ -20,7 +21,8 @@ const query = groq`*[_type == "productions"][0]
         title,
         loopUrl,
         videoUrl,
-        description,
+        shortDescription,
+        fullDescription,
         categories[]->{
           title,
         },
