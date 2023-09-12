@@ -14,7 +14,7 @@ const props = defineProps({
         <h2 class="c-video-player-credits__title o-thumbnail-title">
           {{ data.title }}
         </h2>
-        <p class="c-video-player-credits__description" v-html="data.description"></p>
+        <p class="c-video-player-credits__description" v-html="data.fullDescription"></p>
         <ul class="c-video-player-credits__details">
           <li class="c-video-player-credits__item">
             <span class="o-button -has-white-outline">Diffusion</span>

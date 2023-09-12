@@ -7,7 +7,8 @@ const query = groq`*[_type == "home"][0]
           title,
         },
         title,
-        description,
+        shortDescription,
+        fullDescription,
         loopUrl,
       },
       baseline,
@@ -16,7 +17,6 @@ const query = groq`*[_type == "home"][0]
 `
 
 const { data: home } = useSanityQuery(query)
-console.log(home.value);
 
 const index = ref(0)
 
