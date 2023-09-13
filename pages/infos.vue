@@ -17,7 +17,7 @@ const { data: infos } = useSanityQuery(query)
 <template>
   <div class="l-infos">
     <Hero title="Infos" :video="infos?.videoUrl" />
-    <InfosSection :blocks="infos?.sections" />
+    <InfosSection :blocks="infos?.sections" class="l-infos__section" />
     <InfosNumbers :history="infos?.history" class="l-infos__numbers" />
     <InfosClients :clients="infos?.clients" class="l-infos__clients" />
   </div>
@@ -25,6 +25,12 @@ const { data: infos } = useSanityQuery(query)
 
 <style lang="scss" scoped>
 .l-infos {
+  &__section {
+    margin-top: 32rem;
+    @include mq($until: tablet) {
+      margin-top: 6rem;
+    }
+  }
   &__numbers {
     margin-top: 10rem;
     @include mq($until: tablet) {

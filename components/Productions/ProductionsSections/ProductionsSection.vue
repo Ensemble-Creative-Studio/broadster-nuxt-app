@@ -41,10 +41,6 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .c-productions-section {
-  margin-top: 32rem;
-  @include mq($until: tablet) {
-    margin-top: 12rem;
-  }
   &:last-child {
     margin-bottom: 1.2rem;
     @include mq($until: medium) {

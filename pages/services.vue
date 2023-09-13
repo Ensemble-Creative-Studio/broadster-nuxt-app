@@ -28,7 +28,7 @@ const { data: services } = useSanityQuery(query)
 <style lang="scss" scoped>
 .l-services {
   &__section {
-    margin-top: 28rem;
+    margin-top: 32rem;
     @include mq($until: tablet) {
       margin-top: 6rem;
     }
