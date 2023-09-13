@@ -50,7 +50,7 @@ const props = defineProps({
 .c-infos-section {
   $self: &;
   &__grid {
-    @include grid(12, 1.2rem, 0);
+    @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;
     margin-top: 1.2rem;
   }
@@ -61,6 +61,10 @@ const props = defineProps({
     overflow: hidden;
     &.-has-small-video {
       grid-column: auto / span 3;
+      @include mq($until: desktop) {
+        grid-column: auto / span 12;
+        height: auto;
+      }
     }
     &.-has-big-text {
       grid-column: auto / span 6;
@@ -72,6 +76,9 @@ const props = defineProps({
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      @include mq($until: desktop) {
+        grid-column: auto / span 12;
+      }
       ::selection {
         background-color: $white;
         color: $black;

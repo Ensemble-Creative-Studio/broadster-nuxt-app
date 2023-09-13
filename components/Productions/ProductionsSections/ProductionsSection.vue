@@ -16,7 +16,20 @@ const props = defineProps({
       <Film :film="section.featuredFilm" class="c-productions-section__film -is-featured" />
       <h2 class="c-productions-section__title o-title">{{ section.title }}</h2>
       <div class="c-productions-section__slider">
-        <Swiper :space-between="12" :grab-cursor="true" :free-mode="true" :slides-per-view="2.5">
+        <Swiper
+          :space-between="12"
+          :grab-cursor="true"
+          :free-mode="true"
+          :slides-per-view="1.1"
+          :breakpoints="{
+            640: {
+              slidesPerView: 2.1,
+            },
+            992: {
+              slidesPerView: 2.5,
+            },
+          }"
+        >
           <SwiperSlide v-for="(film, i) in section.films" class="slider__item" :key="i">
             <Film :film="film" class="c-productions-section__film" />
           </SwiperSlide>
@@ -28,20 +41,31 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .c-productions-section {
-  margin-top: 29rem;
+  margin-top: 32rem;
+  @include mq($until: tablet) {
+    margin-top: 12rem;
+  }
   &:last-child {
     margin-bottom: 1.2rem;
+    @include mq($until: medium) {
+      margin-bottom: 21rem;
+    }
   }
   &__title {
-    margin-top: 29rem;
+    margin-top: 32rem;
+    @include mq($until: medium) {
+      margin-top: 21rem;
+    }
   }
   &__slider {
     display: flex;
-    overflow-x: visible !important;
     margin-top: 2.4rem;
   }
   &__film {
-    aspect-ratio: 666 / 435;
+    aspect-ratio: 6 / 4;
+    @include mq($until: medium) {
+      aspect-ratio: auto;
+    }
     &:not(:last-child) {
       margin-right: 1.2rem;
     }
@@ -49,6 +73,11 @@ const props = defineProps({
       max-width: 80%;
       max-height: 80vh;
       margin: 0 auto;
+      @include mq($until: tablet) {
+        max-width: 100%;
+        max-height: initial;
+        height: auto;
+      }
     }
   }
 }

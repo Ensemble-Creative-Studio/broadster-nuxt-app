@@ -39,7 +39,7 @@ const props = defineProps({
     @include mq($until: tablet) {
       grid-column: auto / span 6;
     }
-    @include mq($until: tablet) {
+    @include mq($until: mini) {
       grid-column: 1 / -1;
     }
   }

@@ -87,10 +87,10 @@ onMounted(() => {
               width="12"
               height="12"
               viewBox="0 0 12 12"
-              fill="none"
+              fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M0 12V0L12 6L0 12Z" fill="black" />
+              <path d="M0 12V0L12 6L0 12Z" />
             </svg>
             <span class="c-film-play-button__text">Play</span>
           </button>
@@ -112,14 +112,19 @@ onMounted(() => {
   overflow: hidden;
   user-select: none;
   $self: &;
+  @include mq($until: medium) {
+    height: inherit;
+  }
   &__container {
     position: relative;
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 3.6rem;
+    @include mq($until: medium) {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
   }
   &__overlay,
   &__thumbnail,
@@ -130,11 +135,20 @@ onMounted(() => {
     width: 100%;
     height: 100%;
   }
+  &__video {
+    @include mq($until: medium) {
+      position: relative;
+      flex: 1;
+    }
+  }
   &__overlay {
     background-color: rgba($dark-grey, 0.4);
     z-index: -1;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out,
       background-color 0.3s ease-in-out;
+    @include mq($until: medium) {
+      display: none;
+    }
     #{$self}:hover & {
       background-color: rgba($dark-grey, 0.6);
     }
@@ -152,35 +166,72 @@ onMounted(() => {
     position: absolute;
     bottom: 3.6rem;
     left: 3.6rem;
+    width: calc(100% - 6.4rem);
+    // border: 0.1rem solid red;
+    @include mq($until: medium) {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      flex: 2;
+      width: 100%;
+    }
     #{$self}:not(.-is-featured) & {
       transition: transform 0.5s ease-in-out;
-      transform: translateY(calc(100%));
+      transform: translateY(100%);
+      @include mq($until: medium) {
+        transform: translateY(0%) !important;
+      }
     }
   }
   &__title,
   &__description {
     color: $white;
+    @include mq($until: medium) {
+      color: $black;
+    }
   }
   &__title {
     max-width: 35ch;
+    // border: 0.1rem solid blue;
+    @include mq($until: medium) {
+      order: 2;
+      margin-top: 1rem;
+      max-width: 100%;
+    }
     #{$self}:not(.-is-featured) & {
-      will-change: transform;
-      transform: translateY(0%);
-      position: absolute;
-      bottom: 100%;
-      left: 0;
+      @include mq($from: medium) {
+        will-change: transform;
+        transform: translateY(0%);
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+      }
     }
   }
   &__description {
     margin-top: 1.2rem;
     max-width: 50ch;
+    // border: 0.1rem solid green;
+    @include mq($until: medium) {
+      order: 3;
+      flex: auto;
+      display: flex;
+      align-items: flex-end;
+      max-width: 100%;
+    }
     #{$self}:not(.-is-featured) & {
-      transition: transform 0.5s ease-in-out;
-      will-change: transform;
-      transform: translateY(calc(50%));
+      @include mq($from: medium) {
+        transition: transform 0.5s ease-in-out;
+        will-change: transform;
+        transform: translateY(calc(50%));
+      }
     }
     #{$self}:hover:not(.-is-featured) & {
-      transform: translateY(calc(0%));
+      @include mq($from: medium) {
+        transform: translateY(calc(0%));
+      }
     }
   }
   &__footer {
@@ -188,26 +239,40 @@ onMounted(() => {
     flex-wrap: wrap;
     align-items: stretch;
     margin-top: 1.8rem;
+    // border: 0.1rem solid orange;
+    @include mq($until: medium) {
+      order: 1;
+      margin-top: 0;
+    }
     #{$self}:not(.-is-featured) & {
-      transition: transform 0.5s ease-in-out;
-      will-change: transform;
-      transform: translateY(calc(50%));
+      @include mq($from: medium) {
+        transition: transform 0.5s ease-in-out;
+        will-change: transform;
+        transform: translateY(calc(50%));
+      }
     }
     #{$self}:hover:not(.-is-featured) & {
-      transform: translateY(calc(0%));
-    }
-
-    & > *:not(:last-child) {
-      margin-right: 1rem;
+      @include mq($from: medium) {
+        transform: translateY(calc(0%));
+      }
     }
     & > * {
-      border-radius: 0.4rem;
-      padding: 1rem;
-      text-transform: uppercase;
-      font-size: 1.2rem;
+      @include mq($until: medium) {
+        margin-top: 0.5rem;
+      }
+    }
+    & > *:not(:last-child) {
+      margin-right: 1rem;
+      @include mq($until: medium) {
+        margin-right: 0.5rem;
+      }
     }
   }
   &-play-button {
+    @include mq($until: medium) {
+      background-color: $black;
+      color: $white;
+    }
     &__text {
       margin-left: 1rem;
     }

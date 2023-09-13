@@ -19,6 +19,9 @@ const props = defineProps({
   min-height: 20rem;
   display: flex;
   align-items: flex-end;
+  @include mq($until: tablet) {
+    padding: 1.2rem;
+  }
   @include mq($until: small) {
     min-height: 15rem;
   }

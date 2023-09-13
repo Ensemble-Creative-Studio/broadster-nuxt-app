@@ -10,14 +10,7 @@ const props = defineProps({
 <template>
   <div class="c-infos-numbers-card">
     <div class="c-infos-numbers-card__thumbnail">
-      <video
-        :src="data.videoUrl"
-        alt=""
-        muted
-        loop
-        autoplay
-        playsinline
-      ></video>
+      <video :src="data.videoUrl" alt="" muted loop autoplay playsinline></video>
     </div>
     <footer>
       <h3 class="o-section-title">{{ data.number }}</h3>
@@ -36,6 +29,9 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @include mq($until: tablet) {
+    grid-column: auto / span 12;
+  }
   &__thumbnail {
     max-width: 26rem;
     aspect-ratio: 16/10;
@@ -43,8 +39,11 @@ const props = defineProps({
     border-radius: 0.4rem;
     overflow: hidden;
     @include mq($until: tablet) {
-      max-width: 33.33%;
-      margin: 0;
+      margin: 0 0 6rem auto;
+    }
+    @include mq($until: mobile) {
+      max-width: 50%;
+      margin: 0 0 3.2rem auto;
     }
   }
   &__text {
@@ -52,6 +51,10 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    @include mq($until: tablet) {
+      min-height: auto;
+      margin-top: 1rem;
+    }
   }
 }
 </style>
