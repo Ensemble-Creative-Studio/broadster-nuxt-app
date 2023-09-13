@@ -32,6 +32,7 @@
 .o-thumbnail-title {
   font-size: 2.8rem;
   line-height: 120%;
+  font-weight: $fw-medium;
   @include mq($until: medium) {
     font-size: 2.4rem;
   }
@@ -52,6 +53,10 @@
   text-transform: uppercase;
   font-size: 1.2rem;
   cursor: pointer;
+  @include mq($until: tablet) {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
   font-family: $the-future-mono;
   &.-has-white-background {
     background-color: $white;
