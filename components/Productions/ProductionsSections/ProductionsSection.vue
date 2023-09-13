@@ -58,7 +58,7 @@ const props = defineProps({
   &__film {
     aspect-ratio: 6 / 4;
     @include mq($until: medium) {
-      aspect-ratio: auto;
+      aspect-ratio: initial;
     }
     &:not(:last-child) {
       margin-right: 1.2rem;

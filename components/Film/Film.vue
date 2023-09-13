@@ -133,7 +133,8 @@ function onClick() {
   user-select: none;
   $self: &;
   @include mq($until: medium) {
-    height: inherit;
+    height: auto;
+    overflow: visible;
   }
   &__container {
     position: relative;
@@ -238,7 +239,6 @@ function onClick() {
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        will-change: transform;
         transform: translateY(0%);
         position: absolute;
         bottom: 100%;
@@ -259,7 +259,7 @@ function onClick() {
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
         transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-        will-change: transform;
+
         transform: translateY(calc(50%));
       }
     }
@@ -281,7 +281,7 @@ function onClick() {
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
         transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-        will-change: transform;
+
         transform: translateY(calc(50%));
       }
     }
