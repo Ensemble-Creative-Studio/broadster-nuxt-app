@@ -38,7 +38,9 @@ onBeforeUnmount(() => {
 <template>
   <div class="l-app">
     <!-- <h2 class="o-title">Website under construction</h2> -->
-    <VideoPlayer v-if="isVideoPlayerOpen" />
+    <Transition name="fade" mode="in-out">
+      <VideoPlayer v-if="isVideoPlayerOpen" />
+    </Transition>
     <Header />
     <NuxtPage />
     <Footer />
@@ -46,7 +48,14 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
-// .l-app {
-//   padding: 2rem;
-// }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
+    visibility 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  visibility: hidden;
+}
 </style>

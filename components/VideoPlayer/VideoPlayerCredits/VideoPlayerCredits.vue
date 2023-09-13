@@ -49,6 +49,14 @@ const props = defineProps({
   padding-top: 20rem;
   background-color: rgba($black, 0.8);
   color: $white;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
+    visibility 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+  &.-is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
   @include mq($until: tablet) {
     padding-top: 6rem;
   }

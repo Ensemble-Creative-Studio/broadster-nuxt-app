@@ -121,7 +121,12 @@ onMounted(() => {
       '-is-open': isVideoPlayerOpen,
     }"
   >
-    <VideoPlayerCredits v-show="isCreditsOpen" :data="currentFilm" />
+    <VideoPlayerCredits
+      :class="{
+        '-is-visible': isCreditsOpen,
+      }"
+      :data="currentFilm"
+    />
     <button
       class="c-video-player-credits-button o-button -has-dark-grey-background"
       @click="onToggleCreditsClick"
@@ -129,7 +134,9 @@ onMounted(() => {
       Credits
     </button>
     <button
-      v-show="!isCreditsOpen"
+      :class="{
+        '-is-visible': !isCreditsOpen,
+      }"
       class="c-video-player-close-button o-button -has-white-outline"
       @click="onCloseClick"
     >
@@ -192,7 +199,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .c-video-player {
-  pointer-events: none;
   height: 100%;
   width: 100%;
   position: fixed;
@@ -200,14 +206,6 @@ onMounted(() => {
   z-index: 11;
   top: 0;
   left: 0;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-  &.-is-open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-  }
   &-credits-button,
   &-close-button {
     position: absolute;

@@ -167,8 +167,9 @@ function onClick() {
   &__overlay {
     background-color: rgba($dark-grey, 0.4);
     z-index: -1;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out,
-      background-color 0.3s ease-in-out;
+    transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
+      visibility 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
+      background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
     @include mq($until: medium) {
       display: none;
     }
@@ -214,7 +215,7 @@ function onClick() {
       width: 100%;
     }
     #{$self}:not(.-is-featured) & {
-      transition: transform 0.5s ease-in-out;
+      transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: translateY(100%);
       @include mq($until: medium) {
         transform: translateY(0%) !important;
@@ -257,7 +258,7 @@ function onClick() {
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        transition: transform 0.5s ease-in-out;
+        transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
         will-change: transform;
         transform: translateY(calc(50%));
       }
@@ -279,7 +280,7 @@ function onClick() {
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        transition: transform 0.5s ease-in-out;
+        transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
         will-change: transform;
         transform: translateY(calc(50%));
       }
