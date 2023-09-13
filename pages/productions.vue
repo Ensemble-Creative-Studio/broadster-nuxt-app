@@ -6,6 +6,7 @@ const query = groq`*[_type == "productions"][0]
       ...,
       featuredFilm->{
         title,
+        placeholderImage,
         loopUrl,
         videoUrl,
         shortDescription,
@@ -19,6 +20,7 @@ const query = groq`*[_type == "productions"][0]
       },
       films[]->{
         title,
+        placeholderImage,
         loopUrl,
         videoUrl,
         shortDescription,

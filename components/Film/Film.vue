@@ -53,17 +53,29 @@ function onClick() {
     @mouseleave="onMouseLeave"
   >
     <div class="c-film__container">
-      <div class="c-film__overlay"></div>
-      <div class="c-film__thumbnail"></div>
-      <video
-        ref="$video"
-        :src="film?.loopUrl"
-        class="c-film__video"
-        muted
-        loop
-        playsinline
-        :autoplay="isFeatured"
-      ></video>
+      <div class="c-film__media">
+        <div class="c-film__overlay"></div>
+        <div class="c-film__thumbnail">
+          <SanityImage
+            v-if="film.placeholderImage"
+            :asset-id="film.placeholderImage?.asset?._ref"
+            alt=""
+            auto="format"
+          />
+        </div>
+        <video
+          ref="$video"
+          :src="film?.loopUrl"
+          class="c-film__video"
+          :class="{
+            '-is-visible': (!isFeatured && isHovered) || isFeatured,
+          }"
+          muted
+          loop
+          playsinline
+          :autoplay="isFeatured"
+        ></video>
+      </div>
       <div
         ref="$filmMeta"
         class="c-film__meta"
@@ -134,6 +146,11 @@ function onClick() {
       justify-content: flex-end;
     }
   }
+  &__media {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
   &__overlay,
   &__thumbnail,
   &__video {
@@ -142,13 +159,6 @@ function onClick() {
     left: 0;
     width: 100%;
     height: 100%;
-  }
-  &__video {
-    background-color: $very-dark;
-    @include mq($until: medium) {
-      position: relative;
-      flex: 1;
-    }
   }
   &__overlay {
     background-color: rgba($dark-grey, 0.4);
@@ -166,17 +176,30 @@ function onClick() {
     }
   }
   &__thumbnail {
-    z-index: -1;
+    @include mq($until: medium) {
+      position: relative;
+      min-height: 100%;
+    }
+  }
+  &__thumbnail {
+    z-index: -3;
   }
   &__video {
     z-index: -2;
+    #{$self}:not(.-is-featured) & {
+      opacity: 0;
+      visibility: hidden;
+      &.-is-visible {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
   }
   &__meta {
     position: absolute;
     bottom: 3.6rem;
     left: 3.6rem;
     width: calc(100% - 6.4rem);
-    // border: 0.1rem solid red;
     @include mq($until: medium) {
       position: relative;
       bottom: 0;
@@ -203,7 +226,6 @@ function onClick() {
   }
   &__title {
     max-width: 35ch;
-    // border: 0.1rem solid blue;
     @include mq($until: medium) {
       order: 2;
       margin-top: 1rem;
@@ -222,7 +244,6 @@ function onClick() {
   &__description {
     margin-top: 1.2rem;
     max-width: 50ch;
-    // border: 0.1rem solid green;
     @include mq($until: medium) {
       order: 3;
       flex: auto;
@@ -248,7 +269,6 @@ function onClick() {
     flex-wrap: wrap;
     align-items: stretch;
     margin-top: 1.8rem;
-    // border: 0.1rem solid orange;
     @include mq($until: medium) {
       order: 1;
       margin-top: 0;

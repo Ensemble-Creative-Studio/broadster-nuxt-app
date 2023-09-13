@@ -14,23 +14,23 @@ const props = defineProps({
         <h2 class="c-video-player-credits__title o-thumbnail-title">
           {{ data.title }}
         </h2>
-        <p class="c-video-player-credits__description" v-html="data.fullDescription"></p>
+        <p class="c-video-player-credits__description" v-html="data?.fullDescription"></p>
         <ul class="c-video-player-credits__details">
-          <li class="c-video-player-credits__item">
+          <li class="c-video-player-credits__item" v-if="data?.credits?.diffusion">
             <span class="o-button -has-white-outline">Diffusion</span>
-            <p class="c-video-player-credits__text" v-html="data.credits.diffusion"></p>
+            <p class="c-video-player-credits__text" v-html="data?.credits?.diffusion"></p>
           </li>
-          <li class="c-video-player-credits__item">
+          <li class="c-video-player-credits__item" v-if="data?.duration">
             <span class="o-button -has-white-outline">Durée</span>
-            <p class="c-video-player-credits__text" v-html="data.duration"></p>
+            <p class="c-video-player-credits__text" v-html="data?.duration"></p>
           </li>
-          <li class="c-video-player-credits__item">
+          <li class="c-video-player-credits__item" v-if="data?.genre">
             <span class="o-button -has-white-outline">Genre</span>
-            <p class="c-video-player-credits__text" v-html="data.genre"></p>
+            <p class="c-video-player-credits__text" v-html="data?.genre"></p>
           </li>
-          <li class="c-video-player-credits__item">
+          <li class="c-video-player-credits__item" v-if="data?.credits?.realisation">
             <span class="o-button -has-white-outline">Réalisation</span>
-            <p class="c-video-player-credits__text" v-html="data.credits.realisation"></p>
+            <p class="c-video-player-credits__text" v-html="data?.credits?.realisation"></p>
           </li>
         </ul>
       </div>

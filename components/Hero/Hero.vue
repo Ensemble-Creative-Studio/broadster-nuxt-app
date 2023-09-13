@@ -33,6 +33,7 @@ const props = defineProps({
   height: 100svh;
   width: 100%;
   position: relative;
+  user-select: none;
   $self: &;
   @include mq($until: tablet) {
     height: 75svh;
