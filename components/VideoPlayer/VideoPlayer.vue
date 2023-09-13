@@ -103,11 +103,15 @@ watch(
 
 onMounted(() => {
   onTogglePlayClick()
+
+  // prevent user from scrolling page
+  document.body.style.overflow = 'hidden'
 }),
 
 onBeforeUnmount(() => {
   window.cancelAnimationFrame(raf)
   $video.value = null
+  document.body.style.overflow = 'auto'
 })
 </script>
 
@@ -190,7 +194,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .c-video-player {
   pointer-events: none;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   position: fixed;
   background-color: $black;

@@ -48,7 +48,7 @@ const props = defineProps({
     }
   }
   &__title {
-    margin-top: 32rem;
+    margin-top: 28rem;
     @include mq($until: medium) {
       margin-top: 21rem;
     }
@@ -73,6 +73,10 @@ const props = defineProps({
         max-width: 100%;
         max-height: initial;
         height: auto;
+      }
+      margin-top: 21rem;
+      @include mq($until: tablet) {
+        margin-top: 12rem;
       }
     }
   }

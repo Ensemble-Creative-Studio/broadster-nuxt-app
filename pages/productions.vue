@@ -38,7 +38,7 @@ const { data: productions } = useSanityQuery(query)
 
 <template>
   <div class="l-productions">
-    <Hero title="Productions" class="l-productions__hero" />
+    <Hero title="Productions" />
     <ProductionsSection
       v-for="section in productions?.sections"
       :section="section"
@@ -47,14 +47,3 @@ const { data: productions } = useSanityQuery(query)
     />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.l-productions {
-  &__hero {
-    margin-bottom: 32rem;
-    @include mq($until: tablet) {
-      margin-bottom: 12rem;
-    }
-  }
-}
-</style>
