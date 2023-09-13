@@ -1,11 +1,29 @@
 <script setup>
 const props = defineProps({
-  index: {
-    type: Number,
-  },
   featuredFilms: {
     type: Array,
   },
+})
+
+const index = ref(0)
+let interval
+
+function incrementIndex() {
+  index.value = (index.value + 1) % props.featuredFilms?.length
+}
+
+onMounted(() => {
+  interval = setInterval(() => {
+    const previousIndex = computed(() => {
+      return index.value - 1 < 0 ? props.featuredFilms?.length - 1 : index.value - 1
+    })
+
+    index.value = (index.value + 1) % props.featuredFilms?.length
+  }, 3000)
+})
+
+onUnmounted(() => {
+  clearInterval(interval)
 })
 
 // TODO - Calculate the desired height for container
@@ -19,6 +37,7 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
       class="c-slideshow-video"
       v-for="(item, i) in featuredFilms"
       :class="[modifiers[index], i === index ? '-is-visible' : '']"
+      @click="incrementIndex"
     >
       <video
         class="c-slideshow-video__source"

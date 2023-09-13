@@ -55,7 +55,7 @@ const props = defineProps({
     margin-top: 1.2rem;
   }
   &-block {
-    background-color: $bright-grey;
+    background-color: $very-dark;
     height: 63.9rem;
     border-radius: 0.4rem;
     overflow: hidden;
