@@ -5,7 +5,6 @@ import 'swiper/css'
 const props = defineProps({
   section: {
     type: Object,
-    required: true,
   },
 })
 </script>
@@ -25,7 +24,7 @@ const props = defineProps({
             640: {
               slidesPerView: 2.1,
             },
-            992: {
+            768: {
               slidesPerView: 2.5,
             },
           }"
@@ -54,7 +53,6 @@ const props = defineProps({
     }
   }
   &__slider {
-    display: flex;
     margin-top: 2.4rem;
   }
   &__film {
