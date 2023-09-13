@@ -178,6 +178,10 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
       opacity: 0;
       visibility: hidden;
       transform: translateY(5rem);
+      @include mq($until: medium) {
+        left: 1.2rem;
+        bottom: 1.2rem;
+      }
       &.-is-visible {
         opacity: 1;
         visibility: visible;

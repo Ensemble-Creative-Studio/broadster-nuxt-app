@@ -36,6 +36,9 @@ const slugs = [
   }
   &__card {
     grid-column: auto / span 4;
+    @include mq($until: tablet) {
+      grid-column: auto / span 12;
+    }
   }
 }
 </style>

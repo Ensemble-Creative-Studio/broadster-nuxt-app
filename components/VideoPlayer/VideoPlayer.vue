@@ -107,12 +107,11 @@ onMounted(() => {
   // prevent user from scrolling page
   document.body.style.overflow = 'hidden'
 }),
-
-onBeforeUnmount(() => {
-  window.cancelAnimationFrame(raf)
-  $video.value = null
-  document.body.style.overflow = 'auto'
-})
+  onBeforeUnmount(() => {
+    window.cancelAnimationFrame(raf)
+    $video.value = null
+    document.body.style.overflow = 'auto'
+  })
 </script>
 
 <template>
@@ -122,10 +121,7 @@ onBeforeUnmount(() => {
       '-is-open': isVideoPlayerOpen,
     }"
   >
-    <VideoPlayerCredits
-      v-show="isCreditsOpen"
-      :data="currentFilm"
-    />
+    <VideoPlayerCredits v-show="isCreditsOpen" :data="currentFilm" />
     <button
       class="c-video-player-credits-button o-button -has-dark-grey-background"
       @click="onToggleCreditsClick"
@@ -139,12 +135,12 @@ onBeforeUnmount(() => {
     >
       Close
     </button>
-    <div class="c-video-player__thumbnail"></div>
     <video
       ref="$video"
       :src="currentFilm?.videoUrl"
       class="c-video-player__video"
       playsinline
+      @click="onTogglePlayClick"
       @loadeddata="onVideoLoadedData"
       @timeupdate="onVideoTimeUpdate"
       @ended="onVideoEnded"
@@ -154,10 +150,13 @@ onBeforeUnmount(() => {
         <button class="o-button -has-dark-grey-background" @click="onTogglePlayClick">
           <span v-html="isPlaying ? 'Pause' : 'Play'"></span>
         </button>
-        <button :class="['o-button -has-dark-grey-background']" @click="onMuteClick">
+        <button class="o-button -has-dark-grey-background" @click="onMuteClick">
           <span v-html="isMuted ? 'Unmute' : 'Mute'"></span>
         </button>
-        <button :class="['o-button -has-dark-grey-background']" @click="onFullscreenClick">
+        <button
+          class="c-video-player-controls__fullscreen o-button -has-dark-grey-background"
+          @click="onFullscreenClick"
+        >
           <span v-html="isFullscreen ? 'Exit' : 'Fullscreen'"></span>
         </button>
       </div>
@@ -214,14 +213,22 @@ onBeforeUnmount(() => {
     position: absolute;
     top: 2.4rem;
     z-index: 10;
+    @include mq($until: tablet) {
+      top: 1.2rem;
+    }
   }
   &-credits-button {
     left: 2.4rem;
+    @include mq($until: tablet) {
+      left: 1.2rem;
+    }
   }
   &-close-button {
     right: 2.4rem;
+    @include mq($until: tablet) {
+      right: 1.2rem;
+    }
   }
-  &__thumbnail,
   &__video {
     position: absolute;
     top: 0;
@@ -229,6 +236,7 @@ onBeforeUnmount(() => {
     width: 100%;
     height: 100%;
     height: 100%;
+    object-fit: contain;
   }
   &__thumbnail {
     z-index: -1;
@@ -244,20 +252,47 @@ onBeforeUnmount(() => {
     padding: 2.4rem;
     display: flex;
     align-items: center;
+    @include mq($until: medium) {
+      padding: 1.2rem;
+      flex-wrap: wrap;
+    }
     &__buttons {
+      @include mq($until: medium) {
+        order: 2;
+        margin-top: 2.4rem;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
       & > *:not(:last-child) {
         margin-right: 1.2rem;
+        @include mq($until: medium) {
+          margin-right: 0rem;
+        }
+      }
+    }
+    &__fullscreen {
+      @include mq($until: medium) {
+        display: none;
       }
     }
     &__time {
       flex: auto;
       margin-left: 1.2rem;
       position: relative;
+      @include mq($until: medium) {
+        order: 1;
+        flex: 100%;
+        margin-left: 0;
+      }
     }
     &__duration {
       font-size: 1.2rem;
       color: $white;
       margin-bottom: 2.1rem;
+      @include mq($until: medium) {
+        margin-bottom: 0rem;
+      }
       &.-is-total {
         color: $medium-grey;
         margin-left: 0.6rem;

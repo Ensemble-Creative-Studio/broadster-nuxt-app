@@ -49,17 +49,29 @@ const props = defineProps({
   padding-top: 20rem;
   background-color: rgba($black, 0.8);
   color: $white;
+  @include mq($until: tablet) {
+    padding-top: 6rem;
+  }
   &__grid {
     @include grid(12, 1.2rem, 1.2rem);
+    @include mq($until: tablet) {
+      row-gap: 2.4rem;
+    }
   }
   &__title,
   &__description,
   &__details {
     grid-column: 1 / span 4;
+    @include mq($until: tablet) {
+      grid-column: 1 / span 12;
+    }
   }
   &__description,
   &__details {
     margin-top: 3.7rem;
+    @include mq($until: tablet) {
+      margin-top: 0;
+    }
   }
   &__item {
     display: flex;

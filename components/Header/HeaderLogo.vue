@@ -75,16 +75,17 @@
 .c-header-logo {
   display: flex;
   align-items: center;
+  height: 100%;
   &__picto {
     margin-right: 1.2rem;
     @include mq($until: tablet) {
       margin-right: 0.6rem;
-      width: 2rem;
+      width: 2.5rem;
     }
   }
   &__typeface {
     @include mq($until: tablet) {
-      width: 7rem;
+      width: 8rem;
     }
   }
 }
