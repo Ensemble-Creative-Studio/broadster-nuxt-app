@@ -150,6 +150,10 @@ function onClick() {
     position: relative;
     height: 100%;
     width: 100%;
+    aspect-ratio: 66 / 43.5;
+    @include mq($until: medium) {
+      aspect-ratio: 3 / 2;
+    }
   }
   &__overlay,
   &__thumbnail,
