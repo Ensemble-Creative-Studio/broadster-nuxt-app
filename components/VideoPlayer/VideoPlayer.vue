@@ -1,7 +1,5 @@
 <script setup>
-// TODO - Handle fullscreen
-// import { useFullscreen } from '@vueuse/core'
-// const { isFullscreen, enter, exit, toggle } = useFullscreen()
+import { useFullscreen } from '@vueuse/core'
 
 const currentFilm = useState('currentFilm')
 const isVideoPlayerOpen = useState('isVideoPlayerOpen', () => false)
@@ -39,8 +37,11 @@ function onMuteClick() {
   isMuted.value = !isMuted.value
 }
 
+const { toggle, exit } = useFullscreen($video)
+
 function onFullscreenClick() {
   isFullscreen.value = !isFullscreen.value
+  toggle()
 }
 
 function onUpdate() {
@@ -103,8 +104,6 @@ watch(
 
 onMounted(() => {
   onTogglePlayClick()
-
-  // prevent user from scrolling page
   document.body.style.overflow = 'hidden'
 }),
   onBeforeUnmount(() => {
