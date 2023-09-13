@@ -2,7 +2,6 @@
 const props = defineProps({
   data: {
     type: Object,
-    required: true,
   },
 })
 </script>
@@ -10,11 +9,11 @@ const props = defineProps({
 <template>
   <div class="c-infos-numbers-card">
     <div class="c-infos-numbers-card__thumbnail">
-      <video :src="data.videoUrl" alt="" muted loop autoplay playsinline></video>
+      <video :src="data?.videoUrl" alt="" muted loop autoplay playsinline></video>
     </div>
     <footer>
-      <h3 class="o-section-title">{{ data.number }}</h3>
-      <p class="c-infos-numbers-card__text o-title">{{ data.text }}</p>
+      <h3 class="o-section-title">{{ data?.number }}</h3>
+      <p class="c-infos-numbers-card__text o-title">{{ data?.text }}</p>
     </footer>
   </div>
 </template>

@@ -1,68 +1,57 @@
 <script setup>
-const query = groq`*[_type == "home"][0]
-  {
-    featuredFilms[]{
-      film->{
-        categories[]->{
-          title,
-        },
-        title,
-        shortDescription,
-        fullDescription,
-        loopUrl,
-      },
-      baseline,
-    },
-  }
-`
+const props = defineProps({
+  index: {
+    type: Number,
+  },
+  featuredFilms: {
+    type: Array,
+  },
+})
 
-const { data: home } = useSanityQuery(query)
-
-const index = ref(0)
-
-// Calculate the desired height for container
+// TODO - Calculate the desired height for container
 const aspectRatios = [1.73, 2.25, 0.6]
 const modifiers = ['-is-small', '-is-medium', '-is-large']
-
-let interval
-
-onMounted(() => {
-  interval = setInterval(() => {
-    const previousIndex = computed(() => {
-      return index.value - 1 < 0 ? home.value?.featuredFilms?.length - 1 : index.value - 1
-    })
-
-    index.value = (index.value + 1) % home.value?.featuredFilms?.length
-  }, 2500)
-})
-
-onUnmounted(() => {
-  clearInterval(interval)
-})
 </script>
 
 <template>
   <div class="c-slideshow">
-    <div class="c-slideshow-video" :class="modifiers[index]">
+    <div
+      class="c-slideshow-video"
+      v-for="(item, i) in featuredFilms"
+      :class="[modifiers[index], i === index ? '-is-visible' : '']"
+    >
       <video
-        v-for="(item, i) in home?.featuredFilms"
         class="c-slideshow-video__source"
-        :class="i === index ? '-is-visible' : ''"
-        :src="item.film.loopUrl"
+        :src="item?.film?.loopUrl"
         autoplay
         muted
         loop
         playsinline
       ></video>
+      <div class="c-slideshow-video__meta" v-if="item?.film?.categories">
+        <h3 class="c-slideshow-video__title o-thumbnail-title">{{ item?.film?.title }}</h3>
+        <footer class="c-slideshow-video__footer">
+          <span
+            class="o-button -has-dark-grey-background"
+            v-for="category in item?.film?.categories"
+          >
+            {{ category.title }}
+          </span>
+          <span class="o-button -has-dark-grey-background" v-if="item?.film?.duration">
+            {{ item.film?.duration }}
+          </span>
+        </footer>
+      </div>
     </div>
     <footer class="c-slideshow-footer">
       <h2
-        v-for="(item, i) in home?.featuredFilms"
+        v-for="(item, i) in featuredFilms"
         class="c-slideshow-footer__baseline o-title"
+        :class="[modifiers[index], i === index ? '-is-visible' : '']"
         ref="$baselines"
         :key="i"
       >
-        {{ item.film.baseline }}
+        {{ item.baseline }}
       </h2>
     </footer>
   </div>
@@ -73,18 +62,27 @@ onUnmounted(() => {
   height: 100svh;
   position: relative;
   &-video {
+    cursor: pointer;
+    user-select: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 1.2rem;
+    border-radius: 0.4rem;
     overflow: hidden;
     transform-origin: center;
     transition: cubic-bezier(0.215, 0.61, 0.355, 1) 1.5s;
     height: auto;
-    transition-property: height, width;
+    transition-property: opacity, visibility, height, width;
+    opacity: 0;
+    visibility: hidden;
+
+    &.-is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
     &.-is-small {
-      width: 15vw;
+      width: 35vw;
       height: 45rem;
     }
     &.-is-medium {
@@ -102,25 +100,94 @@ onUnmounted(() => {
       position: absolute;
       top: 0;
       left: 0;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 1.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-      &.-is-visible {
-        opacity: 1;
-        visibility: visible;
+    }
+    &__meta {
+      position: absolute;
+      bottom: 3.6rem;
+      left: 3.6rem;
+      width: calc(100% - 6.4rem);
+      @include mq($until: medium) {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        flex: 2;
+        width: 100%;
+      }
+    }
+    &__title,
+    &__description {
+      color: $white;
+      @include mq($until: medium) {
+        color: $black;
+      }
+    }
+    &__title {
+      max-width: 35ch;
+      @include mq($until: medium) {
+        order: 2;
+        margin-top: 1rem;
+        max-width: 100%;
+      }
+    }
+    &__footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      margin-top: 1.8rem;
+      @include mq($until: medium) {
+        order: 1;
+        margin-top: 0;
+      }
+      & > * {
+        @include mq($until: medium) {
+          margin-top: 0.5rem;
+        }
+      }
+      & > *:not(:last-child) {
+        margin-right: 1rem;
+        @include mq($until: medium) {
+          margin-right: 0.5rem;
+        }
       }
     }
   }
   &-footer {
+    user-select: none;
     &__baseline {
-      max-width: 75vw;
+      max-width: 40ch;
       position: absolute;
       left: 2.4rem;
       bottom: 2.4rem;
       opacity: 0;
-      transform: translateY(50px);
-      transition: ease-in-out 1s;
+      visibility: hidden;
+      transform: translateY(5rem);
+      &.-is-visible {
+        opacity: 1;
+        visibility: visible;
+        animation: fadeInAndOut 3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+      }
     }
+  }
+}
+
+@keyframes fadeInAndOut {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  30% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  95% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-15px);
+    opacity: 0;
   }
 }
 </style>

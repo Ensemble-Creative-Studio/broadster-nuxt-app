@@ -73,7 +73,7 @@ const props = defineProps({
   &-block {
     background-color: $bright-grey;
     height: 63.9rem;
-    border-radius: 0.8rem;
+    border-radius: 0.4rem;
     overflow: hidden;
     @include mq($until: desktop) {
       height: auto;

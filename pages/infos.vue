@@ -4,7 +4,7 @@ const query = groq`*[_type == "infos"][0]
     title,
     videoUrl,
     placeholderImage,
-    //TODO: rename sections to blocks in Sanity
+    // TODO - Rename sections to blocks in Sanity
     sections,
     history[],
     clients[]

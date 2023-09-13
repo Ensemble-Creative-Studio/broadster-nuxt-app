@@ -37,10 +37,6 @@ function onClick() {
   isVideoPlayerOpen.value = true
   currentFilm.value = props.film
 }
-
-onMounted(() => {
-  console.log($filmMeta.value.clientHeight)
-})
 </script>
 
 <template>
@@ -73,11 +69,19 @@ onMounted(() => {
         class="c-film__meta"
         :style="{
           transform:
-            isHovered && !isFeatured ? `translateY(calc(100% - ${$filmMeta?.clientHeight}px))` : '',
+            isHovered && !isFeatured && $filmMeta?.clientHeight
+              ? `translateY(calc(100% - ${$filmMeta?.clientHeight}px))`
+              : !isHovered && isFeatured
+              ? `translateY(0%)`
+              : `translateY(100%)`,
         }"
       >
         <h3 class="c-film__title o-thumbnail-title">{{ film.title }}</h3>
-        <p class="c-film__description" v-html="film.shortDescription"></p>
+        <p
+          class="c-film__description"
+          v-if="film.shortDescription"
+          v-html="film.shortDescription"
+        ></p>
         <footer class="c-film__footer">
           <button
             class="c-film-play-button o-button -has-white-background -has-icon"
@@ -94,10 +98,14 @@ onMounted(() => {
             </svg>
             <span class="c-film-play-button__text">Play</span>
           </button>
-          <span class="o-button -has-dark-grey-background" v-for="category in film.categories">
+          <span
+            class="o-button -has-dark-grey-background"
+            v-for="category in film.categories"
+            v-if="film.categories"
+          >
             {{ category.title }}
           </span>
-          <span class="o-button -has-dark-grey-background">
+          <span class="o-button -has-dark-grey-background" v-if="film.duration">
             {{ film.duration }}
           </span>
         </footer>
@@ -136,6 +144,7 @@ onMounted(() => {
     height: 100%;
   }
   &__video {
+    background-color: $very-dark;
     @include mq($until: medium) {
       position: relative;
       flex: 1;

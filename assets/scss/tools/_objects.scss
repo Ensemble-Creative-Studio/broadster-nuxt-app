@@ -39,7 +39,7 @@
   @include mq($until: desktop) {
     font-size: 2rem;
   }
-  //TODO: double check this
+  // TODO - Double check this
   @include mq($until: mobile) {
     font-size: 1.6rem;
   }

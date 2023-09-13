@@ -1,5 +1,5 @@
 <script setup>
-// TODO: handle fullscreen
+// TODO - Handle fullscreen
 // import { useFullscreen } from '@vueuse/core'
 // const { isFullscreen, enter, exit, toggle } = useFullscreen()
 

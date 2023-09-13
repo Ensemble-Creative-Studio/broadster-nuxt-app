@@ -39,7 +39,7 @@ const props = defineProps({
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
-    border-radius: 1.2rem;
+    border-radius: 0.4rem;
     overflow: hidden;
     aspect-ratio: 1 / 1;
     height: min(60vw, 40rem);

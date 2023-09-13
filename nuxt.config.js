@@ -3,6 +3,20 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ['@nuxtjs/sanity', '@vueuse/nuxt', 'nuxt-lazy-load'],
+  lazyLoad: {
+    // These are the default values
+    images: true,
+    videos: true,
+    audios: true,
+    iframes: true,
+    native: false,
+    directiveOnly: false,
+
+    // To remove class set value to false
+    loadingClass: '-is-loading',
+    loadedClass: '-is-loaded',
+    appendClass: '-has-lazy-load',
+  },
   sanity: {
     projectId: '47htvf4t',
     dataset: 'production',

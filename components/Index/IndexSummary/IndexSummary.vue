@@ -1,17 +1,14 @@
 <script setup>
-const blocks = [
-  {
-    title: 'Productions',
-    slug: 'productions',
+const props = defineProps({
+  links: {
+    type: Array,
   },
-  {
-    title: 'Services',
-    slug: 'services',
-  },
-  {
-    title: 'À propos',
-    slug: 'infos',
-  },
+})
+
+const slugs = [
+  'productions',
+  'services',
+  'infos',
 ]
 </script>
 
@@ -19,9 +16,9 @@ const blocks = [
   <div class="c-index-summary">
     <div class="c-index-summary__grid u-wrapper">
       <IndexSummaryCard
-        v-for="(block, i) in blocks"
-        :title="block.title"
-        :slug="block.slug"
+        v-for="(link, i) in links"
+        :data="link"
+        :slug="slugs[i]"
         class="c-index-summary__card"
         :key="i"
       />

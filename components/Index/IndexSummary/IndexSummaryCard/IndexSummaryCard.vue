@@ -1,8 +1,7 @@
 <script setup>
 const props = defineProps({
-  title: {
-    type: String,
-    default: 'Index Summary Title',
+  data: {
+    type: Object,
   },
   slug: {
     type: String,
@@ -13,16 +12,9 @@ const props = defineProps({
 
 <template>
   <NuxtLink :to="slug" class="c-index-summary-card">
-    <h2 class="o-title">{{ $props.title }}</h2>
+    <h2 class="o-title">{{ data.title }}</h2>
     <div class="c-index-summary-card__thumbnail">
-      <video
-        src="https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a"
-        alt=""
-        muted
-        loop
-        autoplay
-        playsinline
-      />
+      <video :src="data.videoUrl" alt="" muted loop autoplay playsinline></video>
     </div>
   </NuxtLink>
 </template>
