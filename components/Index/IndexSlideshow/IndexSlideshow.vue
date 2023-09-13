@@ -103,14 +103,26 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
     &.-is-small {
       width: 35vw;
       height: 45rem;
+      @include mq($until: tablet) {
+        width: 70vw;
+        height: 50vw;
+      }
     }
     &.-is-medium {
       width: 35vw;
       height: 40rem;
+      @include mq($until: tablet) {
+        width: 95vw;
+        height: 60vw;
+      }
     }
     &.-is-large {
       width: 55vw;
       height: 55rem;
+      @include mq($until: tablet) {
+        width: 60vw;
+        height: 100vw;
+      }
     }
     &__source {
       width: 100%;
@@ -126,29 +138,14 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
       left: 3.6rem;
       width: calc(100% - 6.4rem);
       @include mq($until: medium) {
-        position: relative;
-        bottom: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        flex: 2;
+        bottom: 1rem;
+        left: 1rem;
         width: 100%;
-      }
-    }
-    &__title,
-    &__description {
-      color: $white;
-      @include mq($until: medium) {
-        color: $black;
       }
     }
     &__title {
       max-width: 35ch;
-      @include mq($until: medium) {
-        order: 2;
-        margin-top: 1rem;
-        max-width: 100%;
-      }
+      color: $white;
     }
     &__footer {
       display: flex;
@@ -156,8 +153,7 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
       align-items: stretch;
       margin-top: 1.8rem;
       @include mq($until: medium) {
-        order: 1;
-        margin-top: 0;
+        margin-top: 0.5rem;
       }
       & > * {
         @include mq($until: medium) {
