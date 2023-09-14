@@ -25,6 +25,8 @@
   position: fixed;
   width: 100%;
   z-index: 10;
+  animation: fadeIn 0.5s 1s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  opacity: 0;
   @include mq($until: tablet) {
     padding: 1.2rem 0;
   }
@@ -47,6 +49,14 @@
         margin-left: 0.8rem;
       }
     }
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>

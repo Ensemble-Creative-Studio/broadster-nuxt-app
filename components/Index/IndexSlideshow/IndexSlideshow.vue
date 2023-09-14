@@ -90,7 +90,7 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
     border-radius: 0.4rem;
     overflow: hidden;
     transform-origin: center;
-    transition: cubic-bezier(0.215, 0.61, 0.355, 1) 1.5s;
+    transition: 1s cubic-bezier(0.215, 0.61, 0.355, 1);
     height: auto;
     transition-property: opacity, visibility, height, width;
     opacity: 0;
@@ -102,23 +102,23 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
     }
     &.-is-small {
       width: 35vw;
-      height: 45rem;
+      height: 45vh;
       @include mq($until: tablet) {
         width: 70vw;
         height: 50vw;
       }
     }
     &.-is-medium {
-      width: 35vw;
-      height: 40rem;
+      width: 45vw;
+      height: 45vh;
       @include mq($until: tablet) {
         width: 95vw;
-        height: 60vw;
+        height: 50vw;
       }
     }
     &.-is-large {
-      width: 55vw;
-      height: 55rem;
+      width: 50vw;
+      height: 55vh;
       @include mq($until: tablet) {
         width: 60vw;
         height: 100vw;
