@@ -13,12 +13,12 @@ function incrementIndex() {
 }
 
 onMounted(() => {
-  interval = setInterval(() => {
-    const previousIndex = computed(() => {
-      return index.value - 1 < 0 ? props.featuredFilms?.length - 1 : index.value - 1
-    })
-    index.value = (index.value + 1) % props.featuredFilms?.length
-  }, 3000)
+  // interval = setInterval(() => {
+  //   const previousIndex = computed(() => {
+  //     return index.value - 1 < 0 ? props.featuredFilms?.length - 1 : index.value - 1
+  //   })
+  //   index.value = (index.value + 1) % props.featuredFilms?.length
+  // }, 3000)
 })
 
 onUnmounted(() => {
@@ -111,16 +111,16 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
       width: 30vw;
       height: 23vw;
       @include mq($until: tablet) {
-        width: 60vw;
-        height: 45vw;
+        width: 70vw;
+        height: 53vw;
       }
     }
     &.-is-wide {
       width: 50vw;
       height: 28vw;
       @include mq($until: tablet) {
-        width: 80vw;
-        height: 45vw;
+        width: 90vw;
+        height: 51vw;
       }
     }
     &__source {
@@ -143,7 +143,6 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
       @include mq($until: medium) {
         bottom: 1rem;
         left: 1rem;
-        width: 100%;
       }
     }
     &__title {
