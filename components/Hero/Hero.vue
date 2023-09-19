@@ -52,16 +52,17 @@ const props = defineProps({
     z-index: -1;
     border-radius: 0.4rem;
     overflow: hidden;
-    height: min(60vw, 40rem);
-    width: auto;
     #{$self}.-is-productions & {
       aspect-ratio: 16 / 9;
+      height: min(50vw, 40rem);
     }
     #{$self}.-is-services & {
       aspect-ratio: 4 / 3;
+      height: min(60vw, 40rem);
     }
     #{$self}.-is-infos & {
       aspect-ratio: 9 / 16;
+      height: min(80vw, 40rem);
     }
   }
 }

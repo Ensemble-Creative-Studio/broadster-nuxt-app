@@ -76,6 +76,9 @@ const props = defineProps({
         grid-column: auto / span 12;
         order: 2;
       }
+      @include mq($until: mobile) {
+        aspect-ratio: 4 / 3;
+      }
     }
     &.-has-big-text {
       grid-column: auto / span 6;
