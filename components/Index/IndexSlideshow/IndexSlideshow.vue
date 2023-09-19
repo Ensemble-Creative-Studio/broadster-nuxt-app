@@ -27,8 +27,8 @@ onUnmounted(() => {
 })
 
 // TODO - Calculate the desired height for container
-const aspectRatios = [1.73, 2.25, 0.6]
-const modifiers = ['-is-small', '-is-medium', '-is-large']
+const aspectRatios = [1.77, 2.25, 0.6]
+const modifiers = ['-is-wide', '-is-square', '-is-mobile']
 </script>
 
 <template>
@@ -86,7 +86,7 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -60%);
     border-radius: 0.4rem;
     overflow: hidden;
     transform-origin: center;
@@ -100,29 +100,29 @@ const modifiers = ['-is-small', '-is-medium', '-is-large']
       opacity: 1;
       visibility: visible;
     }
-    &.-is-small {
-      width: 35vw;
-      height: 45vh;
-      @include mq($until: tablet) {
-        width: 70vw;
-        height: 50vw;
-      }
+    &.-is-mobile {
+      width: 17vw;
+      height: 30vw;
+      // @include mq($until: tablet) {
+      //   width: 70vw;
+      //   height: 50vw;
+      // }
     }
-    &.-is-medium {
-      width: 45vw;
-      height: 45vh;
-      @include mq($until: tablet) {
-        width: 95vw;
-        height: 50vw;
-      }
+    &.-is-square {
+      width: 30vw;
+      height: 23vw;
+      // @include mq($until: tablet) {
+      //   width: 95vw;
+      //   height: 50vw;
+      // }
     }
-    &.-is-large {
+    &.-is-wide {
       width: 50vw;
-      height: 55vh;
-      @include mq($until: tablet) {
-        width: 60vw;
-        height: 100vw;
-      }
+      height: 28vw;
+      // @include mq($until: tablet) {
+      //   width: 60vw;
+      //   height: 100vw;
+      // }
     }
     &__source {
       width: 100%;

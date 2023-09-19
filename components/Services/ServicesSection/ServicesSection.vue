@@ -26,7 +26,7 @@ const props = defineProps({
         <div class="c-services-section-block -has-small-video">
           <video
             class="c-services-section__source"
-            src="https://player.vimeo.com/progressive_redirect/playback/847355973/rendition/1080p/file.mp4?loc=external&signature=47ac414eb6ae8d2f123245b4ecc0d7e2d758146fdb1377231d8ab55be0ccfca7"
+            :src="section.video1.url"
             autoplay
             muted
             loop
@@ -50,7 +50,7 @@ const props = defineProps({
         <div class="c-services-section-block -has-big-video">
           <video
             class="c-services-section__source"
-            src="https://player.vimeo.com/progressive_redirect/playback/847356020/rendition/1080p/file.mp4?loc=external&signature=f4a64de90b8b76b1fc7c07b9518235626e948b27bbe8e8e869db69e3056cbb1a"
+            :src="section.video2.url"
             autoplay
             muted
             loop
