@@ -5,7 +5,7 @@
   font-weight: $fw-medium;
   user-select: none;
   @include mq($until: wide) {
-    font-size: calc(1rem + 2.5vw);
+    font-size: max(3.2rem, calc(1rem + 2.5vw));
   }
   @include mq($until: desktop) {
     font-size: 3.2rem;
@@ -21,7 +21,7 @@
   font-weight: $fw-medium;
   user-select: none;
   @include mq($until: wide) {
-    font-size: calc(1rem + 8vw);
+    font-size: max(10rem, calc(1rem + 8vw));
   }
   @include mq($until: medium) {
     font-size: 10rem;
@@ -40,7 +40,7 @@
   font-weight: $fw-medium;
   user-select: none;
   @include mq($until: wide) {
-    font-size: calc(1rem + 1.5vw);
+    font-size: max(2.4rem, calc(1rem + 1.5vw));
   }
   @include mq($until: medium) {
     font-size: 2.4rem;
