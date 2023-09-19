@@ -32,14 +32,14 @@ watch(
         immediate: true,
       })
 
-      if (
-        value === '/' ||
-        value === '/productions' ||
-        value === '/services' ||
-        value === '/infos'
-      ) {
-        lenisRef.value.stop()
-      }
+      // if (
+      //   value === '/' ||
+      //   value === '/productions' ||
+      //   value === '/services' ||
+      //   value === '/infos'
+      // ) {
+      //   lenisRef.value.stop()
+      // }
     }
   }
 )
