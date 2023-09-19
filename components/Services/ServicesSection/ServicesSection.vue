@@ -26,7 +26,7 @@ const props = defineProps({
         <div class="c-services-section-block -has-small-video">
           <video
             class="c-services-section__source"
-            :src="section.video1.url"
+            :src="section?.video1?.url"
             autoplay
             muted
             loop
@@ -50,7 +50,7 @@ const props = defineProps({
         <div class="c-services-section-block -has-big-video">
           <video
             class="c-services-section__source"
-            :src="section.video2.url"
+            :src="section?.video2?.url"
             autoplay
             muted
             loop
