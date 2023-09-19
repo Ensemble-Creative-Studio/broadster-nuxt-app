@@ -1,22 +1,40 @@
+<script setup>
+const query = groq`*[_type == "footer"][0]
+  {
+    title,
+    mail,
+    socials[]
+  }
+`
+
+const { data: footer } = useSanityQuery(query)
+</script>
+
 <template>
   <footer class="c-footer">
     <div class="c-footer__container u-wrapper">
       <div class="c-footer-row">
         <ul>
-          <li>Contact@broadster.fr</li>
+          <li>
+            <a :href="`mailto:${footer.mail}`">{{ footer.mail }}</a>
+          </li>
         </ul>
       </div>
       <div class="c-footer-row">
         <ul>
-          <li>Linkedin</li>
-          <li>Instagram</li>
-          <li>Facebook</li>
+          <li v-for="(item, i) in footer.socials">
+            <a :href="item.url" target="_blank">{{ item.title }}</a>
+          </li>
         </ul>
       </div>
       <div class="c-footer-row">
         <ul>
-          <li>Mentions Légales</li>
-          <li>Politique de confidentialité</li>
+          <li>
+            <NuxtLink to="/mentions-legales"> Mentions Légales </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/politique-de-confidentialite"> Politique de confidentialité </NuxtLink>
+          </li>
         </ul>
       </div>
     </div>

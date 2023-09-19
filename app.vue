@@ -1,38 +1,48 @@
 <script setup>
+import { ref } from 'vue'
 import Lenis from '@studio-freight/lenis'
 const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
 
-let lenis
-let raf
+let lenisRef = ref(null) // Use a ref to store lenis
 
 const initLenis = () => {
-  lenis = new Lenis()
+  const lenis = new Lenis()
 
-  raf = (time) => {
+  const raf = (time) => {
     lenis.raf(time)
     requestAnimationFrame(raf)
   }
   requestAnimationFrame(raf)
+
+  lenisRef.value = lenis // Assign lenis to the ref
 }
 
-onMounted(() => {
+provide('lenisCtx', lenisRef) // Provide the ref
+
+onBeforeMount(() => {
   initLenis()
 })
 
 watch(
   () => route.fullPath,
-  () => {
-    lenis.scrollTo(0, {
-      immediate: true,
-    })
+  (value) => {
+    if (lenisRef.value) {
+      lenisRef.value.scrollTo(0, {
+        immediate: true,
+      })
+
+      if (
+        value === '/' ||
+        value === '/productions' ||
+        value === '/services' ||
+        value === '/infos'
+      ) {
+        lenisRef.value.stop()
+      }
+    }
   }
 )
-
-onBeforeUnmount(() => {
-  lenis.destroy()
-  cancelAnimationFrame(raf)
-})
 </script>
 
 <template>
@@ -46,7 +56,7 @@ onBeforeUnmount(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s cubic-bezier(0.215, 0.61, 0.355, 1),

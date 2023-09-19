@@ -54,6 +54,9 @@ const props = defineProps({
   }
   &__slider {
     margin-top: 2.4rem;
+    .swiper {
+      overflow: visible !important;
+    }
   }
   &__film {
     aspect-ratio: 6 / 4;
