@@ -10,13 +10,21 @@ const props = defineProps({
   <div class="c-infos-section">
     <div class="c-infos-section__container u-wrapper">
       <div class="c-infos-section__grid">
-        <div class="c-infos-section-block -has-big-text">
-          <div>
+        <div class="c-infos-section-block -has-big-text -is-mobile">
+          <header class="c-infos-section-block__header">
             <h3 class="c-infos-section-block__title o-title">
               {{ blocks?.presentation?.quote }}
             </h3>
             <p class="c-infos-section-block__author" v-html="blocks?.presentation?.author"></p>
-          </div>
+          </header>
+        </div>
+        <div class="c-infos-section-block -has-big-text">
+          <header class="c-infos-section-block__header">
+            <h3 class="c-infos-section-block__title o-title">
+              {{ blocks?.presentation?.quote }}
+            </h3>
+            <p class="c-infos-section-block__author" v-html="blocks?.presentation?.author"></p>
+          </header>
           <footer class="c-infos-section-block__footer">
             <SanityContent :blocks="blocks?.presentation?.text" />
           </footer>
@@ -48,22 +56,25 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .c-infos-section {
-  $self: &;
   &__grid {
     @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;
     margin-top: 1.2rem;
   }
   &-block {
+    $block: &;
     background-color: $very-dark;
     height: 63.9rem;
     border-radius: 0.4rem;
     overflow: hidden;
+    @include mq($until: desktop) {
+      height: auto;
+    }
     &.-has-small-video {
       grid-column: auto / span 3;
       @include mq($until: desktop) {
         grid-column: auto / span 12;
-        height: auto;
+        order: 2;
       }
     }
     &.-has-big-text {
@@ -78,13 +89,23 @@ const props = defineProps({
       justify-content: space-between;
       @include mq($until: desktop) {
         grid-column: auto / span 12;
+        &:not(&.-is-mobile) {
+          order: 3;
+        }
       }
-      @include mq($until: tablet) {
-        padding: 1.2rem;
+      @include mq($until: mobile) {
+        font-size: 1.5rem;
+        line-height: 144%;
       }
       ::selection {
         background-color: $white;
         color: $black;
+      }
+      &.-is-mobile {
+        @include mq($from: desktop) {
+          display: none;
+          order: 1;
+        }
       }
     }
     &__title {
@@ -93,6 +114,13 @@ const props = defineProps({
     }
     &__author {
       margin-top: 2rem;
+    }
+    &__header {
+      #{$block}:not(.-is-mobile) & {
+        @include mq($until: desktop) {
+          display: none;
+        }
+      }
     }
     &__footer {
       max-width: 50ch;
