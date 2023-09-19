@@ -17,7 +17,6 @@ onMounted(() => {
     const previousIndex = computed(() => {
       return index.value - 1 < 0 ? props.featuredFilms?.length - 1 : index.value - 1
     })
-
     index.value = (index.value + 1) % props.featuredFilms?.length
   }, 3000)
 })
@@ -103,26 +102,26 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
     &.-is-mobile {
       width: 17vw;
       height: 30vw;
-      // @include mq($until: tablet) {
-      //   width: 70vw;
-      //   height: 50vw;
-      // }
+      @include mq($until: tablet) {
+        width: 50vw;
+        height: 89vw;
+      }
     }
     &.-is-square {
       width: 30vw;
       height: 23vw;
-      // @include mq($until: tablet) {
-      //   width: 95vw;
-      //   height: 50vw;
-      // }
+      @include mq($until: tablet) {
+        width: 60vw;
+        height: 45vw;
+      }
     }
     &.-is-wide {
       width: 50vw;
       height: 28vw;
-      // @include mq($until: tablet) {
-      //   width: 60vw;
-      //   height: 100vw;
-      // }
+      @include mq($until: tablet) {
+        width: 80vw;
+        height: 45vw;
+      }
     }
     &__source {
       width: 100%;
@@ -137,6 +136,10 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
       bottom: 3.6rem;
       left: 3.6rem;
       width: calc(100% - 6.4rem);
+      @include mq($until: large) {
+        bottom: 2.4rem;
+        left: 2.4rem;
+      }
       @include mq($until: medium) {
         bottom: 1rem;
         left: 1rem;
@@ -151,19 +154,23 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
       display: flex;
       flex-wrap: wrap;
       align-items: stretch;
-      margin-top: 1.8rem;
-      @include mq($until: medium) {
+      margin-top: 0.8rem;
+      @include mq($until: large) {
         margin-top: 0.5rem;
       }
+      @include mq($until: medium) {
+        margin-top: 0;
+      }
       & > * {
+        margin-top: 1rem;
         @include mq($until: medium) {
           margin-top: 0.5rem;
         }
-      }
-      & > *:not(:last-child) {
-        margin-right: 1rem;
-        @include mq($until: medium) {
-          margin-right: 0.5rem;
+        &:not(:last-child) {
+          margin-right: 1rem;
+          @include mq($until: medium) {
+            margin-right: 0.5rem;
+          }
         }
       }
     }
