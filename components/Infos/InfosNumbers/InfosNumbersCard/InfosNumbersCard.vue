@@ -30,6 +30,7 @@ const props = defineProps({
   justify-content: space-between;
   @include mq($until: tablet) {
     grid-column: auto / span 12;
+    padding: 1.2rem;
   }
   &__thumbnail {
     max-width: 26rem;

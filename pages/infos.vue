@@ -16,7 +16,7 @@ const { data: infos } = useSanityQuery(query)
 
 <template>
   <div class="l-infos">
-    <Hero title="Infos" :video="infos?.videoUrl" />
+    <Hero title="Infos" :video="infos?.videoUrl" scrollToTarget="l-infos__section" />
     <InfosSection :blocks="infos?.sections" class="l-infos__section" />
     <InfosNumbers :history="infos?.history" class="l-infos__numbers" />
     <InfosClients :clients="infos?.clients" class="l-infos__clients" />

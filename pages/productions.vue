@@ -2,6 +2,7 @@
 const query = groq`*[_type == "productions"][0]
   {
     title,
+    videoUrl,
     sections[]{
       ...,
       featuredFilm->{
@@ -40,7 +41,11 @@ const { data: productions } = useSanityQuery(query)
 
 <template>
   <div class="l-productions">
-    <Hero title="Productions" />
+    <Hero
+      title="Productions"
+      :video="productions?.videoUrl"
+      scrollToTarget="l-productions__section"
+    />
     <ProductionsSection
       v-for="section in productions?.sections"
       :section="section"

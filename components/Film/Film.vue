@@ -29,6 +29,7 @@ function onMouseOver() {
 function onMouseLeave() {
   if (!isFeatured.value) {
     $video.value.pause()
+    $video.value.currentTime = 0
     isHovered.value = false
   }
 }
@@ -203,7 +204,7 @@ function onClick() {
   }
   &__meta {
     position: absolute;
-    bottom: 3.6rem;
+    bottom: 3rem;
     left: 3.6rem;
     width: calc(100% - 6.4rem);
     @include mq($until: medium) {

@@ -7,6 +7,10 @@ const props = defineProps({
     type: Object,
   },
 })
+
+const hasEnoughFilms = computed(() => {
+  return props.section?.films?.length > 2
+})
 </script>
 
 <template>
@@ -21,15 +25,19 @@ const props = defineProps({
           :free-mode="true"
           :slides-per-view="1.1"
           :breakpoints="{
-            640: {
-              slidesPerView: 2.1,
-            },
             768: {
               slidesPerView: 2.5,
             },
           }"
         >
-          <SwiperSlide v-for="(film, i) in section.films" class="slider__item" :key="i">
+          <SwiperSlide
+            v-for="(film, i) in section.films"
+            class="slider__item"
+            :class="{
+              '-is-half': !hasEnoughFilms,
+            }"
+            :key="i"
+          >
             <Film :film="film" class="c-productions-section__film" />
           </SwiperSlide>
         </Swiper>
@@ -56,6 +64,16 @@ const props = defineProps({
     margin-top: 2.4rem;
     .swiper {
       overflow: visible !important;
+      @include mq($from: tablet) {
+        &-slide {
+          &.-is-half {
+            flex: 50% !important;
+            &:last-child {
+              margin-right: 0 !important;
+            }
+          }
+        }
+      }
     }
   }
   &__film {

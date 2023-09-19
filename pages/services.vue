@@ -15,7 +15,7 @@ const { data: services } = useSanityQuery(query)
 
 <template>
   <div class="l-services">
-    <Hero title="Services" :video="services?.videoUrl" />
+    <Hero title="Services" :video="services?.videoUrl" scrollToTarget="l-services__section" />
     <ServicesSection
       v-for="(section, i) in services?.sections"
       class="l-services__section"

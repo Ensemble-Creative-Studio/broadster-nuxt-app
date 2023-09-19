@@ -79,6 +79,9 @@ const props = defineProps({
       @include mq($until: desktop) {
         grid-column: auto / span 12;
       }
+      @include mq($until: tablet) {
+        padding: 1.2rem;
+      }
       ::selection {
         background-color: $white;
         color: $black;

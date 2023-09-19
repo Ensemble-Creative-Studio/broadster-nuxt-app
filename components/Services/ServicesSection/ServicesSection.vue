@@ -93,7 +93,7 @@ const props = defineProps({
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      @include mq($until: medium) {
+      @include mq($until: wide) {
         padding: 3.6rem;
       }
       @include mq($until: desktop) {
