@@ -13,12 +13,12 @@ function incrementIndex() {
 }
 
 onMounted(() => {
-  // interval = setInterval(() => {
-  //   const previousIndex = computed(() => {
-  //     return index.value - 1 < 0 ? props.featuredFilms?.length - 1 : index.value - 1
-  //   })
-  //   index.value = (index.value + 1) % props.featuredFilms?.length
-  // }, 3000)
+  interval = setInterval(() => {
+    const previousIndex = computed(() => {
+      return index.value - 1 < 0 ? props.featuredFilms?.length - 1 : index.value - 1
+     })
+  index.value = (index.value + 1) % props.featuredFilms?.length
+  }, 3000)
 })
 
 onUnmounted(() => {
