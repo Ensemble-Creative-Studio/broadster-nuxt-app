@@ -1,11 +1,13 @@
 <script setup>
+import anime from 'animejs/lib/anime.es.js'
+
 const props = defineProps({
   featuredFilms: {
     type: Array,
   },
 })
 
-const index = ref(0)
+const index = shallowRef(0)
 let interval
 
 function incrementIndex() {
@@ -13,11 +15,20 @@ function incrementIndex() {
 }
 
 onMounted(() => {
+  const tl = anime.timeline({
+    easing: 'spring(1, 80, 20, 3)',
+  })
+
+  tl.add({
+    targets: '.c-slideshow',
+    opacity: 1,
+  }).add({
+    targets: '.c-slideshow-video__meta',
+    opacity: 1,
+  })
+
   interval = setInterval(() => {
-    const previousIndex = computed(() => {
-      return index.value - 1 < 0 ? props.featuredFilms?.length - 1 : index.value - 1
-     })
-  index.value = (index.value + 1) % props.featuredFilms?.length
+    incrementIndex()
   }, 3000)
 })
 
@@ -25,9 +36,18 @@ onUnmounted(() => {
   clearInterval(interval)
 })
 
-// TODO - Calculate the desired height for container
-const aspectRatios = [1.77, 2.25, 0.6]
 const modifiers = ['-is-wide', '-is-square', '-is-mobile']
+
+onBeforeRouteLeave((to, from, next) => {
+  anime({
+    targets: '.c-slideshow',
+    opacity: 0,
+    easing: 'spring(1, 80, 20, 3)',
+    complete: () => {
+      next()
+    },
+  })
+})
 </script>
 
 <template>
@@ -79,6 +99,7 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
 .c-slideshow {
   height: 100svh;
   position: relative;
+  opacity: 0;
   &-video {
     cursor: pointer;
     user-select: none;
@@ -89,7 +110,7 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
     border-radius: 0.4rem;
     overflow: hidden;
     transform-origin: center;
-    transition: 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: 1.5s cubic-bezier(0.215, 0.61, 0.355, 1);
     height: auto;
     transition-property: opacity, visibility, height, width;
     opacity: 0;
@@ -136,6 +157,7 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
       bottom: 3.6rem;
       left: 3.6rem;
       width: calc(100% - 6.4rem);
+      opacity: 0;
       @include mq($until: large) {
         bottom: 2.4rem;
         left: 2.4rem;

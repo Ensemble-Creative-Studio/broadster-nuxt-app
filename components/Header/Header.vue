@@ -1,7 +1,7 @@
 <template>
   <header class="c-header">
     <div class="c-header__container u-wrapper">
-      <NuxtLink to="/" title="">
+      <NuxtLink to="/">
         <HeaderLogo />
       </NuxtLink>
       <ul class="c-header-menu">

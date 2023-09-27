@@ -17,6 +17,7 @@ const isHovered = ref(false)
 const isFeatured = computed(() => props.class.includes('-is-featured'))
 
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
+const isVideoCreditsOpen = useState('isVideoCreditsOpen')
 const currentFilm = useState('currentFilm', () => {})
 
 function onMouseOver() {
@@ -34,8 +35,14 @@ function onMouseLeave() {
   }
 }
 
-function onClick() {
+function onPlayClick() {
   isVideoPlayerOpen.value = true
+  currentFilm.value = props.film
+}
+
+function onCreditsClick() {
+  isVideoPlayerOpen.value = true
+  isVideoCreditsOpen.value = true
   currentFilm.value = props.film
 }
 </script>
@@ -98,7 +105,7 @@ function onClick() {
         <footer class="c-film__footer">
           <button
             class="c-film-play-button o-button -has-white-background -has-icon"
-            @click="onClick"
+            @click="onPlayClick"
           >
             <svg
               width="12"
@@ -110,6 +117,12 @@ function onClick() {
               <path d="M0 12V0L12 6L0 12Z" />
             </svg>
             <span class="c-film-play-button__text">Play</span>
+          </button>
+          <button
+            class="c-film-credits-button o-button -has-white-background"
+            @click="onCreditsClick"
+          >
+            <span class="c-film-credits-button__text">Crédits</span>
           </button>
           <span
             class="o-button -has-dark-grey-background"
@@ -217,7 +230,7 @@ function onClick() {
       width: 100%;
     }
     #{$self}:not(.-is-featured) & {
-      transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+      transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: translateY(100%);
       @include mq($until: medium) {
         transform: translateY(0%) !important;
@@ -259,7 +272,7 @@ function onClick() {
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
 
         transform: translateY(calc(50%));
       }
@@ -281,8 +294,7 @@ function onClick() {
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-
+        transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
         transform: translateY(calc(50%));
       }
     }
@@ -311,6 +323,11 @@ function onClick() {
     &__text {
       margin-left: 1rem;
     }
+  }
+  &-credits-button {
+    background-color: $black;
+    border: .1rem solid $black;
+    color: $white;
   }
 }
 </style>

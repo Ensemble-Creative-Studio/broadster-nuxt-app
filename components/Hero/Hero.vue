@@ -1,4 +1,6 @@
 <script setup>
+import anime from 'animejs/lib/anime.es.js'
+
 const route = useRoute()
 
 const props = defineProps({
@@ -9,6 +11,39 @@ const props = defineProps({
   video: {
     type: String,
   },
+  scrollToTarget: {
+    type: String,
+  },
+})
+
+const lenis = inject('lenisCtx')
+
+onMounted(() => {
+  const tl = anime.timeline({
+    easing: 'spring(1, 80, 20, 3)',
+  })
+
+  tl.add({
+    targets: '.c-hero__title',
+    opacity: 1,
+    translateX: ['-50%', '-50%'],
+    translateY: ['500%', '-75%'],
+    scale: [0.5, 1],
+  }).add(
+    {
+      targets: '.c-hero-video',
+      translateX: ['-50%', '-50%'],
+      translateY: ['500', '-50%'],
+      complete: () => {
+        if (lenis.value.scroll < 100) {
+          lenis.value.scrollTo(props.scrollToTarget, {
+            offset: -100,
+          })
+        }
+      },
+    },
+    '-=1100'
+  )
 })
 </script>
 
@@ -23,7 +58,15 @@ const props = defineProps({
   >
     <h1 class="c-hero__title o-section-title">{{ title }}</h1>
     <div v-if="video" class="c-hero-video">
-      <video :src="video" class="c-hero-video__source" autoplay muted loop playsinline></video>
+      <video
+        :src="video"
+        class="c-hero-video__source"
+        autoplay
+        muted
+        loop
+        playsinline
+        data-not-lazy
+      ></video>
     </div>
   </div>
 </template>
@@ -42,13 +85,14 @@ const props = defineProps({
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -75%);
+    transform: translate(-50%, 500%) scale(0.5);
+    opacity: 0;
   }
   &-video {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 500%);
     z-index: -1;
     border-radius: 0.4rem;
     overflow: hidden;
@@ -63,6 +107,10 @@ const props = defineProps({
     #{$self}.-is-infos & {
       aspect-ratio: 9 / 16;
       height: min(80vw, 40rem);
+    }
+    &__source {
+      opacity: 1;
+      visibility: visible;
     }
   }
 }

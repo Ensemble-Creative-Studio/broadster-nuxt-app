@@ -1,4 +1,6 @@
 <script setup>
+import anime from 'animejs/lib/anime.es.js'
+
 const query = groq`*[_type == "home"][0]
   {
     featuredFilms[]{
@@ -20,6 +22,17 @@ const query = groq`*[_type == "home"][0]
 `
 
 const { data: home } = useSanityQuery(query)
+
+onBeforeRouteLeave((to, from, next) => {
+  anime({
+    targets: '.l-index',
+    opacity: 0,
+    easing: 'spring(1, 80, 20, 3)',
+    complete: () => {
+      next()
+    },
+  })
+})
 </script>
 
 <template>

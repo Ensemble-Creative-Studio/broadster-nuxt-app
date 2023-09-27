@@ -1,4 +1,8 @@
 <script setup>
+import anime from 'animejs/lib/anime.es.js'
+
+const route = useRoute()
+
 const query = groq`*[_type == "footer"][0]
   {
     title,

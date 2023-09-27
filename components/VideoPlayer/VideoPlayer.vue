@@ -3,7 +3,7 @@ import { useFullscreen } from '@vueuse/core'
 
 const currentFilm = useState('currentFilm')
 const isVideoPlayerOpen = useState('isVideoPlayerOpen', () => false)
-const isCreditsOpen = ref(false)
+const isVideoCreditsOpen = useState('isVideoCreditsOpen', () => false)
 
 // Template refs
 const $video = ref(null)
@@ -25,7 +25,7 @@ function onCloseClick() {
 }
 
 function onToggleCreditsClick() {
-  isCreditsOpen.value = !isCreditsOpen.value
+  isVideoCreditsOpen.value = !isVideoCreditsOpen.value
 }
 
 function onTogglePlayClick() {
@@ -122,7 +122,7 @@ onMounted(() => {
   >
     <VideoPlayerCredits
       :class="{
-        '-is-visible': isCreditsOpen,
+        '-is-visible': isVideoCreditsOpen,
       }"
       :data="currentFilm"
     />
@@ -134,7 +134,7 @@ onMounted(() => {
     </button>
     <button
       :class="{
-        '-is-visible': !isCreditsOpen,
+        '-is-visible': !isVideoCreditsOpen,
       }"
       class="c-video-player-close-button o-button -has-white-outline"
       @click="onCloseClick"

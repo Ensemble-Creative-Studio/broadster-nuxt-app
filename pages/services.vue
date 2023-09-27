@@ -1,4 +1,6 @@
 <script setup>
+import anime from 'animejs/lib/anime.es.js'
+
 const query = groq`*[_type == "services"][0]
   {
     title,
@@ -11,11 +13,22 @@ const query = groq`*[_type == "services"][0]
 `
 
 const { data: services } = useSanityQuery(query)
+
+onBeforeRouteLeave((to, from, next) => {
+  anime({
+    targets: '.l-services',
+    opacity: 0,
+    easing: 'spring(1, 80, 20, 3)',
+    complete: () => {
+      next()
+    },
+  })
+})
 </script>
 
 <template>
   <div class="l-services">
-    <Hero title="Services" :video="services?.videoUrl" scrollToTarget="l-services__section" />
+    <Hero title="Services" :video="services?.videoUrl" scrollToTarget=".l-services__section" />
     <ServicesSection
       v-for="(section, i) in services?.sections"
       class="l-services__section"
