@@ -17,33 +17,42 @@ const props = defineProps({
 })
 
 const lenis = inject('lenisCtx')
+let timeout = null
 
 onMounted(() => {
-  const tl = anime.timeline({
-    easing: 'spring(1, 80, 20, 3)',
-  })
+  timeout = setTimeout(() => {
+    const tl = anime.timeline({
+      easing: 'spring(1, 80, 20, 3)',
+    })
 
-  tl.add({
-    targets: '.c-hero__title',
-    opacity: 1,
-    translateX: ['-50%', '-50%'],
-    translateY: ['500%', '-75%'],
-    scale: [0.5, 1],
-  }).add(
-    {
-      targets: '.c-hero-video',
+    tl.add({
+      targets: '.c-hero__title',
+      opacity: 1,
       translateX: ['-50%', '-50%'],
-      translateY: ['500', '-50%'],
-      complete: () => {
-        if (lenis.value.scroll < 100) {
-          lenis.value.scrollTo(props.scrollToTarget, {
-            offset: -100,
-          })
-        }
+      translateY: ['500%', '-75%'],
+      scale: [0.5, 1],
+    }).add(
+      {
+        targets: '.c-hero-video',
+        translateX: ['-50%', '-50%'],
+        translateY: ['500', '-50%'],
+        scaleX: [0, 1],
+        scaleY: [0.3, 1],
+        complete: () => {
+          if (lenis.value.scroll < 100) {
+            lenis.value.scrollTo(props.scrollToTarget, {
+              offset: -100,
+            })
+          }
+        },
       },
-    },
-    '-=1100'
-  )
+      '-=1100'
+    )
+  }, 100)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(timeout)
 })
 </script>
 

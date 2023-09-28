@@ -27,7 +27,7 @@ onBeforeRouteLeave((to, from, next) => {
   anime({
     targets: '.l-index',
     opacity: 0,
-    easing: 'spring(1, 80, 20, 3)',
+    easing: 'spring(3, 80, 20, 1)',
     complete: () => {
       next()
     },

@@ -7,38 +7,48 @@ const props = defineProps({
   },
 })
 
+const modifiers = ['-is-wide', '-is-square', '-is-mobile']
 const index = shallowRef(0)
+
+const lenis = inject('lenisCtx')
+
 let interval
+let timeout
 
 function incrementIndex() {
   index.value = (index.value + 1) % props.featuredFilms?.length
 }
 
 onMounted(() => {
-  const tl = anime.timeline({
-    easing: 'spring(1, 80, 20, 3)',
-  })
+  document.body.classList.add('-is-fixed');
 
-  tl.add({
-    targets: '.c-slideshow',
-    opacity: 1,
-  }).add({
-    targets: '.c-slideshow-video__meta',
-    opacity: 1,
-  })
+  timeout = setTimeout(() => {
+    const tl = anime.timeline({
+      easing: 'spring(1, 80, 20, 3)',
+    })
 
-  interval = setInterval(() => {
-    incrementIndex()
-  }, 3000)
+    tl.add({
+      targets: '.c-slideshow',
+      opacity: 1,
+    }).add({
+      targets: '.c-slideshow-video__meta',
+      opacity: 1,
+    })
+  }, 100)
+
+  // interval = setInterval(() => {
+  //   incrementIndex()
+  // }, 3000)
 })
 
 onUnmounted(() => {
   clearInterval(interval)
+  clearTimeout(timeout)
 })
 
-const modifiers = ['-is-wide', '-is-square', '-is-mobile']
-
 onBeforeRouteLeave((to, from, next) => {
+  document.body.classList.remove('-is-fixed');
+
   anime({
     targets: '.c-slideshow',
     opacity: 0,
@@ -115,6 +125,7 @@ onBeforeRouteLeave((to, from, next) => {
     transition-property: opacity, visibility, height, width;
     opacity: 0;
     visibility: hidden;
+    will-change: opacity, visibility, height, width;
 
     &.-is-visible {
       opacity: 1;
@@ -151,6 +162,8 @@ onBeforeRouteLeave((to, from, next) => {
       position: absolute;
       top: 0;
       left: 0;
+      opacity: 1;
+      visibility: visible;
     }
     &__meta {
       position: absolute;
