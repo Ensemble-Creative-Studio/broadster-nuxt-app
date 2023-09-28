@@ -1,5 +1,8 @@
 <script setup>
-import anime from 'animejs/lib/anime.es.js'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const props = defineProps({
   featuredFilms: {
@@ -10,8 +13,6 @@ const props = defineProps({
 const modifiers = ['-is-wide', '-is-square', '-is-mobile']
 const index = shallowRef(0)
 
-const lenis = inject('lenisCtx')
-
 let interval
 let timeout
 
@@ -20,19 +21,41 @@ function incrementIndex() {
 }
 
 onMounted(() => {
-  document.body.classList.add('-is-fixed');
-
   timeout = setTimeout(() => {
-    const tl = anime.timeline({
-      easing: 'spring(1, 80, 20, 3)',
+    const tl = gsap.timeline({
+      defaults: {
+        ease: 'power4.out',
+        duration: 1,
+      },
     })
 
-    tl.add({
-      targets: '.c-slideshow',
+    tl.to('.c-slideshow', {
       opacity: 1,
-    }).add({
-      targets: '.c-slideshow-video__meta',
-      opacity: 1,
+    }).to(
+      '.c-slideshow-video__meta',
+      {
+        opacity: 1,
+      },
+      '-=0.2'
+    )
+
+    ScrollTrigger.create({
+      trigger: '.c-slideshow',
+      pin: true,
+      end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
+      onUpdate: (self) => {
+        if (self.progress > 0 && self.progress < 0.3) {
+          console.log('index 0')
+        }
+
+        if (self.progress > 0.3 && self.progress < 0.6) {
+          console.log('index 1')
+        }
+
+        if (self.progress > 0.6) {
+          console.log('index 2')
+        }
+      },
     })
   }, 100)
 
@@ -44,18 +67,9 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(interval)
   clearTimeout(timeout)
-})
 
-onBeforeRouteLeave((to, from, next) => {
-  document.body.classList.remove('-is-fixed');
-
-  anime({
-    targets: '.c-slideshow',
-    opacity: 0,
-    easing: 'spring(1, 80, 20, 3)',
-    complete: () => {
-      next()
-    },
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
   })
 })
 </script>

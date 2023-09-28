@@ -1,5 +1,5 @@
 <script setup>
-import anime from 'animejs/lib/anime.es.js'
+import gsap from 'gsap'
 
 const query = groq`*[_type == "home"][0]
   {
@@ -24,11 +24,10 @@ const query = groq`*[_type == "home"][0]
 const { data: home } = useSanityQuery(query)
 
 onBeforeRouteLeave((to, from, next) => {
-  anime({
-    targets: '.l-index',
+  gsap.to('.l-index', {
     opacity: 0,
-    easing: 'spring(3, 80, 20, 1)',
-    complete: () => {
+    ease: 'power3.out',
+    onComplete: () => {
       next()
     },
   })

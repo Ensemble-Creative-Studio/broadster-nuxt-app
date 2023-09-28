@@ -1,5 +1,5 @@
 <script setup>
-import anime from 'animejs/lib/anime.es.js'
+import gsap from 'gsap'
 
 const route = useRoute()
 
@@ -16,43 +16,44 @@ const props = defineProps({
   },
 })
 
+async function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
 const lenis = inject('lenisCtx')
+
 let timeout = null
+
+let tl = gsap.timeline({
+  ease: 'power4.out',
+})
 
 onMounted(() => {
   timeout = setTimeout(() => {
-    const tl = anime.timeline({
-      easing: 'spring(1, 80, 20, 3)',
-    })
-
-    tl.add({
-      targets: '.c-hero__title',
+    tl.to('.c-hero__title', {
       opacity: 1,
-      translateX: ['-50%', '-50%'],
-      translateY: ['500%', '-75%'],
-      scale: [0.5, 1],
-    }).add(
+      transform: 'translate(-50%, -75%) scale(1)',
+    }).to(
+      '.c-hero-video',
       {
-        targets: '.c-hero-video',
-        translateX: ['-50%', '-50%'],
-        translateY: ['500', '-50%'],
-        scaleX: [0, 1],
-        scaleY: [0.3, 1],
-        complete: () => {
-          if (lenis.value.scroll < 100) {
+        transform: 'translate(-50%, -50%) scale(1)',
+        onComplete: async () => {
+          await delay(1000)
+          if (window.scrollY < 100) {
             lenis.value.scrollTo(props.scrollToTarget, {
               offset: -100,
             })
           }
         },
       },
-      '-=1100'
+      '-=0.5'
     )
   }, 100)
 })
 
 onBeforeUnmount(() => {
   clearTimeout(timeout)
+  tl.kill()
 })
 </script>
 
@@ -101,7 +102,7 @@ onBeforeUnmount(() => {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, 500%);
+    transform: translate(-50%, 500%) scale(0);
     z-index: -1;
     border-radius: 0.4rem;
     overflow: hidden;

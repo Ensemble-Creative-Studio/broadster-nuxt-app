@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import Lenis from '@studio-freight/lenis'
+
 const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
 
@@ -31,17 +32,8 @@ watch(
       lenisRef.value.scrollTo(0, {
         immediate: true,
       })
-
-      if (
-        value === '/' ||
-        value === '/productions' ||
-        value === '/services' ||
-        value === '/infos'
-      ) {
-        // document.body.classList.add('-is-fixed');
-      }
     }
-  }
+  },
 )
 </script>
 
