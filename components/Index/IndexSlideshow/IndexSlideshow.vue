@@ -65,7 +65,7 @@ onMounted(() => {
   // }, 3000)
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   clearInterval(interval)
   clearTimeout(timeout)
 
@@ -74,6 +74,7 @@ onUnmounted(() => {
   })
 
   tl.kill()
+  tl = null
 })
 </script>
 

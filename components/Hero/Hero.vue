@@ -59,6 +59,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearTimeout(timeout)
   tl.kill()
+  tl = null
 })
 </script>
 
