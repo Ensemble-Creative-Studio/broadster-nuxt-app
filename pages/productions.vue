@@ -40,6 +40,18 @@ const query = groq`*[_type == "productions"][0]
 
 const { data: productions } = useSanityQuery(query)
 
+onMounted(() => {
+  gsap.to('.l-productions', {
+    opacity: 1,
+    ease: 'power3.out',
+    delay: 1,
+  })
+})
+
+onBeforeUnmount(() => {
+  gsap.killTweensOf('.l-productions')
+})
+
 onBeforeRouteLeave((to, from, next) => {
   gsap.to('.l-productions', {
     opacity: 0,
@@ -66,3 +78,9 @@ onBeforeRouteLeave((to, from, next) => {
     />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.l-productions {
+  opacity: 0;
+}
+</style>

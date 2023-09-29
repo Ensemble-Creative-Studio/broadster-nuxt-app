@@ -14,6 +14,18 @@ const query = groq`*[_type == "services"][0]
 
 const { data: services } = useSanityQuery(query)
 
+onMounted(() => {
+  gsap.to('.l-services', {
+    opacity: 1,
+    ease: 'power3.out',
+    delay: 1,
+  })
+})
+
+onBeforeUnmount(() => {
+  gsap.killTweensOf('.l-services')
+})
+
 onBeforeRouteLeave((to, from, next) => {
   gsap.to('.l-services', {
     opacity: 0,
@@ -39,6 +51,7 @@ onBeforeRouteLeave((to, from, next) => {
 
 <style lang="scss" scoped>
 .l-services {
+  opacity: 0;
   &__section {
     margin-top: 32rem;
     @include mq($until: tablet) {

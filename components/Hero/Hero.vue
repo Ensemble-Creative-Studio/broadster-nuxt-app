@@ -25,11 +25,16 @@ const lenis = inject('lenisCtx')
 let timeout = null
 
 let tl = gsap.timeline({
-  ease: 'power4.out',
+  ease: 'power3.out',
+  duration: 1,
 })
 
 onMounted(() => {
   timeout = setTimeout(() => {
+    lenis.value.scrollTo(0, {
+      immediate: true,
+    })
+
     tl.to('.c-hero__title', {
       opacity: 1,
       transform: 'translate(-50%, -75%) scale(1)',

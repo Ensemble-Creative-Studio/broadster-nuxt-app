@@ -24,17 +24,6 @@ provide('lenisCtx', lenisRef) // Provide the ref
 onBeforeMount(() => {
   initLenis()
 })
-
-watch(
-  () => route.fullPath,
-  (value) => {
-    if (lenisRef.value) {
-      lenisRef.value.scrollTo(0, {
-        immediate: true,
-      })
-    }
-  },
-)
 </script>
 
 <template>

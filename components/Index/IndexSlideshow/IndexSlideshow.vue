@@ -15,6 +15,7 @@ const index = shallowRef(0)
 
 let interval
 let timeout
+let tl
 
 function incrementIndex() {
   index.value = (index.value + 1) % props.featuredFilms?.length
@@ -22,7 +23,7 @@ function incrementIndex() {
 
 onMounted(() => {
   timeout = setTimeout(() => {
-    const tl = gsap.timeline({
+    tl = gsap.timeline({
       defaults: {
         ease: 'power4.out',
         duration: 1,
@@ -71,6 +72,8 @@ onUnmounted(() => {
   ScrollTrigger.getAll().forEach((trigger) => {
     trigger.kill()
   })
+
+  tl.kill()
 })
 </script>
 
