@@ -5,9 +5,8 @@ const currentFilm = useState('currentFilm')
 const isVideoPlayerOpen = useState('isVideoPlayerOpen', () => false)
 const isVideoCreditsOpen = useState('isVideoCreditsOpen', () => false)
 
-// Template refs
-const $video = ref(null)
-const $timeline = ref(null)
+const $$video = ref(null)
+const $$timeline = ref(null)
 
 const isPlaying = ref(false)
 const isMuted = ref(false)
@@ -37,7 +36,7 @@ function onMuteClick() {
   isMuted.value = !isMuted.value
 }
 
-const { toggle, exit } = useFullscreen($video)
+const { toggle, exit } = useFullscreen($$video)
 
 function onFullscreenClick() {
   isFullscreen.value = !isFullscreen.value
@@ -45,12 +44,12 @@ function onFullscreenClick() {
 }
 
 function onUpdate() {
-  videoCurrentTime.value = $video?.value?.currentTime
+  videoCurrentTime.value = $$video?.value?.currentTime
   raf = window.requestAnimationFrame(onUpdate)
 }
 
 function onVideoTimeUpdate() {
-  videoFormatedCurrentTime.value = formatTime($video?.value?.currentTime)
+  videoFormatedCurrentTime.value = formatTime($$video?.value?.currentTime)
 }
 
 function formatTime(time) {
@@ -66,13 +65,13 @@ function onTimelineClick(event) {
 }
 
 function seekOnTimeline(userX) {
-  const timelineLeft = $timeline.value.getBoundingClientRect().left
-  const timelineWidth = $timeline.value.getBoundingClientRect().width
+  const timelineLeft = $$timeline.value.getBoundingClientRect().left
+  const timelineWidth = $$timeline.value.getBoundingClientRect().width
   const userXRelativeToTimeline = userX - timelineLeft
 
   const seekTime = (userXRelativeToTimeline / timelineWidth) * videoDuration.value
 
-  $video.value.currentTime = seekTime
+  $$video.value.currentTime = seekTime
 }
 
 function onVideoEnded() {
@@ -80,7 +79,7 @@ function onVideoEnded() {
 }
 
 function onVideoLoadedData() {
-  videoDuration.value = $video.value.duration
+  videoDuration.value = $$video.value.duration
   videoFormatedDuration.value = formatTime(videoDuration.value)
 }
 
@@ -88,9 +87,9 @@ watch(
   () => isPlaying.value,
   (isPlaying) => {
     if (isPlaying) {
-      $video.value.play()
+      $$video.value.play()
     } else {
-      $video.value.pause()
+      $$video.value.pause()
     }
   }
 )
@@ -98,7 +97,7 @@ watch(
 watch(
   () => isMuted.value,
   (value) => {
-    $video.value.muted = value
+    $$video.value.muted = value
   }
 )
 
@@ -108,7 +107,7 @@ onMounted(() => {
 }),
   onBeforeUnmount(() => {
     window.cancelAnimationFrame(raf)
-    $video.value = null
+    $$video.value = null
     document.body.style.overflow = 'auto'
   })
 </script>
@@ -142,7 +141,7 @@ onMounted(() => {
       Close
     </button>
     <video
-      ref="$video"
+      ref="$$video"
       :src="currentFilm?.videoUrl"
       class="c-video-player__video"
       playsinline
@@ -176,7 +175,7 @@ onMounted(() => {
           </span>
         </div>
         <div
-          ref="$timeline"
+          ref="$$timeline"
           class="c-video-player-controls__timeline"
           @click="onTimelineClick"
           @mousedown="onTimelineMousedown"

@@ -10,9 +10,8 @@ const props = defineProps({
   },
 })
 
-const $film = ref(null)
-const $filmMeta = ref(null)
-const $video = ref(null)
+const $$filmMeta = ref(null)
+const $$video = ref(null)
 const isHovered = ref(false)
 const isFeatured = computed(() => props.class.includes('-is-featured'))
 
@@ -22,15 +21,15 @@ const currentFilm = useState('currentFilm', () => {})
 
 function onMouseOver() {
   if (!isFeatured.value) {
-    $video.value.play()
+    $$video.value.play()
     isHovered.value = true
   }
 }
 
 function onMouseLeave() {
   if (!isFeatured.value) {
-    $video.value.pause()
-    $video.value.currentTime = 0
+    $$video.value.pause()
+    $$video.value.currentTime = 0
     isHovered.value = false
   }
 }
@@ -49,7 +48,6 @@ function onCreditsClick() {
 
 <template>
   <div
-    ref="$film"
     :class="[
       'c-film',
       {
@@ -72,7 +70,7 @@ function onCreditsClick() {
           />
         </div>
         <video
-          ref="$video"
+          ref="$$video"
           :src="film?.loopUrl"
           class="c-film__video"
           :class="{
@@ -85,12 +83,12 @@ function onCreditsClick() {
         ></video>
       </div>
       <div
-        ref="$filmMeta"
+        ref="$$filmMeta"
         class="c-film__meta"
         :style="{
           transform:
-            isHovered && !isFeatured && $filmMeta?.clientHeight
-              ? `translateY(calc(100% - ${$filmMeta?.clientHeight}px))`
+            isHovered && !isFeatured && $$filmMeta?.clientHeight
+              ? `translateY(calc(100% - ${$$filmMeta?.clientHeight}px))`
               : !isHovered && isFeatured
               ? `translateY(0%)`
               : `translateY(100%)`,

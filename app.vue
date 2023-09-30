@@ -5,7 +5,7 @@ import Lenis from '@studio-freight/lenis'
 const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
 
-let lenisRef = ref(null) // Use a ref to store lenis
+let lenisRef = shallowRef(null)
 
 const initLenis = () => {
   const lenis = new Lenis()
@@ -16,14 +16,25 @@ const initLenis = () => {
   }
   requestAnimationFrame(raf)
 
-  lenisRef.value = lenis // Assign lenis to the ref
+  lenisRef.value = lenis
 }
 
-provide('lenisCtx', lenisRef) // Provide the ref
+provide('lenisCtx', lenisRef)
 
 onBeforeMount(() => {
   initLenis()
 })
+
+watch(
+  () => route.fullPath,
+  (value) => {
+    if (lenisRef.value) {
+      lenisRef.value.scrollTo(0, {
+        immediate: true,
+      })
+    }
+  }
+)
 </script>
 
 <template>
