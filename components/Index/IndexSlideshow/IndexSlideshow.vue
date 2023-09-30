@@ -18,7 +18,8 @@ let timeout
 let tl
 
 function incrementIndex() {
-  lenis.value.scrollTo((window.innerHeight / 3) * (index.value + 1))
+  const value = ((index.value + 1) * (window.innerHeight * 2)) / 3
+  lenis.value.scrollTo(value)
 }
 
 function setIndex(i) {
@@ -68,7 +69,7 @@ onMounted(() => {
     ScrollTrigger.create({
       trigger: '.c-slideshow',
       pin: true,
-      end: '+=' + window.innerHeight, // TODO - Make innerHeight reactive
+      end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
       onUpdate: (self) => {
         let progressFlag = -1
 
