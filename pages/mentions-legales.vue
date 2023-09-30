@@ -1,5 +1,5 @@
 <script setup>
-import gsap from 'gsap/dist/gsap'
+import gsap from 'gsap'
 
 const query = groq`*[_type == "legal"][0]`
 
