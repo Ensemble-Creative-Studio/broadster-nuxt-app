@@ -12,10 +12,11 @@ const $$base = shallowRef()
 const $$item = shallowRef()
 
 let timeout
+let tl
 
 onMounted(() => {
   timeout = setTimeout(() => {
-    const tl = gsap.timeline({
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: $$base.value,
         // markers: true,
@@ -29,9 +30,13 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   clearTimeout(timeout)
+
   ScrollTrigger.getAll().forEach((trigger) => {
     trigger.kill()
   })
+
+  tl.kill()
+  tl = null
 })
 </script>
 

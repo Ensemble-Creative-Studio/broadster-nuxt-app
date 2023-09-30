@@ -45,16 +45,25 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     @include mq($until: tablet) {
       font-size: 1.6rem;
     }
-    &__item:not(:first-child) {
-      margin-left: 2.4rem;
-      @include mq($until: tablet) {
-        margin-left: 0.8rem;
+    &__item {
+      @include mq($from: tablet) {
+        transition: 0.5s opacity $cubic;
+        &:hover {
+          opacity: 0.5;
+        }
+        &:not(:first-child) {
+          margin-left: 2.4rem;
+          @include mq($until: tablet) {
+            margin-left: 0.8rem;
+          }
+        }
       }
     }
   }
 }
 @keyframes fadeIn {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 0;
   }
   100% {

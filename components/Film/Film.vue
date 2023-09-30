@@ -139,6 +139,8 @@ function onCreditsClick() {
 </template>
 
 <style lang="scss" scoped>
+$cubic: cubic-bezier(0.16, 1, 0.3, 1);
+
 .c-film {
   border-radius: 0.4rem;
   overflow: hidden;
@@ -314,18 +316,30 @@ function onCreditsClick() {
     }
   }
   &-play-button {
+    cursor: pointer;
+    transition: 0.5s transform $cubic;
+    will-change: transform;
     @include mq($until: medium) {
       background-color: $black;
       color: $white;
+    }
+    &:hover {
+      transform: scale(1.05);
     }
     &__text {
       margin-left: 1rem;
     }
   }
   &-credits-button {
+    cursor: pointer;
     background-color: $black;
     border: .1rem solid $black;
     color: $white;
+    transition: 0.5s transform $cubic;
+    will-change: transform;
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 }
 </style>

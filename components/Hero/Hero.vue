@@ -1,5 +1,6 @@
 <script setup>
 import gsap from 'gsap'
+import CustomEase from 'gsap/CustomEase'
 
 const route = useRoute()
 
@@ -23,25 +24,32 @@ async function delay(ms) {
 const lenis = inject('lenisCtx')
 
 let tl = gsap.timeline({
-  ease: 'power3.out',
-  duration: 2,
+  defaults: {
+    duration: 1.5,
+    ease: 'expo.out',
+  },
 })
 
 onMounted(() => {
   tl.to('.c-hero__title', {
     opacity: 1,
     transform: 'translate(-50%, -75%) scale(1)',
-  }).to('.c-hero-video', {
-    transform: 'translate(-50%, -50%) scale(1)',
-    onComplete: async () => {
-      await delay(1000)
-      if (window.scrollY < 100) {
-        lenis.value.scrollTo(props.scrollToTarget, {
-          offset: -100,
-        })
-      }
+    delay: 1,
+  }).to(
+    '.c-hero-video',
+    {
+      transform: 'translate(-50%, -50%) scale(1)',
+      onComplete: async () => {
+        await delay(1000)
+        if (window.scrollY < 100) {
+          lenis.value.scrollTo(props.scrollToTarget, {
+            offset: -100,
+          })
+        }
+      },
     },
-  }, '-=0.5')
+    '-=1.6'
+  )
 })
 
 onBeforeUnmount(() => {
@@ -80,6 +88,7 @@ onBeforeUnmount(() => {
   width: 100%;
   position: relative;
   user-select: none;
+  overflow: hidden;
   $self: &;
   &__title {
     position: absolute;

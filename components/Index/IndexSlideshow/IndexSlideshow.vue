@@ -18,7 +18,7 @@ let timeout
 let tl
 
 function incrementIndex() {
-  lenis.value.scrollTo(window.innerHeight / 3 * (index.value + 1))
+  lenis.value.scrollTo((window.innerHeight / 3) * (index.value + 1))
 }
 
 function setIndex(i) {
@@ -48,8 +48,8 @@ onMounted(() => {
   timeout = setTimeout(() => {
     tl = gsap.timeline({
       defaults: {
-        ease: 'power3.out',
         duration: 1,
+        ease: 'expo.out',
       },
     })
 

@@ -17,12 +17,18 @@ onMounted(() => {
     tl = gsap.timeline({
       scrollTrigger: {
         trigger: $$base.value,
-        // markers: true,
+        markers: true,
         start: 'top 75%',
       },
     })
 
-    tl.to('.c-infos-clients__item', { stagger: 0.1, opacity: 1, y: 0, duration: 0.5 })
+    tl.to('.c-infos-clients__item', {
+      stagger: 0.1,
+      opacity: 1,
+      y: 0,
+      duration: 2,
+      ease: 'expo.out',
+    })
   }, 500)
 })
 
@@ -32,7 +38,7 @@ onBeforeUnmount(() => {
   ScrollTrigger.getAll().forEach((trigger) => {
     trigger.kill()
   })
-  
+
   tl.kill()
   tl = null
 })

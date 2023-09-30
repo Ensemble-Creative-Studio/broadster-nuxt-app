@@ -10,8 +10,10 @@ const props = defineProps({
 
 const $$base = shallowRef()
 
+let tl
+
 onMounted(() => {
-  const tl = gsap.timeline({
+  tl = gsap.timeline({
     scrollTrigger: {
       trigger: $$base.value,
       // markers: true,
@@ -25,6 +27,9 @@ onBeforeUnmount(() => {
   ScrollTrigger.getAll().forEach((trigger) => {
     trigger.kill()
   })
+
+  tl.kill()
+  tl = null
 })
 </script>
 
