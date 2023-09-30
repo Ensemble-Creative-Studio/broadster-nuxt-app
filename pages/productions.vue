@@ -85,7 +85,9 @@ onBeforeRouteLeave((to, from, next) => {
 .l-productions {
   opacity: 0;
   &__footer {
-    margin-top: 26rem;
+    @include mq($until: medium) {
+      margin-top: 26rem;
+    }
   }
 }
 </style>
