@@ -1,9 +1,39 @@
 <script setup>
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 const props = defineProps({
   section: {
     type: Object,
     required: true,
   },
+})
+
+const $$item = shallowRef()
+
+let timeout
+
+onMounted(() => {
+  timeout = setTimeout(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $$item.value,
+        markers: true,
+        start: 'top 80%',
+      },
+    })
+
+    tl.to('.c-services-section-block', { stagger: 0.1, opacity: 1, y: 0, duration: 1 })
+  }, 100)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(timeout)
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
+  })
 })
 </script>
 
@@ -23,7 +53,7 @@ const props = defineProps({
     <div class="c-services-section__container u-wrapper">
       <h2 class="o-title">{{ section.title }}</h2>
       <div class="c-services-section__grid">
-        <div class="c-services-section-block -has-small-video">
+        <div class="c-services-section-block -has-small-video" ref="$$item">
           <video
             class="c-services-section__source"
             :src="section?.video1?.url"
@@ -33,7 +63,7 @@ const props = defineProps({
             playsinline
           ></video>
         </div>
-        <div class="c-services-section-block -has-medium-text">
+        <div class="c-services-section-block -has-medium-text" ref="$$item">
           <SanityContent :blocks="section.presentation.text" />
           <footer class="c-services-section-block__footer">
             <h3>{{ section.presentation.label }}</h3>
@@ -47,7 +77,7 @@ const props = defineProps({
             </ul>
           </footer>
         </div>
-        <div class="c-services-section-block -has-big-video">
+        <div class="c-services-section-block -has-big-video" ref="$$item">
           <video
             class="c-services-section__source"
             :src="section?.video2?.url"

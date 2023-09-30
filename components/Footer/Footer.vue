@@ -1,6 +1,4 @@
 <script setup>
-const route = useRoute()
-
 const query = groq`*[_type == "footer"][0]
   {
     title,
@@ -46,6 +44,7 @@ const { data: footer } = useSanityQuery(query)
 <style lang="scss" scoped>
 .c-footer {
   padding-bottom: 2.4rem;
+  margin-top: 1.2rem;
   &__container {
     font-size: 1.6rem;
     @include grid(12, 1.2rem, 1.2rem);

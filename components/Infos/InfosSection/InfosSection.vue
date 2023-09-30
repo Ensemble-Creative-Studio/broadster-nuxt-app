@@ -1,13 +1,37 @@
 <script setup>
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 const props = defineProps({
   blocks: {
     type: Object,
   },
 })
+
+const $$base = shallowRef()
+
+onMounted(() => {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: $$base.value,
+      markers: true,
+    },
+  })
+
+  tl.to($$base.value, { opacity: 1, duration: 1 })
+})
+
+onBeforeUnmount(() => {
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
+  })
+})
 </script>
 
 <template>
-  <div class="c-infos-section">
+  <div class="c-infos-section" ref="$$base">
     <div class="c-infos-section__container u-wrapper">
       <div class="c-infos-section__grid">
         <div class="c-infos-section-block -has-big-text -is-mobile">
@@ -56,6 +80,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .c-infos-section {
+  opacity: 0;
   &__grid {
     @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;

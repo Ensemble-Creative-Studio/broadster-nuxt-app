@@ -46,6 +46,7 @@ onBeforeRouteLeave((to, from, next) => {
       :section="section"
       :key="i"
     />
+    <Footer />
   </div>
 </template>
 

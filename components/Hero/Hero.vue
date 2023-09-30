@@ -30,30 +30,20 @@ let tl = gsap.timeline({
 })
 
 onMounted(() => {
-  timeout = setTimeout(() => {
-    lenis.value.scrollTo(0, {
-      immediate: true,
-    })
-
-    tl.to('.c-hero__title', {
-      opacity: 1,
-      transform: 'translate(-50%, -75%) scale(1)',
-    }).to(
-      '.c-hero-video',
-      {
-        transform: 'translate(-50%, -50%) scale(1)',
-        onComplete: async () => {
-          await delay(1000)
-          if (window.scrollY < 100) {
-            lenis.value.scrollTo(props.scrollToTarget, {
-              offset: -100,
-            })
-          }
-        },
-      },
-      '-=0.5'
-    )
-  }, 100)
+  tl.to('.c-hero__title', {
+    opacity: 1,
+    transform: 'translate(-50%, -75%) scale(1)',
+  }).to('.c-hero-video', {
+    transform: 'translate(-50%, -50%) scale(1)',
+    onComplete: async () => {
+      await delay(1000)
+      if (window.scrollY < 100) {
+        lenis.value.scrollTo(props.scrollToTarget, {
+          offset: -100,
+        })
+      }
+    },
+  }, '-=0.5')
 })
 
 onBeforeUnmount(() => {
@@ -73,7 +63,7 @@ onBeforeUnmount(() => {
     }"
   >
     <h1 class="c-hero__title o-section-title">{{ title }}</h1>
-    <div v-if="video" class="c-hero-video">
+    <div class="c-hero-video">
       <video
         :src="video"
         class="c-hero-video__source"

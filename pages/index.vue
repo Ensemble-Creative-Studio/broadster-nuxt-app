@@ -23,6 +23,14 @@ const query = groq`*[_type == "home"][0]
 
 const { data: home } = useSanityQuery(query)
 
+onMounted(() => {
+  gsap.to('.l-index', {
+    opacity: 1,
+    ease: 'power3.out',
+    delay: 1,
+  })
+})
+
 onBeforeRouteLeave((to, from, next) => {
   gsap.to('.l-index', {
     opacity: 0,
@@ -38,6 +46,7 @@ onBeforeRouteLeave((to, from, next) => {
   <div class="l-index">
     <IndexSlideshow :featuredFilms="home?.featuredFilms" />
     <IndexSummary :links="home?.links" />
+    <Footer />
   </div>
 </template>
 
@@ -45,5 +54,6 @@ onBeforeRouteLeave((to, from, next) => {
 .l-index {
   min-height: 100vh;
   width: 100%;
+  opacity: 0;
 }
 </style>

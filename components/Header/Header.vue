@@ -20,12 +20,14 @@
 </template>
 
 <style lang="scss" scoped>
+$cubic: cubic-bezier(0.16, 1, 0.3, 1);
+
 .c-header {
   padding: 1.8rem 0;
   position: fixed;
   width: 100%;
   z-index: 10;
-  animation: fadeIn 0.5s 1s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  animation: fadeIn 3s $cubic forwards;
   opacity: 0;
   @include mq($until: tablet) {
     padding: 1.2rem 0;
@@ -52,7 +54,7 @@
   }
 }
 @keyframes fadeIn {
-  0% {
+  0%, 50% {
     opacity: 0;
   }
   100% {

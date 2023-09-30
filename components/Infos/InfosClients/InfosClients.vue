@@ -1,8 +1,38 @@
 <script setup>
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 const props = defineProps({
   clients: {
     type: Array,
   },
+})
+
+const $$base = shallowRef()
+
+let timeout
+
+onMounted(() => {
+  timeout = setTimeout(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $$base.value,
+        markers: true,
+        start: 'top 80%',
+      },
+    })
+
+    tl.to('.c-infos-clients__item', { stagger: 0.1, opacity: 1, y: 0, duration: 1 })
+  }, 100)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(timeout)
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
+  })
 })
 </script>
 
@@ -10,7 +40,7 @@ const props = defineProps({
   <div class="c-infos-clients">
     <div class="c-infos-clients__container u-wrapper">
       <h2 class="o-title">Clients</h2>
-      <div class="c-infos-clients__grid">
+      <div class="c-infos-clients__grid" ref="$$base">
         <InfosClientsItem
           v-for="(client, i) in clients"
           :client="client"
@@ -33,6 +63,8 @@ const props = defineProps({
   }
   &__item {
     grid-column: auto / span 3;
+    opacity: 0;
+    transform: translateY(2rem);
     @include mq($until: small) {
       grid-column: auto / span 4;
     }

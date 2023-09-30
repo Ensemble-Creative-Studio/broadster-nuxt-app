@@ -21,7 +21,13 @@
     margin-right: 1.2rem;
     @include mq($until: tablet) {
       margin-right: 0.6rem;
-      width: 2.5rem;
+      width: 15rem;
+    }
+    @include mq($until: mobile) {
+      width: 12rem;
+    }
+    @include mq($until: mini) {
+      width: 10rem;
     }
   }
 }

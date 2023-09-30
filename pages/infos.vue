@@ -44,6 +44,7 @@ onBeforeRouteLeave((to, from, next) => {
     <InfosSection :blocks="infos?.sections" class="l-infos__section" />
     <InfosNumbers :history="infos?.history" class="l-infos__numbers" />
     <InfosClients :clients="infos?.clients" class="l-infos__clients" />
+    <Footer />
   </div>
 </template>
 

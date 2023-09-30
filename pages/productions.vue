@@ -76,6 +76,7 @@ onBeforeRouteLeave((to, from, next) => {
       :key="section._key"
       class="l-productions__section"
     />
+    <Footer />
   </div>
 </template>
 
