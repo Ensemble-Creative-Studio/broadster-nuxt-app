@@ -26,7 +26,6 @@ function setIndex(i) {
   })
 
   if (i > 0) {
-    console.log('animate out', $$baseline.value[i - 1])
     gsap.to($$baseline.value[i - 1], {
       opacity: 0,
       transform: 'translateY(-5rem)',
