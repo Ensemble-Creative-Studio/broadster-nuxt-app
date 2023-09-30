@@ -12,13 +12,33 @@ const props = defineProps({
 
 const modifiers = ['-is-wide', '-is-square', '-is-mobile']
 const index = shallowRef(0)
+const $$baseline = shallowRef()
 
-let interval
 let timeout
 let tl
 
-function incrementIndex() {
-  index.value = (index.value + 1) % props.featuredFilms?.length
+function setIndex(i) {
+  index.value = i
+
+  gsap.to($$baseline.value[i], {
+    opacity: 1,
+    transform: 'translateY(0)',
+  })
+
+  if (i > 0) {
+    console.log('animate out', $$baseline.value[i - 1])
+    gsap.to($$baseline.value[i - 1], {
+      opacity: 0,
+      transform: 'translateY(-5rem)',
+    })
+  }
+
+  if (i < 2) {
+    gsap.to($$baseline.value[i + 1], {
+      opacity: 0,
+      transform: 'translateY(5rem)',
+    })
+  }
 }
 
 onMounted(() => {
@@ -40,33 +60,33 @@ onMounted(() => {
       '-=0.2'
     )
 
+    let currentProgressFlag = -1
+
     ScrollTrigger.create({
       trigger: '.c-slideshow',
       pin: true,
-      end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
+      end: '+=' + window.innerHeight * 3, // TODO - Make innerHeight reactive
       onUpdate: (self) => {
-        if (self.progress > 0 && self.progress < 0.3) {
-          console.log('index 0')
+        let progressFlag = -1
+
+        if (self.progress < 0.3) {
+          progressFlag = 0
+        } else if (self.progress < 0.6) {
+          progressFlag = 1
+        } else {
+          progressFlag = 2
         }
 
-        if (self.progress > 0.3 && self.progress < 0.6) {
-          console.log('index 1')
-        }
-
-        if (self.progress > 0.6) {
-          console.log('index 2')
+        if (progressFlag !== currentProgressFlag) {
+          setIndex(progressFlag)
+          currentProgressFlag = progressFlag
         }
       },
     })
   }, 100)
-
-  // interval = setInterval(() => {
-  //   incrementIndex()
-  // }, 3000)
 })
 
 onBeforeUnmount(() => {
-  clearInterval(interval)
   clearTimeout(timeout)
 
   ScrollTrigger.getAll().forEach((trigger) => {
@@ -84,7 +104,6 @@ onBeforeUnmount(() => {
       class="c-slideshow-video"
       v-for="(item, i) in featuredFilms"
       :class="[modifiers[index], i === index ? '-is-visible' : '']"
-      @click="incrementIndex"
     >
       <video
         class="c-slideshow-video__source"
@@ -113,8 +132,7 @@ onBeforeUnmount(() => {
       <h2
         v-for="(item, i) in featuredFilms"
         class="c-slideshow-footer__baseline o-title"
-        :class="[modifiers[index], i === index ? '-is-visible' : '']"
-        ref="$baselines"
+        ref="$$baseline"
         :key="i"
       >
         {{ item.baseline }}
@@ -124,6 +142,8 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
+$cubic: cubic-bezier(0.16, 1, 0.3, 1);
+
 .c-slideshow {
   height: 100svh;
   position: relative;
@@ -138,7 +158,7 @@ onBeforeUnmount(() => {
     border-radius: 0.4rem;
     overflow: hidden;
     transform-origin: center;
-    transition: 1.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: 1s cubic;
     height: auto;
     transition-property: opacity, visibility, height, width;
     opacity: 0;
@@ -235,37 +255,12 @@ onBeforeUnmount(() => {
       left: 2.4rem;
       bottom: 2.4rem;
       opacity: 0;
-      visibility: hidden;
       transform: translateY(5rem);
       @include mq($until: medium) {
         left: 1.2rem;
         bottom: 1.2rem;
       }
-      &.-is-visible {
-        opacity: 1;
-        visibility: visible;
-        animation: fadeInAndOut 3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-      }
     }
-  }
-}
-
-@keyframes fadeInAndOut {
-  0% {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  30% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  95% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-15px);
-    opacity: 0;
   }
 }
 </style>
