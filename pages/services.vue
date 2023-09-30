@@ -39,14 +39,19 @@ onBeforeRouteLeave((to, from, next) => {
 
 <template>
   <div class="l-services">
-    <Hero title="Services" :video="services?.videoUrl" scrollToTarget=".l-services__section" />
+    <Hero
+      title="Services"
+      :video="services?.videoUrl"
+      scrollToTarget=".l-services__section"
+      class="-is-hidden-in-footer"
+    />
     <ServicesSection
       v-for="(section, i) in services?.sections"
-      class="l-services__section"
+      class="l-services__section -is-hidden-in-footer"
       :section="section"
       :key="i"
     />
-    <Footer />
+    <Footer elemsToHide=".-is-hidden-in-footer" />
   </div>
 </template>
 

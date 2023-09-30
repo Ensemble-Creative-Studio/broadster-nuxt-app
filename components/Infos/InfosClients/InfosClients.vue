@@ -18,11 +18,11 @@ onMounted(() => {
       scrollTrigger: {
         trigger: $$base.value,
         markers: true,
-        start: 'top 80%',
+        start: 'top 75%',
       },
     })
 
-    tl.to('.c-infos-clients__item', { stagger: 0.1, opacity: 1, y: 0, duration: 1 })
+    tl.to('.c-infos-clients__item', { stagger: 0.1, opacity: 1, y: 0, duration: 0.5 })
   }, 500)
 })
 
@@ -57,7 +57,6 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .c-infos-clients {
   width: 100%;
-  margin-bottom: 10rem;
   &__grid {
     @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;

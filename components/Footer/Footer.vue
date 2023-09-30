@@ -1,4 +1,14 @@
 <script setup>
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+const props = defineProps({
+  elemsToHide: {
+    type: String,
+    required: true,
+  },
+})
+
 const query = groq`*[_type == "footer"][0]
   {
     title,
@@ -8,6 +18,37 @@ const query = groq`*[_type == "footer"][0]
 `
 
 const { data: footer } = useSanityQuery(query)
+
+let timeout
+let tl
+
+onMounted(() => {
+  timeout = setTimeout(() => {
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.c-footer',
+        markers: true,
+        start: 'top 75%',
+        onLeaveBack: () => {
+          tl.reverse()
+        },
+      },
+    })
+
+    tl.to(props.elemsToHide, { opacity: 0, duration: 0.5 })
+  }, 500)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(timeout)
+
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
+  })
+
+  tl.kill()
+  tl = null
+})
 </script>
 
 <template>

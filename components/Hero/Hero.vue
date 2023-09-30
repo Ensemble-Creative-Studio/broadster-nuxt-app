@@ -24,7 +24,7 @@ const lenis = inject('lenisCtx')
 
 let tl = gsap.timeline({
   ease: 'power3.out',
-  duration: 1,
+  duration: 2,
 })
 
 onMounted(() => {

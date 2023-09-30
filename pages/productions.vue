@@ -69,14 +69,15 @@ onBeforeRouteLeave((to, from, next) => {
       title="Productions"
       :video="productions?.videoUrl"
       scrollToTarget=".l-productions__section"
+      class="-is-hidden-in-footer"
     />
     <ProductionsSection
       v-for="section in productions?.sections"
       :section="section"
       :key="section._key"
-      class="l-productions__section"
+      class="l-productions__section -is-hidden-in-footer"
     />
-    <Footer class="l-productions__footer" />
+    <Footer class="l-productions__footer" elemsToHide=".-is-hidden-in-footer" />
   </div>
 </template>
 

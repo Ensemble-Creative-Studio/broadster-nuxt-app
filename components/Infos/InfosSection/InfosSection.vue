@@ -18,7 +18,7 @@ onMounted(() => {
     },
   })
 
-  tl.to($$base.value, { opacity: 1, duration: 1 })
+  tl.to($$base.value, { opacity: 1, duration: 0.5 })
 })
 
 onBeforeUnmount(() => {

@@ -19,12 +19,12 @@ onMounted(() => {
     tl = gsap.timeline({
       scrollTrigger: {
         trigger: $$base.value,
-        markers: true,
-        start: 'top 80%',
+        // markers: true,
+        start: 'top 75%',
       },
     })
 
-    tl.to('.c-index-summary__card', { stagger: 0.1, opacity: 1, duration: 1 })
+    tl.to('.c-index-summary__card', { stagger: 0.1, opacity: 1, duration: 0.5 })
   }, 500)
 })
 

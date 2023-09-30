@@ -19,11 +19,11 @@ onMounted(() => {
       scrollTrigger: {
         trigger: $$base.value,
         markers: true,
-        start: 'top 80%',
+        start: 'top 75%',
       },
     })
 
-    tl.to('.c-infos-numbers__card', { stagger: 0.1, opacity: 1, y: 0, duration: 1 })
+    tl.to('.c-infos-numbers__card', { stagger: 0.1, opacity: 1, y: 0, duration: 0.5 })
   }, 500)
 })
 

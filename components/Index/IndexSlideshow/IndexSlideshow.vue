@@ -48,7 +48,7 @@ onMounted(() => {
   timeout = setTimeout(() => {
     tl = gsap.timeline({
       defaults: {
-        ease: 'power4.out',
+        ease: 'power3.out',
         duration: 1,
       },
     })
@@ -150,7 +150,6 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
 
 .c-slideshow {
   height: 100vh;
-  height: -webkit-fill-available;
   position: relative;
   opacity: 0;
   &-video {
