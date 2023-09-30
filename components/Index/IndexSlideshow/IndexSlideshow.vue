@@ -14,8 +14,14 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
 const index = shallowRef(0)
 const $$baseline = shallowRef()
 
+const lenis = inject('lenisCtx')
+
 let timeout
 let tl
+
+function incrementIndex() {
+  lenis.value.scrollTo(window.innerHeight * (index.value + 1))
+}
 
 function setIndex(i) {
   index.value = i
@@ -103,6 +109,7 @@ onBeforeUnmount(() => {
       class="c-slideshow-video"
       v-for="(item, i) in featuredFilms"
       :class="[modifiers[index], i === index ? '-is-visible' : '']"
+      @click="incrementIndex"
     >
       <video
         class="c-slideshow-video__source"
