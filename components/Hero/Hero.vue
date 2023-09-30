@@ -1,6 +1,5 @@
 <script setup>
 import gsap from 'gsap'
-import CustomEase from 'gsap/CustomEase'
 
 const route = useRoute()
 

@@ -2,6 +2,8 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const slugs = ['productions', 'services', 'infos']
 
 const props = defineProps({

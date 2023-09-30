@@ -1,9 +1,6 @@
 <script setup>
 import Lenis from '@studio-freight/lenis'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
