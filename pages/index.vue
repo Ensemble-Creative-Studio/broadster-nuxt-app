@@ -45,7 +45,7 @@ onBeforeRouteLeave((to, from, next) => {
 <template>
   <div class="l-index">
     <IndexSlideshow :featuredFilms="home?.featuredFilms" class="-is-hidden-in-footer" />
-    <IndexSummary :links="home?.links" class="-is-hidden-in-footer" />
+    <IndexSummary :links="home?.links" />
     <Footer elemsToHide=".-is-hidden-in-footer" />
   </div>
 </template>

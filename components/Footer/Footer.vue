@@ -27,7 +27,7 @@ onMounted(() => {
     tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.c-footer',
-        markers: true,
+        // markers: true,
         start: 'top 75%',
         onLeaveBack: () => {
           tl.reverse()
@@ -112,10 +112,12 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       padding: 1.2rem;
       height: 10rem;
     }
-    &__link {
-      transition: 0.5s opacity $cubic;
-      &:hover {
-        opacity: 0.7;
+    @include mq($from: tablet) {
+      &__link {
+        transition: 0.5s opacity $cubic;
+        &:hover {
+          opacity: 0.7;
+        }
       }
     }
   }

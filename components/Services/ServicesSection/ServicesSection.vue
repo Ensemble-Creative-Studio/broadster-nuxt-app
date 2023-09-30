@@ -19,7 +19,7 @@ onMounted(() => {
     tl = gsap.timeline({
       scrollTrigger: {
         trigger: $$item.value,
-        markers: true,
+        // markers: true,
         start: 'top 75%',
       },
     })
