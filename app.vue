@@ -1,6 +1,6 @@
 <script setup>
 import Lenis from '@studio-freight/lenis'
-import gsap from 'gsap'
+import gsap from 'gsap/dist/gsap'
 
 const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
