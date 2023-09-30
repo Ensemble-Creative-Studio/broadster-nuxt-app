@@ -2,10 +2,10 @@
 import { ref } from 'vue'
 import Lenis from '@studio-freight/lenis'
 
-const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
+const route = useRoute()
 
-let lenisRef = ref(null) // Use a ref to store lenis
+let lenisRef = shallowRef() // Use a ref to store lenis
 
 const initLenis = () => {
   const lenis = new Lenis()
@@ -24,6 +24,17 @@ provide('lenisCtx', lenisRef) // Provide the ref
 onBeforeMount(() => {
   initLenis()
 })
+
+watch(
+  () => route.fullPath,
+  (value) => {
+    if (lenisRef.value) {
+      lenisRef.value.scrollTo(0, {
+        immediate: true,
+      })
+    }
+  }
+)
 </script>
 
 <template>
@@ -33,7 +44,6 @@ onBeforeMount(() => {
     </Transition>
     <Header />
     <NuxtPage />
-    <Footer />
   </div>
 </template>
 
