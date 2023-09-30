@@ -6,8 +6,8 @@ const isVideoPlayerOpen = useState('isVideoPlayerOpen', () => false)
 const isVideoCreditsOpen = useState('isVideoCreditsOpen', () => false)
 
 // Template refs
-const $video = shallowRef()
-const $timeline = shallowRef()
+const $video = ref(null)
+const $timeline = ref(null)
 
 const isPlaying = ref(false)
 const isMuted = ref(false)
@@ -15,7 +15,7 @@ const isFullscreen = ref(false)
 
 const videoCurrentTime = ref(0)
 const videoFormatedCurrentTime = ref(formatTime(videoCurrentTime.value))
-const videoDuration = shallowRef()
+const videoDuration = ref(null)
 const videoFormatedDuration = ref(formatTime(videoDuration.value))
 
 let raf = null

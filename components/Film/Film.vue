@@ -10,9 +10,9 @@ const props = defineProps({
   },
 })
 
-const $film = shallowRef()
-const $filmMeta = shallowRef()
-const $video = shallowRef()
+const $film = ref(null)
+const $filmMeta = ref(null)
+const $video = ref(null)
 const isHovered = ref(false)
 const isFeatured = computed(() => props.class.includes('-is-featured'))
 
@@ -141,8 +141,6 @@ function onCreditsClick() {
 </template>
 
 <style lang="scss" scoped>
-$cubic: cubic-bezier(0.16, 1, 0.3, 1);
-
 .c-film {
   border-radius: 0.4rem;
   overflow: hidden;
@@ -232,7 +230,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       width: 100%;
     }
     #{$self}:not(.-is-featured) & {
-      transition: transform 1.25s $cubic;
+      transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: translateY(100%);
       @include mq($until: medium) {
         transform: translateY(0%) !important;
@@ -274,7 +272,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        transition: transform 1.25s $cubic;
+        transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
 
         transform: translateY(calc(50%));
       }
@@ -296,7 +294,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        transition: transform 1.25s $cubic;
+        transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
         transform: translateY(calc(50%));
       }
     }
