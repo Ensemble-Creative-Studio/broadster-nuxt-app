@@ -33,7 +33,6 @@ onBeforeMount(() => {
     </Transition>
     <Header />
     <NuxtPage />
-    <Footer />
   </div>
 </template>
 
