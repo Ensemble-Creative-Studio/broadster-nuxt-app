@@ -1,5 +1,5 @@
 <script setup>
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 
 const query = groq`*[_type == "services"][0]
   {

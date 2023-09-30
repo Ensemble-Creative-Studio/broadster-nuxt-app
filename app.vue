@@ -1,6 +1,9 @@
 <script setup>
 import Lenis from '@studio-freight/lenis'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
@@ -16,12 +19,11 @@ const initLenis = () => {
   }
   requestAnimationFrame(raf)
 
-  gsap.ticker.add((time)=>{
-  lenis.raf(time * 1000)
-})
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000)
+  })
 
-gsap.ticker.lagSmoothing(0)
-
+  gsap.ticker.lagSmoothing(0)
   lenisRef.value = lenis
 }
 
