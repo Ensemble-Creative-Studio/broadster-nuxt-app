@@ -2,8 +2,6 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const slugs = ['productions', 'services', 'infos']
 
 const props = defineProps({
@@ -27,7 +25,7 @@ onMounted(() => {
     })
 
     tl.to('.c-index-summary__card', { stagger: 0.1, opacity: 1, duration: 1 })
-  }, 100)
+  }, 500)
 })
 
 onBeforeUnmount(() => {

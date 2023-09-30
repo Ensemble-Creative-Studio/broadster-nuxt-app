@@ -54,7 +54,7 @@ onBeforeRouteLeave((to, from, next) => {
 .l-services {
   opacity: 0;
   &__section {
-    margin-top: 32rem;
+    margin-top: 26rem;
     @include mq($until: tablet) {
       margin-top: 6rem;
     }

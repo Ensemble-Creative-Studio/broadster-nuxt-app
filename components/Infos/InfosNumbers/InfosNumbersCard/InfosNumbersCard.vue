@@ -28,6 +28,7 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 25vw; // TODO - Check this
   @include mq($until: tablet) {
     grid-column: auto / span 12;
   }

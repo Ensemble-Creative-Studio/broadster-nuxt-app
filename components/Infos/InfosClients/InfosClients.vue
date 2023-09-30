@@ -2,8 +2,6 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const props = defineProps({
   clients: {
     type: Array,
@@ -25,7 +23,7 @@ onMounted(() => {
     })
 
     tl.to('.c-infos-clients__item', { stagger: 0.1, opacity: 1, y: 0, duration: 1 })
-  }, 100)
+  }, 500)
 })
 
 onBeforeUnmount(() => {

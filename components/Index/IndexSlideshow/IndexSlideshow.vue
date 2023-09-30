@@ -2,8 +2,6 @@
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const props = defineProps({
   featuredFilms: {
     type: Array,
@@ -88,7 +86,7 @@ onMounted(() => {
         }
       },
     })
-  }, 100)
+  }, 500)
 })
 
 onBeforeUnmount(() => {
@@ -151,7 +149,8 @@ onBeforeUnmount(() => {
 $cubic: cubic-bezier(0.16, 1, 0.3, 1);
 
 .c-slideshow {
-  height: 100svh;
+  height: 100vh;
+  height: -webkit-fill-available;
   position: relative;
   opacity: 0;
   &-video {
@@ -160,7 +159,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -60%);
+    transform: translate3d(-50%, -60%, 0);
     border-radius: 0.4rem;
     overflow: hidden;
     transform-origin: center;

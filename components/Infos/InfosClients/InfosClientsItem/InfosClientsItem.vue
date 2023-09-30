@@ -16,7 +16,7 @@ const props = defineProps({
   color: $white;
   padding: 2.4rem;
   border-radius: 0.4rem;
-  min-height: 20rem;
+  min-height: clamp(20rem, 8vw, 10vw); // TODO - Check this
   display: flex;
   align-items: flex-end;
   @include mq($until: tablet) {

@@ -2,8 +2,6 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const props = defineProps({
   history: {
     type: Object,
@@ -26,7 +24,7 @@ onMounted(() => {
     })
 
     tl.to('.c-infos-numbers__card', { stagger: 0.1, opacity: 1, y: 0, duration: 1 })
-  }, 100)
+  }, 500)
 })
 
 onBeforeUnmount(() => {

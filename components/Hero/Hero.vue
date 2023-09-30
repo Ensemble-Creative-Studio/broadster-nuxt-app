@@ -22,8 +22,6 @@ async function delay(ms) {
 
 const lenis = inject('lenisCtx')
 
-let timeout = null
-
 let tl = gsap.timeline({
   ease: 'power3.out',
   duration: 1,
@@ -47,7 +45,6 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  clearTimeout(timeout)
   tl.kill()
   tl = null
 })
@@ -79,14 +76,11 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .c-hero {
-  height: 100svh;
+  height: 100vh;
   width: 100%;
   position: relative;
   user-select: none;
   $self: &;
-  @include mq($until: tablet) {
-    height: 75svh;
-  }
   &__title {
     position: absolute;
     top: 50%;

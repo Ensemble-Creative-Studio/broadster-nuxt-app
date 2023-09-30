@@ -2,8 +2,6 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const props = defineProps({
   section: {
     type: Object,
@@ -27,7 +25,7 @@ onMounted(() => {
     })
 
     tl.to('.c-services-section-block', { stagger: 0.1, opacity: 1, y: 0, duration: 1 })
-  }, 100)
+  }, 500)
 })
 
 onBeforeUnmount(() => {
@@ -107,7 +105,7 @@ onBeforeUnmount(() => {
   }
   &-block {
     background-color: $very-dark;
-    height: 63.9rem;
+    height: clamp(63.9rem, 36vw, 42vw); // TODO - Check this
     border-radius: 0.4rem;
     overflow: hidden;
     @include mq($until: desktop) {
@@ -117,6 +115,7 @@ onBeforeUnmount(() => {
       grid-column: auto / span 2;
       @include mq($until: desktop) {
         grid-column: auto / span 3;
+        height: 1435;
       }
     }
     &.-has-medium-text {
@@ -133,7 +132,6 @@ onBeforeUnmount(() => {
       }
       @include mq($until: desktop) {
         grid-column: auto / span 12;
-        height: auto;
       }
       @include mq($until: tablet) {
         font-size: 1.7rem;
@@ -156,6 +154,7 @@ onBeforeUnmount(() => {
       grid-column: auto / span 6;
       @include mq($until: desktop) {
         grid-column: auto / span 9;
+        height: 35vw;
       }
     }
     #{$self}.-is-sbm & {

@@ -53,11 +53,17 @@ const hasEnoughFilms = computed(() => {
     @include mq($until: medium) {
       margin-bottom: 21rem;
     }
+    @include mq($until: tablet) {
+      margin-bottom: 16rem;
+    }
   }
   &__title {
     margin-top: 28rem;
     @include mq($until: medium) {
       margin-top: 21rem;
+    }
+    @include mq($until: tablet) {
+      margin-top: 16rem;
     }
   }
   &__slider {

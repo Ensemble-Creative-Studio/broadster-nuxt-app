@@ -2,8 +2,6 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const props = defineProps({
   blocks: {
     type: Object,
@@ -89,7 +87,7 @@ onBeforeUnmount(() => {
   &-block {
     $block: &;
     background-color: $very-dark;
-    height: 63.9rem;
+    height: clamp(63.9rem, 36vw, 42vw); // TODO - Check this
     border-radius: 0.4rem;
     overflow: hidden;
     @include mq($until: desktop) {

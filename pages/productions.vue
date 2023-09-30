@@ -76,12 +76,15 @@ onBeforeRouteLeave((to, from, next) => {
       :key="section._key"
       class="l-productions__section"
     />
-    <Footer />
+    <Footer class="l-productions__footer" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .l-productions {
   opacity: 0;
+  &__footer {
+    margin-top: 26rem;
+  }
 }
 </style>
