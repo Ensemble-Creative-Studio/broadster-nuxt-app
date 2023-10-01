@@ -25,7 +25,7 @@ let timeout
 onMounted(() => {
   timeout = setTimeout(() => {
     gsap.to(`.-has-index-${props.index} .c-productions-section__film:not(.-is-featured)`, {
-      stagger: 0.3,
+      stagger: 0.15,
       opacity: 1,
       duration: 1,
       ease: 'expo.out',

@@ -14,7 +14,7 @@ let timeout
 onMounted(() => {
   timeout = setTimeout(() => {
     gsap.to('.c-infos-clients__item', {
-      stagger: 0.1,
+      stagger: 0.15,
       opacity: 1,
       y: 0,
       duration: 1,
