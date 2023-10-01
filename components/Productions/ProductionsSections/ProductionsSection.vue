@@ -41,7 +41,7 @@ onMounted(() => {
       ease: 'expo.out',
       scrollTrigger: {
         trigger: `.-has-index-${props.index}`,
-        markers: true,
+        // markers: true,
         start: 'top 50%',
       },
     })

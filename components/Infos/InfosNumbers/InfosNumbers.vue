@@ -12,13 +12,13 @@ const $$base = shallowRef()
 const $$item = shallowRef()
 
 let timeout
+let tl
 
 onMounted(() => {
   timeout = setTimeout(() => {
     gsap.to('.c-infos-numbers__card', {
       stagger: 0.3,
       opacity: 1,
-      y: 0,
       duration: 1,
       ease: 'expo.out',
       scrollTrigger: {
@@ -65,7 +65,6 @@ onBeforeUnmount(() => {
   }
   &__card {
     opacity: 0;
-    transform: translateY(5rem);
   }
 }
 </style>
