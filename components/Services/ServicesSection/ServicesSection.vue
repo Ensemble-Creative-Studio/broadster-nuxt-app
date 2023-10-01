@@ -73,7 +73,7 @@ onBeforeUnmount(() => {
             <ul class="c-services-section-block__list">
               <li
                 v-for="item in section.presentation.expertises"
-                class="c-services-section-block__tag o-button"
+                class="c-services-section-block__tag o-button -has-white-outline"
               >
                 {{ item }}
               </li>
