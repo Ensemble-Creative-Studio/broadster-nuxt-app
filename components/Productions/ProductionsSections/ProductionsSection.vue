@@ -72,6 +72,7 @@ const hasEnoughFilms = computed(() => {
       overflow: visible;
       @include mq($until: tablet) {
         &-slide {
+          height: auto;
           :deep(.c-film__description) {
             opacity: 0;
             visibility: hidden;
