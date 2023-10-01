@@ -46,6 +46,9 @@ function setIndex(i) {
 }
 
 onMounted(() => {
+  window.addEventListener('resize', setHeight)
+  setHeight()
+
   timeout = setTimeout(() => {
     tl = gsap.timeline({
       defaults: {
@@ -99,7 +102,14 @@ onBeforeUnmount(() => {
 
   tl.kill()
   tl = null
+
+  window.removeEventListener('resize', setHeight)
 })
+
+function setHeight() {
+  const vh = window.innerHeight * 0.01
+  document.documentElement.style.setProperty('--vh', `${vh}px`)
+}
 </script>
 
 <template>
@@ -147,10 +157,15 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
+:root {
+  --vh: 1vh;
+}
+
 $cubic: cubic-bezier(0.16, 1, 0.3, 1);
 
 .c-slideshow {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   position: relative;
   opacity: 0;
   &-video {
