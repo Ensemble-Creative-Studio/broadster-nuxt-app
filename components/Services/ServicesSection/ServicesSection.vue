@@ -12,21 +12,6 @@ const props = defineProps({
 const $$item = shallowRef()
 
 let timeout
-let tl
-
-onMounted(() => {
-  timeout = setTimeout(() => {
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: $$item.value,
-        // markers: true,
-        start: 'top 75%',
-      },
-    })
-
-    tl.to('.c-services-section-block', { stagger: 0.1, opacity: 1, y: 0, duration: 0.5 })
-  }, 500)
-})
 
 onBeforeUnmount(() => {
   clearTimeout(timeout)
@@ -34,9 +19,6 @@ onBeforeUnmount(() => {
   ScrollTrigger.getAll().forEach((trigger) => {
     trigger.kill()
   })
-
-  tl.kill()
-  tl = null
 })
 </script>
 

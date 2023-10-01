@@ -72,8 +72,9 @@ onBeforeRouteLeave((to, from, next) => {
       class="-is-hidden-in-footer"
     />
     <ProductionsSection
-      v-for="section in productions?.sections"
+      v-for="(section, i) in productions?.sections"
       :section="section"
+      :index="i"
       :key="section._key"
       class="l-productions__section -is-hidden-in-footer"
     />

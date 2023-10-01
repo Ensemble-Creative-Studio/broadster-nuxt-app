@@ -10,24 +10,20 @@ const props = defineProps({
 
 const $$base = shallowRef()
 let timeout
-let tl
 
 onMounted(() => {
   timeout = setTimeout(() => {
-    tl = gsap.timeline({
+    gsap.to('.c-infos-clients__item', {
+      stagger: 0.1,
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: 'expo.out',
       scrollTrigger: {
         trigger: $$base.value,
         // markers: true,
         start: 'top 75%',
       },
-    })
-
-    tl.to('.c-infos-clients__item', {
-      stagger: 0.1,
-      opacity: 1,
-      y: 0,
-      duration: 2,
-      ease: 'expo.out',
     })
   }, 500)
 })
@@ -38,9 +34,6 @@ onBeforeUnmount(() => {
   ScrollTrigger.getAll().forEach((trigger) => {
     trigger.kill()
   })
-
-  tl.kill()
-  tl = null
 })
 </script>
 
@@ -71,7 +64,7 @@ onBeforeUnmount(() => {
   &__item {
     grid-column: auto / span 3;
     opacity: 0;
-    transform: translateY(2rem);
+    transform: translateY(5rem);
     @include mq($until: small) {
       grid-column: auto / span 4;
     }
