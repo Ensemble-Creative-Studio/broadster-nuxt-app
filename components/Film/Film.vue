@@ -172,6 +172,9 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     @include mq($until: mobile) {
       height: auto;
     }
+    #{$self}.-is-featured & {
+      transform: scale(0.7);
+    }
   }
   &__overlay,
   &__thumbnail,
@@ -233,6 +236,9 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     }
     @include mq($until: mobile) {
       height: 100%;
+    }
+    #{$self}.-is-featured & {
+      opacity: 0;
     }
     #{$self}:not(.-is-featured) & {
       transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);

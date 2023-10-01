@@ -35,7 +35,7 @@ onMounted(() => {
       },
     })
 
-    gsap.to(`.-has-index-${props.index} .c-productions-section__film.-is-featured`, {
+    gsap.to(`.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__media`, {
       scale: 1,
       duration: 1.5,
       ease: 'expo.out',
@@ -43,6 +43,15 @@ onMounted(() => {
         trigger: `.-has-index-${props.index}`,
         // markers: true,
         start: 'top 50%',
+      },
+      onComplete: () => {
+        gsap.to(
+          `.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__meta`,
+          {
+            opacity: 1,
+            duration: 0.5,
+          }
+        )
       },
     })
   }, 500)
@@ -165,7 +174,6 @@ onBeforeUnmount(() => {
       max-width: 80%;
       max-height: 80vh;
       margin: 0 auto;
-      transform: scale(0.8);
       @include mq($until: tablet) {
         max-width: 100%;
         max-height: initial;
