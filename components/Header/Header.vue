@@ -51,11 +51,11 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
         &:hover {
           opacity: 0.5;
         }
-        &:not(:first-child) {
-          margin-left: 2.4rem;
-          @include mq($until: tablet) {
-            margin-left: 0.8rem;
-          }
+      }
+      &:not(:first-child) {
+        margin-left: 2.4rem;
+        @include mq($until: tablet) {
+          margin-left: 0.8rem;
         }
       }
     }
