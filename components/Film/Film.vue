@@ -347,7 +347,6 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
   &-credits-button {
     cursor: pointer;
     background-color: $black;
-    border: 0.1rem solid $black;
     color: $white;
     transition: 0.5s transform $cubic;
     will-change: transform;
