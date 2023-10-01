@@ -69,7 +69,21 @@ const hasEnoughFilms = computed(() => {
   &__slider {
     margin-top: 2.4rem;
     .swiper {
-      overflow: visible !important;
+      overflow: visible;
+      @include mq($until: tablet) {
+        &-slide {
+          :deep(.c-film__description) {
+            opacity: 0;
+            visibility: hidden;
+          }
+          &-active {
+            :deep(.c-film__description) {
+              opacity: 1;
+              visibility: visible;
+            }
+          }
+        }
+      }
       @include mq($from: tablet) {
         &-slide {
           &.-is-half {
@@ -86,6 +100,11 @@ const hasEnoughFilms = computed(() => {
     aspect-ratio: 6 / 4;
     @include mq($until: medium) {
       aspect-ratio: initial;
+    }
+    @include mq($until: mobile) {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
     &:not(:last-child) {
       margin-right: 1.2rem;

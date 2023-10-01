@@ -94,12 +94,14 @@ function onCreditsClick() {
               : `translateY(100%)`,
         }"
       >
-        <h3 class="c-film__title o-thumbnail-title">{{ film.title }}</h3>
-        <p
-          class="c-film__description"
-          v-if="film.shortDescription"
-          v-html="film.shortDescription"
-        ></p>
+        <div class="c-film__details">
+          <h3 class="c-film__title o-thumbnail-title">{{ film.title }}</h3>
+          <p
+            class="c-film__description"
+            v-if="film.shortDescription"
+            v-html="film.shortDescription"
+          ></p>
+        </div>
         <footer class="c-film__footer">
           <button
             class="c-film-play-button o-button -has-white-background -has-icon"
@@ -146,10 +148,6 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
   user-select: none;
   $self: &;
-  @include mq($until: medium) {
-    height: auto;
-    overflow: visible;
-  }
   &__container {
     position: relative;
     height: 100%;
@@ -160,6 +158,8 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       flex-direction: column;
       justify-content: flex-end;
     }
+    @include mq($until: mobile) {
+    }
   }
   &__media {
     position: relative;
@@ -168,6 +168,9 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     aspect-ratio: 66 / 43.5;
     @include mq($until: medium) {
       aspect-ratio: 3 / 2;
+    }
+    @include mq($until: mobile) {
+      height: auto;
     }
   }
   &__overlay,
@@ -226,15 +229,27 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       left: 0;
       display: flex;
       flex-direction: column;
-      flex: 2;
       width: 100%;
+    }
+    @include mq($until: mobile) {
+      height: 100%;
     }
     #{$self}:not(.-is-featured) & {
       transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: translateY(100%);
       @include mq($until: medium) {
         transform: translateY(0%) !important;
+        flex: 1;
       }
+    }
+  }
+  &__details {
+    @include mq($until: medium) {
+      order: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
     }
   }
   &__title,
@@ -247,7 +262,6 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
   &__title {
     max-width: 35ch;
     @include mq($until: medium) {
-      order: 2;
       margin-top: 1rem;
       max-width: 100%;
     }
@@ -263,8 +277,8 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
   &__description {
     margin-top: 1.2rem;
     max-width: 50ch;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
     @include mq($until: medium) {
-      order: 3;
       flex: auto;
       display: flex;
       align-items: flex-end;
@@ -333,7 +347,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
   &-credits-button {
     cursor: pointer;
     background-color: $black;
-    border: .1rem solid $black;
+    border: 0.1rem solid $black;
     color: $white;
     transition: 0.5s transform $cubic;
     will-change: transform;

@@ -48,9 +48,6 @@
   @include mq($until: desktop) {
     font-size: 2rem;
   }
-  @include mq($until: mobile) {
-    font-size: 1.6rem;
-  }
 }
 
 .o-button {
