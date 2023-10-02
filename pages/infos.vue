@@ -39,6 +39,7 @@ onBeforeRouteLeave((to, from, next) => {
 </script>
 
 <template>
+  <Title>Broadster — Infos</Title>
   <div class="l-infos">
     <Hero
       title="Infos"

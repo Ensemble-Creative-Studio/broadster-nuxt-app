@@ -64,6 +64,7 @@ onBeforeRouteLeave((to, from, next) => {
 </script>
 
 <template>
+  <Title>Broadster — Productions</Title>
   <div class="l-productions">
     <Hero
       title="Productions"

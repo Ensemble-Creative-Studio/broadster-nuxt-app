@@ -43,6 +43,15 @@ watch(
     }
   }
 )
+
+useSeoMeta({
+  description:
+    'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
+  ogDescription:
+    'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
+  // ogImage: 'https://example.com/image.png',
+  // twitterCard: 'summary_large_image',
+})
 </script>
 
 <template>

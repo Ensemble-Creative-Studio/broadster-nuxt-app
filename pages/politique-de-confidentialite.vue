@@ -25,6 +25,7 @@ onBeforeRouteLeave((to, from, next) => {
 </script>
 
 <template>
+  <Title>Broadster — Politiques de confidentialité</Title>
   <div class="l-policy">
     <Annex :data="policy" />
     <Footer />

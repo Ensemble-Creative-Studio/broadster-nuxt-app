@@ -43,6 +43,7 @@ onBeforeRouteLeave((to, from, next) => {
 </script>
 
 <template>
+  <Title>Broadster</Title>
   <div class="l-index">
     <IndexSlideshow :featuredFilms="home?.featuredFilms" class="-is-hidden-in-footer" />
     <IndexSummary :links="home?.links" />

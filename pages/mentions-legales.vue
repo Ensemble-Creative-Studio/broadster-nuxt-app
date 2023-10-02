@@ -25,6 +25,7 @@ onBeforeRouteLeave((to, from, next) => {
 </script>
 
 <template>
+  <Title>Broadster — Mentions légales</Title>
   <div class="l-legal">
     <Annex :data="legal" />
     <Footer />
