@@ -1,10 +1,14 @@
 <script setup>
-import { ref } from 'vue'
 import Lenis from '@studio-freight/lenis'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
 
-let lenisRef = ref(null) // Use a ref to store lenis
+let lenisRef = shallowRef(null)
 
 const initLenis = () => {
   const lenis = new Lenis()
@@ -15,10 +19,15 @@ const initLenis = () => {
   }
   requestAnimationFrame(raf)
 
-  lenisRef.value = lenis // Assign lenis to the ref
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000)
+  })
+
+  gsap.ticker.lagSmoothing(0)
+  lenisRef.value = lenis
 }
 
-provide('lenisCtx', lenisRef) // Provide the ref
+provide('lenisCtx', lenisRef)
 
 onBeforeMount(() => {
   initLenis()
@@ -31,15 +40,6 @@ watch(
       lenisRef.value.scrollTo(0, {
         immediate: true,
       })
-
-      // if (
-      //   value === '/' ||
-      //   value === '/productions' ||
-      //   value === '/services' ||
-      //   value === '/infos'
-      // ) {
-      //   lenisRef.value.stop()
-      // }
     }
   }
 )
@@ -52,7 +52,6 @@ watch(
     </Transition>
     <Header />
     <NuxtPage />
-    <Footer />
   </div>
 </template>
 

@@ -1,4 +1,6 @@
 <script setup>
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 
@@ -6,17 +8,72 @@ const props = defineProps({
   section: {
     type: Object,
   },
+  index: {
+    type: Number,
+  },
 })
 
 const hasEnoughFilms = computed(() => {
   return props.section?.films?.length > 2
 })
+
+const $$featuredFilm = shallowRef()
+const $$film = shallowRef()
+
+let timeout
+
+onMounted(() => {
+  timeout = setTimeout(() => {
+    gsap.to(`.-has-index-${props.index} .c-productions-section__film:not(.-is-featured)`, {
+      stagger: 0.15,
+      opacity: 1,
+      duration: 1,
+      ease: 'expo.out',
+      scrollTrigger: {
+        trigger: `.-has-index-${props.index} .c-productions-section__slider`,
+        start: 'top 50%',
+      },
+    })
+
+    gsap.to(`.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__media`, {
+      scale: 1,
+      duration: 1.5,
+      ease: 'expo.out',
+      scrollTrigger: {
+        trigger: `.-has-index-${props.index}`,
+        // markers: true,
+        start: 'top 50%',
+      },
+      onComplete: () => {
+        gsap.to(
+          `.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__meta`,
+          {
+            opacity: 1,
+            duration: 0.5,
+          }
+        )
+      },
+    })
+  }, 500)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(timeout)
+
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
+  })
+})
 </script>
 
 <template>
-  <div class="c-productions-section">
+  <div class="c-productions-section" :class="'-has-index-' + index">
     <div class="c-productions-section__container u-wrapper">
-      <Film :film="section.featuredFilm" class="c-productions-section__film -is-featured" />
+      <Film
+        :film="section.featuredFilm"
+        class="c-productions-section__film -is-featured"
+        ref="$$featuredFilm"
+      />
       <h2 class="c-productions-section__title o-title">{{ section.title }}</h2>
       <div class="c-productions-section__slider">
         <Swiper
@@ -38,7 +95,7 @@ const hasEnoughFilms = computed(() => {
             }"
             :key="i"
           >
-            <Film :film="film" class="c-productions-section__film" />
+            <Film :film="film" class="c-productions-section__film" ref="$$film" />
           </SwiperSlide>
         </Swiper>
       </div>
@@ -53,17 +110,38 @@ const hasEnoughFilms = computed(() => {
     @include mq($until: medium) {
       margin-bottom: 21rem;
     }
+    @include mq($until: tablet) {
+      margin-bottom: 16rem;
+    }
   }
   &__title {
     margin-top: 28rem;
     @include mq($until: medium) {
       margin-top: 21rem;
     }
+    @include mq($until: tablet) {
+      margin-top: 16rem;
+    }
   }
   &__slider {
     margin-top: 2.4rem;
     .swiper {
-      overflow: visible !important;
+      overflow: visible;
+      @include mq($until: tablet) {
+        &-slide {
+          height: auto;
+          :deep(.c-film__description) {
+            opacity: 0;
+            visibility: hidden;
+          }
+          &-active {
+            :deep(.c-film__description) {
+              opacity: 1;
+              visibility: visible;
+            }
+          }
+        }
+      }
       @include mq($from: tablet) {
         &-slide {
           &.-is-half {
@@ -80,6 +158,14 @@ const hasEnoughFilms = computed(() => {
     aspect-ratio: 6 / 4;
     @include mq($until: medium) {
       aspect-ratio: initial;
+    }
+    @include mq($until: mobile) {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    &:not(.-is-featured) {
+      opacity: 0;
     }
     &:not(:last-child) {
       margin-right: 1.2rem;

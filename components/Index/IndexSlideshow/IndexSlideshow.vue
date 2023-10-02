@@ -1,33 +1,115 @@
 <script setup>
+import { gsap } from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
 const props = defineProps({
   featuredFilms: {
     type: Array,
   },
 })
 
-const index = ref(0)
-let interval
+const modifiers = ['-is-wide', '-is-square', '-is-mobile']
+const index = shallowRef(0)
+const $$baseline = shallowRef()
+
+const lenis = inject('lenisCtx')
+
+let timeout
+let tl
 
 function incrementIndex() {
-  index.value = (index.value + 1) % props.featuredFilms?.length
+  const value = ((index.value + 1) * (window.innerHeight * 2)) / 3
+  lenis.value.scrollTo(value)
+}
+
+function setIndex(i) {
+  index.value = i
+
+  gsap.to($$baseline.value[i], {
+    opacity: 1,
+    transform: 'translateY(0)',
+  })
+
+  if (i > 0) {
+    gsap.to($$baseline.value[i - 1], {
+      opacity: 0,
+      transform: 'translateY(-5rem)',
+    })
+  }
+
+  if (i < 2) {
+    gsap.to($$baseline.value[i + 1], {
+      opacity: 0,
+      transform: 'translateY(5rem)',
+    })
+  }
 }
 
 onMounted(() => {
-  interval = setInterval(() => {
-    const previousIndex = computed(() => {
-      return index.value - 1 < 0 ? props.featuredFilms?.length - 1 : index.value - 1
-     })
-  index.value = (index.value + 1) % props.featuredFilms?.length
-  }, 3000)
+  window.addEventListener('resize', setHeight)
+  setHeight()
+
+  timeout = setTimeout(() => {
+    tl = gsap.timeline({
+      defaults: {
+        duration: 1,
+        ease: 'expo.out',
+      },
+    })
+
+    tl.to('.c-slideshow', {
+      opacity: 1,
+    }).to(
+      '.c-slideshow-video__meta',
+      {
+        opacity: 1,
+      },
+      '-=0.2'
+    )
+
+    let currentProgressFlag = -1
+
+    ScrollTrigger.create({
+      trigger: '.c-slideshow',
+      pin: true,
+      end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
+      onUpdate: (self) => {
+        let progressFlag = -1
+
+        if (self.progress < 0.3) {
+          progressFlag = 0
+        } else if (self.progress < 0.6) {
+          progressFlag = 1
+        } else {
+          progressFlag = 2
+        }
+
+        if (progressFlag !== currentProgressFlag) {
+          setIndex(progressFlag)
+          currentProgressFlag = progressFlag
+        }
+      },
+    })
+  }, 500)
 })
 
-onUnmounted(() => {
-  clearInterval(interval)
+onBeforeUnmount(() => {
+  clearTimeout(timeout)
+
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
+  })
+
+  tl.kill()
+  tl = null
+
+  window.removeEventListener('resize', setHeight)
 })
 
-// TODO - Calculate the desired height for container
-const aspectRatios = [1.77, 2.25, 0.6]
-const modifiers = ['-is-wide', '-is-square', '-is-mobile']
+function setHeight() {
+  const vh = window.innerHeight * 0.01
+  document.documentElement.style.setProperty('--vh', `${vh}px`)
+}
 </script>
 
 <template>
@@ -65,8 +147,7 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
       <h2
         v-for="(item, i) in featuredFilms"
         class="c-slideshow-footer__baseline o-title"
-        :class="[modifiers[index], i === index ? '-is-visible' : '']"
-        ref="$baselines"
+        ref="$$baseline"
         :key="i"
       >
         {{ item.baseline }}
@@ -76,24 +157,33 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
 </template>
 
 <style lang="scss" scoped>
+:root {
+  --vh: 1vh;
+}
+
+$cubic: cubic-bezier(0.16, 1, 0.3, 1);
+
 .c-slideshow {
-  height: 100svh;
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   position: relative;
+  opacity: 0;
   &-video {
     cursor: pointer;
     user-select: none;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -60%);
+    transform: translate3d(-50%, -60%, 0);
     border-radius: 0.4rem;
     overflow: hidden;
     transform-origin: center;
-    transition: 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: 1s cubic;
     height: auto;
     transition-property: opacity, visibility, height, width;
     opacity: 0;
     visibility: hidden;
+    will-change: opacity, visibility, height, width;
 
     &.-is-visible {
       opacity: 1;
@@ -130,12 +220,15 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
       position: absolute;
       top: 0;
       left: 0;
+      opacity: 1;
+      visibility: visible;
     }
     &__meta {
       position: absolute;
       bottom: 3.6rem;
       left: 3.6rem;
       width: calc(100% - 6.4rem);
+      opacity: 0;
       @include mq($until: large) {
         bottom: 2.4rem;
         left: 2.4rem;
@@ -182,37 +275,12 @@ const modifiers = ['-is-wide', '-is-square', '-is-mobile']
       left: 2.4rem;
       bottom: 2.4rem;
       opacity: 0;
-      visibility: hidden;
       transform: translateY(5rem);
       @include mq($until: medium) {
         left: 1.2rem;
         bottom: 1.2rem;
       }
-      &.-is-visible {
-        opacity: 1;
-        visibility: visible;
-        animation: fadeInAndOut 3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-      }
     }
-  }
-}
-
-@keyframes fadeInAndOut {
-  0% {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  30% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  95% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-15px);
-    opacity: 0;
   }
 }
 </style>

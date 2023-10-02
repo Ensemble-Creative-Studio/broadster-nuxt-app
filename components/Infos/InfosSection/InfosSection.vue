@@ -1,13 +1,35 @@
 <script setup>
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
 const props = defineProps({
   blocks: {
     type: Object,
   },
 })
+
+const $$base = shallowRef()
+
+onMounted(() => {
+  gsap.to($$base.value, {
+    opacity: 1,
+    duration: 0.5,
+    scrollTrigger: {
+      trigger: $$base.value,
+      // markers: true,
+    },
+  })
+})
+
+onBeforeUnmount(() => {
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
+  })
+})
 </script>
 
 <template>
-  <div class="c-infos-section">
+  <div class="c-infos-section" ref="$$base">
     <div class="c-infos-section__container u-wrapper">
       <div class="c-infos-section__grid">
         <div class="c-infos-section-block -has-big-text -is-mobile">
@@ -56,6 +78,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .c-infos-section {
+  opacity: 0;
   &__grid {
     @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;
@@ -64,7 +87,7 @@ const props = defineProps({
   &-block {
     $block: &;
     background-color: $very-dark;
-    height: 63.9rem;
+    height: clamp(63.9rem, 36vw, 42vw); // TODO - Check this
     border-radius: 0.4rem;
     overflow: hidden;
     @include mq($until: desktop) {

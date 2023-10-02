@@ -1,4 +1,6 @@
 <script setup>
+import { gsap } from 'gsap'
+
 const route = useRoute()
 
 const props = defineProps({
@@ -9,6 +11,49 @@ const props = defineProps({
   video: {
     type: String,
   },
+  scrollToTarget: {
+    type: String,
+  },
+})
+
+async function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+const lenis = inject('lenisCtx')
+
+let tl = gsap.timeline({
+  defaults: {
+    duration: 2,
+    ease: 'expo.out',
+  },
+})
+
+onMounted(() => {
+  tl.to('.c-hero__title', {
+    opacity: 1,
+    transform: 'translate(-50%, -75%) scale(1)',
+    delay: 1,
+  }).to(
+    '.c-hero-video',
+    {
+      transform: 'translate(-50%, -50%) scale(1)',
+      onComplete: async () => {
+        await delay(1000)
+        if (window.scrollY < 100) {
+          lenis.value.scrollTo(props.scrollToTarget, {
+            offset: -100,
+          })
+        }
+      },
+    },
+    '-=2.1'
+  )
+})
+
+onBeforeUnmount(() => {
+  tl.kill()
+  tl = null
 })
 </script>
 
@@ -22,33 +67,40 @@ const props = defineProps({
     }"
   >
     <h1 class="c-hero__title o-section-title">{{ title }}</h1>
-    <div v-if="video" class="c-hero-video">
-      <video :src="video" class="c-hero-video__source" autoplay muted loop playsinline></video>
+    <div class="c-hero-video">
+      <video
+        :src="video"
+        class="c-hero-video__source"
+        autoplay
+        muted
+        loop
+        playsinline
+        data-not-lazy
+      ></video>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .c-hero {
-  height: 100svh;
+  height: 100vh;
   width: 100%;
   position: relative;
   user-select: none;
+  overflow: hidden;
   $self: &;
-  @include mq($until: tablet) {
-    height: 75svh;
-  }
   &__title {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -75%);
+    transform: translate(-50%, 500%) scale(0.5);
+    opacity: 0;
   }
   &-video {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 500%) scale(0);
     z-index: -1;
     border-radius: 0.4rem;
     overflow: hidden;
@@ -63,6 +115,10 @@ const props = defineProps({
     #{$self}.-is-infos & {
       aspect-ratio: 9 / 16;
       height: min(80vw, 40rem);
+    }
+    &__source {
+      opacity: 1;
+      visibility: visible;
     }
   }
 }

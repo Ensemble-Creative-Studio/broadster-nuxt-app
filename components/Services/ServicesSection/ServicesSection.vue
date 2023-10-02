@@ -1,9 +1,24 @@
 <script setup>
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
 const props = defineProps({
   section: {
     type: Object,
     required: true,
   },
+})
+
+const $$item = shallowRef()
+
+let timeout
+
+onBeforeUnmount(() => {
+  clearTimeout(timeout)
+
+  ScrollTrigger.getAll().forEach((trigger) => {
+    trigger.kill()
+  })
 })
 </script>
 
@@ -23,7 +38,7 @@ const props = defineProps({
     <div class="c-services-section__container u-wrapper">
       <h2 class="o-title">{{ section.title }}</h2>
       <div class="c-services-section__grid">
-        <div class="c-services-section-block -has-small-video">
+        <div class="c-services-section-block -has-small-video" ref="$$item">
           <video
             class="c-services-section__source"
             :src="section?.video1?.url"
@@ -33,21 +48,21 @@ const props = defineProps({
             playsinline
           ></video>
         </div>
-        <div class="c-services-section-block -has-medium-text">
+        <div class="c-services-section-block -has-medium-text" ref="$$item">
           <SanityContent :blocks="section.presentation.text" />
           <footer class="c-services-section-block__footer">
             <h3>{{ section.presentation.label }}</h3>
             <ul class="c-services-section-block__list">
               <li
                 v-for="item in section.presentation.expertises"
-                class="c-services-section-block__tag o-button"
+                class="c-services-section-block__tag o-button -has-white-outline"
               >
                 {{ item }}
               </li>
             </ul>
           </footer>
         </div>
-        <div class="c-services-section-block -has-big-video">
+        <div class="c-services-section-block -has-big-video" ref="$$item">
           <video
             class="c-services-section__source"
             :src="section?.video2?.url"
@@ -72,7 +87,7 @@ const props = defineProps({
   }
   &-block {
     background-color: $very-dark;
-    height: 63.9rem;
+    height: clamp(63.9rem, 36vw, 42vw); // TODO - Check this
     border-radius: 0.4rem;
     overflow: hidden;
     @include mq($until: desktop) {
@@ -82,6 +97,7 @@ const props = defineProps({
       grid-column: auto / span 2;
       @include mq($until: desktop) {
         grid-column: auto / span 3;
+        height: 1435;
       }
     }
     &.-has-medium-text {
@@ -98,7 +114,6 @@ const props = defineProps({
       }
       @include mq($until: desktop) {
         grid-column: auto / span 12;
-        height: auto;
       }
       @include mq($until: tablet) {
         font-size: 1.7rem;
@@ -121,6 +136,7 @@ const props = defineProps({
       grid-column: auto / span 6;
       @include mq($until: desktop) {
         grid-column: auto / span 9;
+        height: 35vw;
       }
     }
     #{$self}.-is-sbm & {

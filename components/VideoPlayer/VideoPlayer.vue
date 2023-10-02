@@ -3,11 +3,11 @@ import { useFullscreen } from '@vueuse/core'
 
 const currentFilm = useState('currentFilm')
 const isVideoPlayerOpen = useState('isVideoPlayerOpen', () => false)
-const isCreditsOpen = ref(false)
+const isVideoCreditsOpen = useState('isVideoCreditsOpen', () => false)
 
-// Template refs
-const $video = ref(null)
-const $timeline = ref(null)
+const $$base = ref(null)
+const $$video = ref(null)
+const $$timeline = ref(null)
 
 const isPlaying = ref(false)
 const isMuted = ref(false)
@@ -18,6 +18,10 @@ const videoFormatedCurrentTime = ref(formatTime(videoCurrentTime.value))
 const videoDuration = ref(null)
 const videoFormatedDuration = ref(formatTime(videoDuration.value))
 
+const lenis = inject('lenisCtx')
+
+const { toggle, exit } = useFullscreen($$base.value)
+
 let raf = null
 
 function onCloseClick() {
@@ -25,7 +29,7 @@ function onCloseClick() {
 }
 
 function onToggleCreditsClick() {
-  isCreditsOpen.value = !isCreditsOpen.value
+  isVideoCreditsOpen.value = !isVideoCreditsOpen.value
 }
 
 function onTogglePlayClick() {
@@ -37,20 +41,18 @@ function onMuteClick() {
   isMuted.value = !isMuted.value
 }
 
-const { toggle, exit } = useFullscreen($video)
-
 function onFullscreenClick() {
-  isFullscreen.value = !isFullscreen.value
   toggle()
+  isFullscreen.value = !isFullscreen.value
 }
 
 function onUpdate() {
-  videoCurrentTime.value = $video?.value?.currentTime
+  videoCurrentTime.value = $$video?.value?.currentTime
   raf = window.requestAnimationFrame(onUpdate)
 }
 
 function onVideoTimeUpdate() {
-  videoFormatedCurrentTime.value = formatTime($video?.value?.currentTime)
+  videoFormatedCurrentTime.value = formatTime($$video?.value?.currentTime)
 }
 
 function formatTime(time) {
@@ -66,13 +68,13 @@ function onTimelineClick(event) {
 }
 
 function seekOnTimeline(userX) {
-  const timelineLeft = $timeline.value.getBoundingClientRect().left
-  const timelineWidth = $timeline.value.getBoundingClientRect().width
+  const timelineLeft = $$timeline.value.getBoundingClientRect().left
+  const timelineWidth = $$timeline.value.getBoundingClientRect().width
   const userXRelativeToTimeline = userX - timelineLeft
 
   const seekTime = (userXRelativeToTimeline / timelineWidth) * videoDuration.value
 
-  $video.value.currentTime = seekTime
+  $$video.value.currentTime = seekTime
 }
 
 function onVideoEnded() {
@@ -80,37 +82,37 @@ function onVideoEnded() {
 }
 
 function onVideoLoadedData() {
-  videoDuration.value = $video.value.duration
+  videoDuration.value = $$video.value.duration
   videoFormatedDuration.value = formatTime(videoDuration.value)
 }
 
-watch(
-  () => isPlaying.value,
-  (isPlaying) => {
-    if (isPlaying) {
-      $video.value.play()
-    } else {
-      $video.value.pause()
-    }
-  }
-)
+// WIP //
 
-watch(
-  () => isMuted.value,
-  (value) => {
-    $video.value.muted = value
+//
+
+watch(isPlaying, (isPlaying) => {
+  if (isPlaying) {
+    $$video.value.play()
+  } else {
+    $$video.value.pause()
   }
-)
+})
+
+watch(isMuted, (value) => {
+  $$video.value.muted = value
+})
 
 onMounted(() => {
   onTogglePlayClick()
-  document.body.style.overflow = 'hidden'
-}),
-  onBeforeUnmount(() => {
-    window.cancelAnimationFrame(raf)
-    $video.value = null
-    document.body.style.overflow = 'auto'
-  })
+  lenis.value.stop()
+})
+
+onBeforeUnmount(() => {
+  lenis.value.start()
+  window.cancelAnimationFrame(raf)
+  raf = null
+  $$video.value = null
+})
 </script>
 
 <template>
@@ -122,81 +124,97 @@ onMounted(() => {
   >
     <VideoPlayerCredits
       :class="{
-        '-is-visible': isCreditsOpen,
+        '-is-visible': isVideoCreditsOpen,
       }"
       :data="currentFilm"
     />
     <button
       class="c-video-player-credits-button o-button -has-dark-grey-background"
+      :class="{
+        '-is-visible': !isFullscreen,
+      }"
       @click="onToggleCreditsClick"
     >
       Credits
     </button>
     <button
       :class="{
-        '-is-visible': !isCreditsOpen,
+        '-is-visible': !isVideoCreditsOpen && !isFullscreen,
       }"
       class="c-video-player-close-button o-button -has-white-outline"
       @click="onCloseClick"
     >
       Close
     </button>
-    <video
-      ref="$video"
-      :src="currentFilm?.videoUrl"
-      class="c-video-player__video"
-      playsinline
-      @click="onTogglePlayClick"
-      @loadeddata="onVideoLoadedData"
-      @timeupdate="onVideoTimeUpdate"
-      @ended="onVideoEnded"
-    ></video>
-    <footer class="c-video-player-controls">
-      <div class="c-video-player-controls__buttons">
-        <button class="o-button -has-dark-grey-background" @click="onTogglePlayClick">
-          <span v-html="isPlaying ? 'Pause' : 'Play'"></span>
-        </button>
-        <button class="o-button -has-dark-grey-background" @click="onMuteClick">
-          <span v-html="isMuted ? 'Unmute' : 'Mute'"></span>
-        </button>
-        <button
-          class="c-video-player-controls__fullscreen o-button -has-dark-grey-background"
-          @click="onFullscreenClick"
-        >
-          <span v-html="isFullscreen ? 'Exit' : 'Fullscreen'"></span>
-        </button>
-      </div>
-      <div class="c-video-player-controls__time">
-        <div class="c-video-player-controls__duration">
-          <span class="c-video-player-controls__timestamp -is-current">
-            {{ videoFormatedCurrentTime }}
-          </span>
-          <span class="c-video-player-controls__duration -is-total">
-            {{ videoFormatedDuration }}
-          </span>
+    <div ref="$$base">
+      <video
+        ref="$$video"
+        :src="currentFilm?.videoUrl"
+        class="c-video-player__video"
+        playsinline
+        webkit-playsinline
+        crossorigin="anonymous"
+        @click="onTogglePlayClick"
+        @loadeddata="onVideoLoadedData"
+        @timeupdate="onVideoTimeUpdate"
+        @ended="onVideoEnded"
+      ></video>
+      <footer
+        class="c-video-player-controls"
+        :class="{
+          '-is-fullscreen': isFullscreen,
+        }"
+      >
+        <div class="c-video-player-controls__buttons">
+          <button class="o-button -has-dark-grey-background" @click="onTogglePlayClick">
+            <span v-html="isPlaying ? 'Pause' : 'Play'"></span>
+          </button>
+          <button class="o-button -has-dark-grey-background" @click="onMuteClick">
+            <span v-show="isMuted">Unmute</span>
+            <span v-show="!isMuted">Mute</span>
+          </button>
+          <button
+            class="c-video-player-controls__fullscreen o-button -has-dark-grey-background"
+            @click="onFullscreenClick"
+          >
+            <span v-show="isFullscreen">Exit</span>
+            <span v-show="!isFullscreen">Fullscreen</span>
+          </button>
         </div>
-        <div
-          ref="$timeline"
-          class="c-video-player-controls__timeline"
-          @click="onTimelineClick"
-          @mousedown="onTimelineMousedown"
-          @mouseup="onTimelineMouseup"
-          @touchstart="onTimelineTouchstart"
-        >
-          <div class="c-video-player-controls__background"></div>
+        <div class="c-video-player-controls__time">
+          <div class="c-video-player-controls__duration">
+            <span class="c-video-player-controls__timestamp -is-current">
+              {{ videoFormatedCurrentTime }}
+            </span>
+            <span class="c-video-player-controls__duration -is-total">
+              {{ videoFormatedDuration }}
+            </span>
+          </div>
           <div
-            class="c-video-player-controls__current"
-            :style="{
-              transform: `translate3d(-${100 - (videoCurrentTime / videoDuration) * 100}%, 0, 0)`,
-            }"
-          ></div>
+            ref="$$timeline"
+            class="c-video-player-controls__timeline"
+            @click="onTimelineClick"
+            @mousedown="onTimelineMousedown"
+            @mouseup="onTimelineMouseup"
+            @touchstart="onTimelineTouchstart"
+          >
+            <div class="c-video-player-controls__background"></div>
+            <div
+              class="c-video-player-controls__current"
+              :style="{
+                transform: `translate3d(-${100 - (videoCurrentTime / videoDuration) * 100}%, 0, 0)`,
+              }"
+            ></div>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+$cubic: cubic-bezier(0.16, 1, 0.3, 1);
+
 .c-video-player {
   height: 100%;
   width: 100%;
@@ -216,14 +234,41 @@ onMounted(() => {
   }
   &-credits-button {
     left: 2.4rem;
+    cursor: pointer;
+    transition: opacity 1s 1s $cubic, transform 0.5s $cubic, visibility 1s 1s $cubic;
+    will-change: transform;
+    opacity: 0;
+    visibility: hidden;
     @include mq($until: tablet) {
       left: 1.2rem;
+    }
+    &:hover {
+      transform: scale(1.05);
+    }
+    &.-is-visible {
+      opacity: 1;
+      visibility: visible;
     }
   }
   &-close-button {
     right: 2.4rem;
+    cursor: pointer;
+    transition: opacity 1s 1s $cubic, color 0.5s $cubic, background-color 0.5s $cubic,
+      transform 0.5s $cubic, visibility 1s 1s $cubic;
+    will-change: transform;
+    opacity: 0;
+    visibility: hidden;
     @include mq($until: tablet) {
       right: 1.2rem;
+    }
+    &:hover {
+      color: $black;
+      background-color: $white;
+      transform: scale(1.05);
+    }
+    &.-is-visible {
+      opacity: 1;
+      visibility: visible;
     }
   }
   &__video {
@@ -234,6 +279,7 @@ onMounted(() => {
     height: 100%;
     height: 100%;
     object-fit: contain;
+    cursor: pointer;
   }
   &__thumbnail {
     z-index: -1;
@@ -253,6 +299,12 @@ onMounted(() => {
       padding: 1.2rem;
       flex-wrap: wrap;
     }
+    // &.-is-fullscreen {
+    //   opacity: 0;
+    //   &:hover {
+    //     opacity: 1;
+    //   }
+    // }
     &__buttons {
       @include mq($until: medium) {
         order: 2;
@@ -260,6 +312,9 @@ onMounted(() => {
         display: flex;
         justify-content: space-between;
         width: 100%;
+      }
+      & > * {
+        cursor: pointer;
       }
       & > *:not(:last-child) {
         margin-right: 1.2rem;

@@ -10,39 +10,44 @@ const props = defineProps({
   },
 })
 
-const $film = ref(null)
-const $filmMeta = ref(null)
-const $video = ref(null)
+const $$filmMeta = ref(null)
+const $$video = ref(null)
 const isHovered = ref(false)
 const isFeatured = computed(() => props.class.includes('-is-featured'))
 
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
+const isVideoCreditsOpen = useState('isVideoCreditsOpen')
 const currentFilm = useState('currentFilm', () => {})
 
 function onMouseOver() {
   if (!isFeatured.value) {
-    $video.value.play()
+    $$video.value.play()
     isHovered.value = true
   }
 }
 
 function onMouseLeave() {
   if (!isFeatured.value) {
-    $video.value.pause()
-    $video.value.currentTime = 0
+    $$video.value.pause()
+    $$video.value.currentTime = 0
     isHovered.value = false
   }
 }
 
-function onClick() {
+function onPlayClick() {
   isVideoPlayerOpen.value = true
+  currentFilm.value = props.film
+}
+
+function onCreditsClick() {
+  isVideoPlayerOpen.value = true
+  isVideoCreditsOpen.value = true
   currentFilm.value = props.film
 }
 </script>
 
 <template>
   <div
-    ref="$film"
     :class="[
       'c-film',
       {
@@ -65,7 +70,7 @@ function onClick() {
           />
         </div>
         <video
-          ref="$video"
+          ref="$$video"
           :src="film?.loopUrl"
           class="c-film__video"
           :class="{
@@ -78,27 +83,29 @@ function onClick() {
         ></video>
       </div>
       <div
-        ref="$filmMeta"
+        ref="$$filmMeta"
         class="c-film__meta"
         :style="{
           transform:
-            isHovered && !isFeatured && $filmMeta?.clientHeight
-              ? `translateY(calc(100% - ${$filmMeta?.clientHeight}px))`
+            isHovered && !isFeatured && $$filmMeta?.clientHeight
+              ? `translateY(calc(100% - ${$$filmMeta?.clientHeight}px))`
               : !isHovered && isFeatured
               ? `translateY(0%)`
               : `translateY(100%)`,
         }"
       >
-        <h3 class="c-film__title o-thumbnail-title">{{ film.title }}</h3>
-        <p
-          class="c-film__description"
-          v-if="film.shortDescription"
-          v-html="film.shortDescription"
-        ></p>
+        <div class="c-film__details">
+          <h3 class="c-film__title o-thumbnail-title">{{ film.title }}</h3>
+          <p
+            class="c-film__description"
+            v-if="film.shortDescription"
+            v-html="film.shortDescription"
+          ></p>
+        </div>
         <footer class="c-film__footer">
           <button
             class="c-film-play-button o-button -has-white-background -has-icon"
-            @click="onClick"
+            @click="onPlayClick"
           >
             <svg
               width="12"
@@ -110,6 +117,12 @@ function onClick() {
               <path d="M0 12V0L12 6L0 12Z" />
             </svg>
             <span class="c-film-play-button__text">Play</span>
+          </button>
+          <button
+            class="c-film-credits-button o-button -has-white-background"
+            @click="onCreditsClick"
+          >
+            <span class="c-film-credits-button__text">Crédits</span>
           </button>
           <span
             class="o-button -has-dark-grey-background"
@@ -128,15 +141,13 @@ function onClick() {
 </template>
 
 <style lang="scss" scoped>
+$cubic: cubic-bezier(0.16, 1, 0.3, 1);
+
 .c-film {
   border-radius: 0.4rem;
   overflow: hidden;
   user-select: none;
   $self: &;
-  @include mq($until: medium) {
-    height: auto;
-    overflow: visible;
-  }
   &__container {
     position: relative;
     height: 100%;
@@ -147,6 +158,8 @@ function onClick() {
       flex-direction: column;
       justify-content: flex-end;
     }
+    @include mq($until: mobile) {
+    }
   }
   &__media {
     position: relative;
@@ -155,6 +168,12 @@ function onClick() {
     aspect-ratio: 66 / 43.5;
     @include mq($until: medium) {
       aspect-ratio: 3 / 2;
+    }
+    @include mq($until: mobile) {
+      height: auto;
+    }
+    #{$self}.-is-featured & {
+      transform: scale(0.7);
     }
   }
   &__overlay,
@@ -213,15 +232,30 @@ function onClick() {
       left: 0;
       display: flex;
       flex-direction: column;
-      flex: 2;
       width: 100%;
     }
+    @include mq($until: mobile) {
+      height: 100%;
+    }
+    #{$self}.-is-featured & {
+      opacity: 0;
+    }
     #{$self}:not(.-is-featured) & {
-      transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+      transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: translateY(100%);
       @include mq($until: medium) {
         transform: translateY(0%) !important;
+        flex: 1;
       }
+    }
+  }
+  &__details {
+    @include mq($until: medium) {
+      order: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
     }
   }
   &__title,
@@ -234,7 +268,6 @@ function onClick() {
   &__title {
     max-width: 35ch;
     @include mq($until: medium) {
-      order: 2;
       margin-top: 1rem;
       max-width: 100%;
     }
@@ -250,8 +283,8 @@ function onClick() {
   &__description {
     margin-top: 1.2rem;
     max-width: 50ch;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
     @include mq($until: medium) {
-      order: 3;
       flex: auto;
       display: flex;
       align-items: flex-end;
@@ -259,7 +292,7 @@ function onClick() {
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
 
         transform: translateY(calc(50%));
       }
@@ -281,8 +314,7 @@ function onClick() {
     }
     #{$self}:not(.-is-featured) & {
       @include mq($from: medium) {
-        transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-
+        transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
         transform: translateY(calc(50%));
       }
     }
@@ -304,12 +336,28 @@ function onClick() {
     }
   }
   &-play-button {
+    cursor: pointer;
+    transition: 0.5s transform $cubic;
+    will-change: transform;
     @include mq($until: medium) {
       background-color: $black;
       color: $white;
     }
+    &:hover {
+      transform: scale(1.05);
+    }
     &__text {
       margin-left: 1rem;
+    }
+  }
+  &-credits-button {
+    cursor: pointer;
+    background-color: $black;
+    color: $white;
+    transition: 0.5s transform $cubic;
+    will-change: transform;
+    &:hover {
+      transform: scale(1.05);
     }
   }
 }

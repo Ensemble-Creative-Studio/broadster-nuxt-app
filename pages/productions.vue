@@ -1,4 +1,6 @@
 <script setup>
+import { gsap } from 'gsap'
+
 const query = groq`*[_type == "productions"][0]
   {
     title,
@@ -37,20 +39,57 @@ const query = groq`*[_type == "productions"][0]
 `
 
 const { data: productions } = useSanityQuery(query)
+
+onMounted(() => {
+  gsap.to('.l-productions', {
+    opacity: 1,
+    ease: 'power3.out',
+    delay: 1,
+  })
+})
+
+onBeforeUnmount(() => {
+  gsap.killTweensOf('.l-productions')
+})
+
+onBeforeRouteLeave((to, from, next) => {
+  gsap.to('.l-productions', {
+    opacity: 0,
+    ease: 'power3.out',
+    onComplete: () => {
+      next()
+    },
+  })
+})
 </script>
 
 <template>
+  <Title>Broadster — Productions</Title>
   <div class="l-productions">
     <Hero
       title="Productions"
       :video="productions?.videoUrl"
-      scrollToTarget="l-productions__section"
+      scrollToTarget=".l-productions__section"
+      class="-is-hidden-in-footer"
     />
     <ProductionsSection
-      v-for="section in productions?.sections"
+      v-for="(section, i) in productions?.sections"
       :section="section"
+      :index="i"
       :key="section._key"
-      class="l-productions__section"
+      class="l-productions__section -is-hidden-in-footer"
     />
+    <Footer class="l-productions__footer" elemsToHide=".-is-hidden-in-footer" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.l-productions {
+  opacity: 0;
+  &__footer {
+    @include mq($until: medium) {
+      margin-top: 26rem;
+    }
+  }
+}
+</style>

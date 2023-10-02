@@ -29,7 +29,7 @@ const props = defineProps({
     grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
-    padding: 1.2rem;
+    padding: 1.2rem 1.2rem 2.8rem 1.2rem;
     min-height: 10rem;
   }
   &__thumbnail {
