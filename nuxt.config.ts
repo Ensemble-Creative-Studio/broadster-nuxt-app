@@ -22,6 +22,73 @@ export default defineNuxtConfig({
     dataset: 'production',
     apiVersion: '2023-09-11',
   },
+  nitro: {
+    prerender: {
+      routes: ['/404.html'],
+    },
+  },
+  app: {
+    head: {
+      charset: 'utf-16',
+      viewport: 'initial-scale=1',
+      title: 'BADASS - French production company',
+      meta: [
+        { name: 'description', content: 'BADASS - French production company' },
+        { name: 'color-scheme', content: 'black' }, // Add this line
+      ],
+      link: [
+        {
+          rel: 'preload',
+          href: '/_nuxt/fonts/FoundersGrotesk-Semibold.woff2',
+          as: 'font',
+          type: 'font/woff2',
+          crossorigin: 'anonymous',
+        },
+        {
+          rel: 'preload',
+          href: '/_nuxt/fonts/TungstenCompressed-Black.woff2',
+          as: 'font',
+          type: 'font/woff2',
+          crossorigin: 'anonymous',
+        },
+        {
+          rel: 'preload',
+          href: '/_nuxt/fonts/FoundersGrotesk-Regular.woff2',
+          as: 'font',
+          type: 'font/woff2',
+          crossorigin: 'anonymous',
+        },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicons/favicon.ico' },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/favicons/apple-touch-icon.png',
+        },
+        { rel: 'icon', sizes: '150x150', href: '/favicon/favicon-150x150.png' },
+        { rel: 'icon', sizes: '144x144', href: '/favicon/favicon-144x144.png' },
+        { rel: 'icon', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
+        { rel: 'icon', sizes: '16x16', href: '/favicon/favicon-16x16.png' },
+        { hid: 'icon', rel: 'icon', href: '/favicon/favicon.svg' },
+        {
+          hid: 'mask-icon',
+          rel: 'mask-icon',
+          href: '/favicon/safari-pinned-tab.svg',
+          color: '#000000',
+        },
+        {
+          hid: 'apple-touch-icon',
+          rel: 'apple-touch-icon',
+          href: '/favicon/apple-touch-icon.png',
+        },
+        {
+          hid: 'manifest',
+          rel: 'manifest',
+          href: '/favicon/manifest.json',
+          crossorigin: 'use-credentials',
+        },
+      ],
+    },
+  },
   css: ['@/assets/scss/index.scss', '@/assets/fonts/the-future/style.css'],
   vite: {
     css: {
