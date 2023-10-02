@@ -80,12 +80,6 @@ export default defineNuxtConfig({
           rel: 'apple-touch-icon',
           href: '/favicon/apple-touch-icon.png',
         },
-        {
-          hid: 'manifest',
-          rel: 'manifest',
-          href: '/favicon/manifest.json',
-          crossorigin: 'use-credentials',
-        },
       ],
     },
   },
