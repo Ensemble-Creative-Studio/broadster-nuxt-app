@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  // devtools: { enabled: false },
+  devtools: { enabled: false },
   app: {
     head: {
       charset: 'utf-16',
@@ -9,7 +9,7 @@ export default defineNuxtConfig({
       title: 'Broadster',
       meta: [
         { name: 'description', content: 'Broadster' },
-        { name: 'color-scheme', content: 'black' }, // Add this line
+        { name: 'color-scheme', content: 'black' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicons/favicon.ico' },
@@ -23,12 +23,12 @@ export default defineNuxtConfig({
         { rel: 'icon', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
         { rel: 'icon', sizes: '16x16', href: '/favicon/favicon-16x16.png' },
         { hid: 'icon', rel: 'icon', href: '/favicon/favicon.svg' },
-        {
-          hid: 'mask-icon',
-          rel: 'mask-icon',
-          href: '/favicon/safari-pinned-tab.svg',
-          color: '#000000',
-        },
+        // {
+        //   hid: 'mask-icon',
+        //   rel: 'mask-icon',
+        //   href: '/favicon/safari-pinned-tab.svg',
+        //   color: '#000000',
+        // },
         {
           hid: 'apple-touch-icon',
           rel: 'apple-touch-icon',
