@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 const props = defineProps({
   elemsToHide: {
     type: String,
-    required: true,
   },
 })
 
@@ -35,7 +34,9 @@ onMounted(() => {
       },
     })
 
-    tl.to(props.elemsToHide, { opacity: 0, duration: 0.5 })
+    if (props.elemsToHide) {
+      tl.to(props.elemsToHide, { opacity: 0, duration: 0.5 })
+    }
   }, 500)
 })
 
