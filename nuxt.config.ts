@@ -31,33 +31,15 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-16',
       viewport: 'initial-scale=1',
-      title: 'BADASS - French production company',
       meta: [
-        { name: 'description', content: 'BADASS - French production company' },
-        { name: 'color-scheme', content: 'black' }, // Add this line
+        {
+          name: 'description',
+          content:
+            'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
+        },
+        { name: 'color-scheme', content: 'black' },
       ],
       link: [
-        {
-          rel: 'preload',
-          href: '/_nuxt/fonts/FoundersGrotesk-Semibold.woff2',
-          as: 'font',
-          type: 'font/woff2',
-          crossorigin: 'anonymous',
-        },
-        {
-          rel: 'preload',
-          href: '/_nuxt/fonts/TungstenCompressed-Black.woff2',
-          as: 'font',
-          type: 'font/woff2',
-          crossorigin: 'anonymous',
-        },
-        {
-          rel: 'preload',
-          href: '/_nuxt/fonts/FoundersGrotesk-Regular.woff2',
-          as: 'font',
-          type: 'font/woff2',
-          crossorigin: 'anonymous',
-        },
         { rel: 'icon', type: 'image/x-icon', href: '/favicons/favicon.ico' },
         {
           rel: 'apple-touch-icon',
