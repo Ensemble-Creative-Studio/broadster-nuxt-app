@@ -22,6 +22,51 @@ export default defineNuxtConfig({
     dataset: 'production',
     apiVersion: '2023-09-11',
   },
+  app: {
+    head: {
+      charset: 'utf-16',
+      viewport: 'initial-scale=1',
+      title: 'Broadster',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
+        },
+        { name: 'color-scheme', content: 'black' }, // Add this line
+      ],
+      link: [
+        // { rel: 'icon', type: 'image/x-icon', href: '/favicons/favicon.ico' },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/favicons/apple-touch-icon.png',
+        },
+        // { rel: 'icon', sizes: '150x150', href: '/favicon/favicon-150x150.png' },
+        // { rel: 'icon', sizes: '144x144', href: '/favicon/favicon-144x144.png' },
+        { rel: 'icon', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
+        { rel: 'icon', sizes: '16x16', href: '/favicon/favicon-16x16.png' },
+        { hid: 'icon', rel: 'icon', href: '/favicon/favicon.svg' },
+        // {
+        //   hid: 'mask-icon',
+        //   rel: 'mask-icon',
+        //   href: '/favicon/safari-pinned-tab.svg',
+        //   color: '#000000',
+        // },
+        {
+          hid: 'apple-touch-icon',
+          rel: 'apple-touch-icon',
+          href: '/favicon/apple-touch-icon.png',
+        },
+        {
+          hid: 'manifest',
+          rel: 'manifest',
+          href: '/favicon/manifest.json',
+          crossorigin: 'use-credentials',
+        },
+      ],
+    },
+  },
   css: ['@/assets/scss/index.scss', '@/assets/fonts/the-future/style.css'],
   vite: {
     css: {
