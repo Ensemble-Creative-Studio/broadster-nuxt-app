@@ -44,14 +44,37 @@ watch(
   }
 )
 
-// useSeoMeta({
-//   description:
-//     'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
-//   ogDescription:
-//     'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
-//   // ogImage: 'https://example.com/image.png',
-//   // twitterCard: 'summary_large_image',
-// })
+useSeoMeta({
+  description:
+    'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
+  ogDescription:
+    'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
+  // ogImage: 'https://example.com/image.png',
+  // twitterCard: 'summary_large_image',
+})
+
+useHead({
+  link: [
+    { rel: 'icon', sizes: '150x150', href: '/favicon/favicon-150x150.png' },
+    { rel: 'icon', sizes: '144x144', href: '/favicon/favicon-144x144.png' },
+    { rel: 'icon', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
+    { rel: 'icon', sizes: '16x16', href: '/favicon/favicon-16x16.png' },
+    { rel: 'manifest', href: '/site.webmanifest' },
+    { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#000000' },
+    { hid: 'icon', rel: 'icon', href: '/favicon/favicon.svg' },
+    {
+      hid: 'apple-touch-icon',
+      rel: 'apple-touch-icon',
+      href: '/favicon/apple-touch-icon.png',
+    },
+    {
+      hid: 'manifest',
+      rel: 'manifest',
+      href: '/favicon/manifest.json',
+      crossorigin: 'use-credentials',
+    },
+  ],
+})
 </script>
 
 <template>
