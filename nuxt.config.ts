@@ -4,15 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ['@nuxtjs/sanity', '@vueuse/nuxt', 'nuxt-lazy-load'],
   lazyLoad: {
-    // These are the default values
     images: true,
     videos: true,
     audios: true,
     iframes: true,
     native: false,
     directiveOnly: false,
-
-    // To remove class set value to false
     loadingClass: '-is-loading',
     loadedClass: '-is-loaded',
     appendClass: '-has-lazy-load',
@@ -33,7 +30,17 @@ export default defineNuxtConfig({
       viewport: 'initial-scale=1',
       meta: [
         {
+          hid: 'description',
           name: 'description',
+          content:
+            'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
+        },
+        { hid: 'og:site_name', property: 'og:site_name', content: 'Broadster' },
+        { hid: 'og:type', property: 'og:type', content: 'website' },
+        { hid: 'og:title', property: 'og:title', content: 'Broadster' },
+        {
+          hid: 'og:description',
+          property: 'og:description',
           content:
             'Broadster imagine et produit des contenus audiovisuels pour raconter des histoires originales.',
         },
