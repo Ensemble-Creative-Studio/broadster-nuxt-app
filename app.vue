@@ -2,8 +2,10 @@
 import Lenis from '@studio-freight/lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { CustomEase } from "gsap/CustomEase";
 
 gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(CustomEase)
 
 const route = useRoute()
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
