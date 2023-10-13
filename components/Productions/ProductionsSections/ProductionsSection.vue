@@ -36,17 +36,6 @@ onMounted(() => {
       },
     })
 
-    gsap.to(`.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__media`, {
-      scale: 1,
-      duration: 1.5,
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: `.-has-index-${props.index}`,
-        // markers: true,
-        start: '20% 50%',
-      },
-    })
-
     mm.add(
       {
         isDesktop: `(min-width: ${breakpoint}px)`,
@@ -58,13 +47,28 @@ onMounted(() => {
         gsap.to(
           `.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__meta`,
           {
+            duration: 1,
             autoAlpha: 1,
-            duration: 0.5,
-            delay: isDesktop ? 1 : 0.25,
+            ease: 'expo.out',
+            delay: isDesktop ? 0.5 : 0.25,
             scrollTrigger: {
               trigger: `.-has-index-${props.index}`,
               // markers: true,
-              start: '0% 50%',
+              start: isDesktop ? '20% 50%' : '0% 30%',
+            },
+          }
+        )
+
+        gsap.to(
+          `.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__media`,
+          {
+            scale: 1,
+            duration: 1.5,
+            ease: 'expo.out',
+            scrollTrigger: {
+              trigger: `.-has-index-${props.index}`,
+              // markers: true,
+              start: isDesktop ? '20% 50%' : '0% 30%',
             },
           }
         )
