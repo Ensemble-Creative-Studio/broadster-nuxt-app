@@ -27,10 +27,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: `.-has-index-${props.index}`,
         start: '0% 50%',
-        markers: true,
-        onEnter: () => {
-          console.log('enter')
-        },
+        // markers: true,
       },
     })
   })
