@@ -26,7 +26,7 @@ function setIndex(i) {
   index.value = i
 
   gsap.to($$baseline.value[i], {
-    opacity: 1,
+    autoAlpha: 1,
     transform: 'translateY(0)',
   })
 
@@ -58,11 +58,11 @@ onMounted(() => {
     })
 
     tl.to('.c-slideshow', {
-      opacity: 1,
+      autoAlpha: 1,
     }).to(
       '.c-slideshow-video__meta',
       {
-        opacity: 1,
+        autoAlpha: 1,
       },
       '-=0.2'
     )
@@ -276,6 +276,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       bottom: 2.4rem;
       opacity: 0;
       transform: translateY(5rem);
+      will-change: transform;
       @include mq($until: medium) {
         left: 1.2rem;
         bottom: 1.2rem;

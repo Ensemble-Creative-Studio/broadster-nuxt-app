@@ -1,8 +1,11 @@
 <script setup>
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
+
+let ctx
+let mm = gsap.matchMedia(),
+  breakpoint = 992
 
 const props = defineProps({
   section: {
@@ -20,18 +23,16 @@ const hasEnoughFilms = computed(() => {
 const $$featuredFilm = shallowRef()
 const $$film = shallowRef()
 
-let timeout
-
 onMounted(() => {
-  timeout = setTimeout(() => {
+  ctx = gsap.context(() => {
     gsap.to(`.-has-index-${props.index} .c-productions-section__film:not(.-is-featured)`, {
-      stagger: 0.15,
-      opacity: 1,
+      stagger: 0.2,
+      autoAlpha: 1,
       duration: 1,
-      ease: 'expo.out',
+      ease: 'ease.inOut',
       scrollTrigger: {
         trigger: `.-has-index-${props.index} .c-productions-section__slider`,
-        start: 'top 50%',
+        start: '0% 50%',
       },
     })
 
@@ -42,27 +43,38 @@ onMounted(() => {
       scrollTrigger: {
         trigger: `.-has-index-${props.index}`,
         // markers: true,
-        start: 'top 50%',
+        start: '20% 50%',
       },
-      onComplete: () => {
+    })
+
+    mm.add(
+      {
+        isDesktop: `(min-width: ${breakpoint}px)`,
+        isMobile: `(max-width: ${breakpoint - 1}px)`,
+      },
+      (context) => {
+        let { isDesktop, isMobile } = context.conditions
+
         gsap.to(
           `.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__meta`,
           {
-            opacity: 1,
+            autoAlpha: 1,
             duration: 0.5,
+            delay: isDesktop ? 1 : 0.25,
+            scrollTrigger: {
+              trigger: `.-has-index-${props.index}`,
+              // markers: true,
+              start: '0% 50%',
+            },
           }
         )
-      },
-    })
-  }, 500)
+      }
+    )
+  })
 })
 
 onBeforeUnmount(() => {
-  clearTimeout(timeout)
-
-  ScrollTrigger.getAll().forEach((trigger) => {
-    trigger.kill()
-  })
+  ctx.revert()
 })
 </script>
 
@@ -171,10 +183,9 @@ onBeforeUnmount(() => {
       margin-right: 1.2rem;
     }
     &.-is-featured {
-      max-width: 80%;
-      max-height: 80vh;
+      max-width: 60%;
       margin: 0 auto;
-      @include mq($until: tablet) {
+      @include mq($until: medium) {
         max-width: 100%;
         max-height: initial;
         height: auto;

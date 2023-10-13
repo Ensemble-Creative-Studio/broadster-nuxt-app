@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <NuxtLink :to="slug" class="c-index-summary-card">
-    <h2 class="o-title">{{ data.title }}</h2>
+    <h2 class="c-index-summary-card__title o-title">{{ data.title }}</h2>
     <div class="c-index-summary-card__thumbnail">
       <video :src="data.videoUrl" alt="" muted loop autoplay playsinline></video>
     </div>
@@ -32,12 +32,19 @@ const props = defineProps({
     padding: 1.2rem 1.2rem 2.8rem 1.2rem;
     min-height: 10rem;
   }
+  &__title {
+    transform: translateY(5rem);
+    opacity: 0;
+    will-change: transform;
+  }
   &__thumbnail {
     max-width: 32rem;
     aspect-ratio: 16/10;
     margin: 16.7rem 0 0 auto;
     border-radius: 0.4rem;
     overflow: hidden;
+    transform: scale(0);
+    transform-origin: bottom right;
     @include mq($until: tablet) {
       max-width: 33.33%;
       margin: 0;

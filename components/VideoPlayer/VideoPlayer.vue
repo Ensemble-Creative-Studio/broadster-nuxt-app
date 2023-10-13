@@ -360,6 +360,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       position: absolute;
       top: 50%;
       transform: translateY(calc(-50% + 2rem));
+      will-change: transform;
     }
     &__background {
       position: absolute;

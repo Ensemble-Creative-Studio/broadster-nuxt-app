@@ -28,6 +28,7 @@
     }
     @include mq($until: mini) {
       width: 10rem;
+      margin-top: -0.2rem;
     }
   }
 }

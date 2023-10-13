@@ -1,6 +1,11 @@
 <script setup>
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { CustomEase } from 'gsap/CustomEase'
+
+CustomEase.create('title', '0.16, 0.6, 0.38, 0.85')
+CustomEase.create('video', '0.17, 0.52, 0.44, 0.86')
+
+let ctx
 
 const props = defineProps({
   history: {
@@ -11,31 +16,48 @@ const props = defineProps({
 const $$base = shallowRef()
 const $$item = shallowRef()
 
-let timeout
-let tl
-
 onMounted(() => {
-  timeout = setTimeout(() => {
-    gsap.to('.c-infos-numbers__card', {
-      stagger: 0.3,
-      opacity: 1,
-      duration: 1,
-      ease: 'expo.out',
+  ctx = gsap.context(() => {
+    let tl = gsap.timeline({
       scrollTrigger: {
         trigger: $$base.value,
         // markers: true,
-        start: 'top 75%',
+        start: '25% 50%',
       },
     })
-  }, 500)
+
+    tl.to('.c-infos-numbers-card__thumbnail', {
+      duration: 1,
+      stagger: 0.3,
+      ease: 'video',
+      transform: 'scale(1)',
+    })
+    tl.to(
+      '.c-infos-numbers-card__text',
+      {
+        duration: 0.75,
+        stagger: 0.15,
+        ease: 'title',
+        autoAlpha: 1,
+      },
+      '-=1'
+    )
+    tl.to(
+      '.c-infos-numbers-card__title',
+      {
+        duration: 0.75,
+        stagger: 0.15,
+        ease: 'title',
+        transform: 'translateY(0)',
+        autoAlpha: 1,
+      },
+      '-=0.5'
+    )
+  })
 })
 
 onBeforeUnmount(() => {
-  clearTimeout(timeout)
-
-  ScrollTrigger.getAll().forEach((trigger) => {
-    trigger.kill()
-  })
+  ctx.revert()
 })
 </script>
 
@@ -62,9 +84,6 @@ onBeforeUnmount(() => {
     margin-top: 1.2rem;
     @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;
-  }
-  &__card {
-    opacity: 0;
   }
 }
 </style>

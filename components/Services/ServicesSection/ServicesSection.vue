@@ -1,55 +1,72 @@
 <script setup>
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { CustomEase } from 'gsap/CustomEase'
+
+CustomEase.create('title', '0.16, 0.6, 0.38, 0.85')
 
 const props = defineProps({
   section: {
     type: Object,
-    required: true,
+  },
+  index: {
+    type: Number,
   },
 })
 
+let ctx
+
 const $$item = shallowRef()
 
-let timeout
+onMounted(() => {
+  ctx = gsap.context(() => {
+    gsap.to(`.-has-index-${props.index} .c-services-section-block__content`, {
+      autoAlpha: 1,
+      duration: 0.75,
+      ease: 'title',
+      transform: 'translateY(0)',
+      scrollTrigger: {
+        trigger: `.-has-index-${props.index}`,
+        start: '0% 50%',
+        markers: true,
+        onEnter: () => {
+          console.log('enter')
+        },
+      },
+    })
+  })
+})
 
 onBeforeUnmount(() => {
-  clearTimeout(timeout)
-
-  ScrollTrigger.getAll().forEach((trigger) => {
-    trigger.kill()
-  })
+  ctx.revert()
 })
 </script>
 
 <template>
   <div
     class="c-services-section"
-    :class="[
-      section.layout === 'sbm'
-        ? '-is-sbm'
-        : section.layout === 'smb'
-        ? '-is-smb'
-        : section.layout === 'bsm'
-        ? '-is-bsm'
-        : '-is-smb',
-    ]"
+    :class="
+      ([
+        section.layout === 'sbm'
+          ? '-is-sbm'
+          : section.layout === 'smb'
+          ? '-is-smb'
+          : section.layout === 'bsm'
+          ? '-is-bsm'
+          : '-is-smb',
+      ],
+      '-has-index-' + index)
+    "
   >
     <div class="c-services-section__container u-wrapper">
       <h2 class="o-title">{{ section.title }}</h2>
       <div class="c-services-section__grid">
         <div class="c-services-section-block -has-small-video" ref="$$item">
-          <video
-            class="c-services-section__source"
-            :src="section?.video1?.url"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
+          <video :src="section?.video1?.url" autoplay muted loop playsinline></video>
         </div>
         <div class="c-services-section-block -has-medium-text" ref="$$item">
-          <SanityContent :blocks="section.presentation.text" />
+          <div class="c-services-section-block__content">
+            <SanityContent :blocks="section.presentation.text" />
+          </div>
           <footer class="c-services-section-block__footer">
             <h3>{{ section.presentation.label }}</h3>
             <ul class="c-services-section-block__list">
@@ -63,14 +80,7 @@ onBeforeUnmount(() => {
           </footer>
         </div>
         <div class="c-services-section-block -has-big-video" ref="$$item">
-          <video
-            class="c-services-section__source"
-            :src="section?.video2?.url"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
+          <video :src="section?.video2?.url" autoplay muted loop playsinline></video>
         </div>
       </div>
     </div>
@@ -97,7 +107,6 @@ onBeforeUnmount(() => {
       grid-column: auto / span 2;
       @include mq($until: desktop) {
         grid-column: auto / span 3;
-        height: 1435;
       }
     }
     &.-has-medium-text {
@@ -177,6 +186,10 @@ onBeforeUnmount(() => {
       &.-has-medium-text {
         order: 3;
       }
+    }
+    &__content {
+      opacity: 0;
+      transform: translateY(10rem);
     }
     &__footer {
       @include mq($until: desktop) {

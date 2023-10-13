@@ -1,6 +1,10 @@
 <script setup>
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { CustomEase } from 'gsap/CustomEase'
+
+CustomEase.create('title', '0.16, 0.6, 0.38, 0.85')
+
+let ctx
 
 const props = defineProps({
   clients: {
@@ -9,31 +13,26 @@ const props = defineProps({
 })
 
 const $$base = shallowRef()
-let timeout
 
 onMounted(() => {
-  timeout = setTimeout(() => {
-    gsap.to('.c-infos-clients__item', {
-      stagger: 0.15,
-      opacity: 1,
-      y: 0,
+  ctx = gsap.context(() => {
+    gsap.to('.c-infos-clients-item__title', {
+      stagger: 0.075,
+      autoAlpha: 1,
+      transform: 'translateY(0)',
       duration: 1,
-      ease: 'expo.out',
+      ease: 'title',
       scrollTrigger: {
         trigger: $$base.value,
         // markers: true,
-        start: 'top 75%',
+        start: '5% 50%',
       },
     })
-  }, 500)
+  })
 })
 
 onBeforeUnmount(() => {
-  clearTimeout(timeout)
-
-  ScrollTrigger.getAll().forEach((trigger) => {
-    trigger.kill()
-  })
+  ctx.revert()
 })
 </script>
 
@@ -63,8 +62,6 @@ onBeforeUnmount(() => {
   }
   &__item {
     grid-column: auto / span 3;
-    opacity: 0;
-    transform: translateY(5rem);
     @include mq($until: small) {
       grid-column: auto / span 4;
     }

@@ -1,7 +1,10 @@
 <script setup>
 import { gsap } from 'gsap'
+import { ForceWait } from '/utils/ForceWait'
 
+const fw = new ForceWait()
 const route = useRoute()
+let ctx
 
 const props = defineProps({
   title: {
@@ -14,46 +17,48 @@ const props = defineProps({
   scrollToTarget: {
     type: String,
   },
-})
-
-async function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-const lenis = inject('lenisCtx')
-
-let tl = gsap.timeline({
-  defaults: {
-    duration: 2,
-    ease: 'expo.out',
+  scrollToOffset: {
+    type: Number,
+    default: 12,
   },
 })
 
+const lenis = inject('lenisCtx')
+
 onMounted(() => {
-  tl.to('.c-hero__title', {
-    opacity: 1,
-    transform: 'translate(-50%, -75%) scale(1)',
-    delay: 1,
-  }).to(
-    '.c-hero-video',
-    {
-      transform: 'translate(-50%, -50%) scale(1)',
-      onComplete: async () => {
-        await delay(1000)
-        if (window.scrollY < 100) {
-          lenis.value.scrollTo(props.scrollToTarget, {
-            offset: -100,
-          })
-        }
+  ctx = gsap.context(() => {
+    let tl = gsap.timeline({
+      defaults: {
+        duration: 2,
+        ease: 'expo.out',
       },
-    },
-    '-=2.1'
-  )
+    })
+
+    tl.to('.c-hero__title', {
+      autoAlpha: 1,
+      transform: 'translate(-50%, -75%) scale(1)',
+      delay: 1,
+    }).to(
+      '.c-hero-video',
+      {
+        transform: 'translate(-50%, -50%) scale(1)',
+        onComplete: async () => {
+          await fw.delay(750)
+          if (window.scrollY < 100) {
+            lenis.value.scrollTo(props.scrollToTarget, {
+              offset: props.scrollToOffset,
+            })
+          }
+        },
+      },
+      '-=2.1'
+    )
+  })
 })
 
 onBeforeUnmount(() => {
-  tl.kill()
-  tl = null
+  ctx.revert()
+  fw.kill()
 })
 </script>
 

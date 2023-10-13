@@ -12,7 +12,7 @@ const $$base = shallowRef()
 
 onMounted(() => {
   gsap.to($$base.value, {
-    opacity: 1,
+    autoAlpha: 1,
     duration: 0.5,
     scrollTrigger: {
       trigger: $$base.value,
@@ -79,10 +79,12 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .c-infos-section {
   opacity: 0;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
   &__grid {
     @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;
-    margin-top: 1.2rem;
   }
   &-block {
     $block: &;

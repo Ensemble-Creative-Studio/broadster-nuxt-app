@@ -1,6 +1,8 @@
 <script setup>
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ForceWait } from '/utils/ForceWait'
+
+const fw = new ForceWait()
 
 const props = defineProps({
   elemsToHide: {
@@ -18,16 +20,16 @@ const query = groq`*[_type == "footer"][0]
 
 const { data: footer } = useSanityQuery(query)
 
-let timeout
-let tl
+let ctx
 
-onMounted(() => {
-  timeout = setTimeout(() => {
-    tl = gsap.timeline({
+onMounted(async () => {
+  await fw.delay(500)
+  ctx = gsap.context(() => {
+    let tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.c-footer',
         // markers: true,
-        start: 'top 75%',
+        start: '0% 75%',
         onLeaveBack: () => {
           tl.reverse()
         },
@@ -37,18 +39,12 @@ onMounted(() => {
     if (props.elemsToHide) {
       tl.to(props.elemsToHide, { opacity: 0, duration: 0.5 })
     }
-  }, 500)
+  })
 })
 
 onBeforeUnmount(() => {
-  clearTimeout(timeout)
-
-  ScrollTrigger.getAll().forEach((trigger) => {
-    trigger.kill()
-  })
-
-  tl.kill()
-  tl = null
+  ctx.revert()
+  fw.kill()
 })
 </script>
 

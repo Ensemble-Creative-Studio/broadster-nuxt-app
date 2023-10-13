@@ -30,6 +30,9 @@ const props = defineProps({
   }
   &__title {
     max-width: 10ch;
+    opacity: 0;
+    transform: translateY(-2.5rem);
+    will-change: transform;
   }
 }
 </style>

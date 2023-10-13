@@ -226,7 +226,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     bottom: 3rem;
     left: 3.6rem;
     width: calc(100% - 6.4rem);
-    @include mq($until: medium) {
+    @include mq($until: desktop) {
       position: relative;
       bottom: 0;
       left: 0;
@@ -243,14 +243,14 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     #{$self}:not(.-is-featured) & {
       transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: translateY(100%);
-      @include mq($until: medium) {
+      @include mq($until: desktop) {
         transform: translateY(0%) !important;
         flex: 1;
       }
     }
   }
   &__details {
-    @include mq($until: medium) {
+    @include mq($until: desktop) {
       order: 2;
       display: flex;
       flex-direction: column;
@@ -261,13 +261,13 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
   &__title,
   &__description {
     color: $white;
-    @include mq($until: medium) {
+    @include mq($until: desktop) {
       color: $black;
     }
   }
   &__title {
     max-width: 35ch;
-    @include mq($until: medium) {
+    @include mq($until: desktop) {
       margin-top: 1rem;
       max-width: 100%;
     }
@@ -284,22 +284,23 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     margin-top: 1.2rem;
     max-width: 50ch;
     transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-    @include mq($until: medium) {
+    @include mq($until: desktop) {
       flex: auto;
       display: flex;
       align-items: flex-end;
       max-width: 100%;
     }
     #{$self}:not(.-is-featured) & {
-      @include mq($from: medium) {
+      @include mq($from: desktop) {
         transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
-
         transform: translateY(calc(50%));
+        will-change: transform;
       }
     }
     #{$self}:hover:not(.-is-featured) & {
       @include mq($from: medium) {
         transform: translateY(calc(0%));
+        will-change: transform;
       }
     }
   }
@@ -308,7 +309,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     flex-wrap: wrap;
     align-items: stretch;
     margin-top: 1.8rem;
-    @include mq($until: medium) {
+    @include mq($until: desktop) {
       order: 1;
       margin-top: 0;
     }
@@ -316,21 +317,23 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       @include mq($from: medium) {
         transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
         transform: translateY(calc(50%));
+        will-change: transform;
       }
     }
     #{$self}:hover:not(.-is-featured) & {
       @include mq($from: medium) {
         transform: translateY(calc(0%));
+        will-change: transform;
       }
     }
     & > * {
-      @include mq($until: medium) {
+      @include mq($until: desktop) {
         margin-top: 0.5rem;
       }
     }
     & > *:not(:last-child) {
       margin-right: 1rem;
-      @include mq($until: medium) {
+      @include mq($until: desktop) {
         margin-right: 0.5rem;
       }
     }
@@ -339,7 +342,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
     transition: 0.5s transform $cubic;
     will-change: transform;
-    @include mq($until: medium) {
+    @include mq($until: desktop) {
       background-color: $black;
       color: $white;
     }
