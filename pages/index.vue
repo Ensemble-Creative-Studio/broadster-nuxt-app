@@ -23,11 +23,15 @@ const query = groq`*[_type == "home"][0]
 
 const { data: home } = useSanityQuery(query)
 
+let ctx
+
 onMounted(() => {
-  gsap.to('.l-index', {
-    opacity: 1,
-    ease: 'power3.out',
-    delay: 1,
+  ctx = gsap.context(() => {
+    gsap.to('.l-index', {
+      opacity: 1,
+      ease: 'power3.out',
+      delay: 1,
+    })
   })
 })
 
@@ -39,6 +43,10 @@ onBeforeRouteLeave((to, from, next) => {
       next()
     },
   })
+})
+
+onUnmounted(() => {
+  ctx.revert()
 })
 </script>
 

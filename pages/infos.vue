@@ -15,16 +15,20 @@ const query = groq`*[_type == "infos"][0]
 
 const { data: infos } = useSanityQuery(query)
 
+let ctx
+
 onMounted(() => {
-  gsap.to('.l-infos', {
-    opacity: 1,
-    ease: 'power3.out',
-    delay: 1,
+  ctx = gsap.context(() => {
+    gsap.to('.l-infos', {
+      autoAlpha: 1,
+      ease: 'power3.out',
+      delay: 1,
+    })
   })
 })
 
 onBeforeUnmount(() => {
-  gsap.killTweensOf('.l-infos')
+  ctx.revert()
 })
 
 onBeforeRouteLeave((to, from, next) => {
@@ -57,12 +61,6 @@ onBeforeRouteLeave((to, from, next) => {
 <style lang="scss" scoped>
 .l-infos {
   opacity: 0;
-  &__section {
-    margin-top: 26rem;
-    @include mq($until: tablet) {
-      margin-top: 6rem;
-    }
-  }
   &__numbers {
     margin-top: 10rem;
     @include mq($until: tablet) {

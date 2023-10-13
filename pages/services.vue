@@ -14,16 +14,20 @@ const query = groq`*[_type == "services"][0]
 
 const { data: services } = useSanityQuery(query)
 
+let ctx
+
 onMounted(() => {
-  gsap.to('.l-services', {
-    opacity: 1,
-    ease: 'power3.out',
-    delay: 1,
+  ctx = gsap.context(() => {
+    gsap.to('.l-services', {
+      autoAlpha: 1,
+      ease: 'power3.out',
+      delay: 1,
+    })
   })
 })
 
 onBeforeUnmount(() => {
-  gsap.killTweensOf('.l-services')
+  ctx.revert()
 })
 
 onBeforeRouteLeave((to, from, next) => {
@@ -49,8 +53,10 @@ onBeforeRouteLeave((to, from, next) => {
     <ServicesSection
       v-for="(section, i) in services?.sections"
       class="l-services__section -is-hidden-in-footer"
+      :class="i === 0 ? '-is-first' : ''"
       :section="section"
-      :key="i"
+      :key="section._key"
+      :index="i"
     />
     <Footer elemsToHide=".-is-hidden-in-footer" />
   </div>
@@ -64,8 +70,11 @@ onBeforeRouteLeave((to, from, next) => {
     @include mq($until: tablet) {
       margin-top: 6rem;
     }
-    &:last-child {
-      margin-bottom: 1.2rem;
+    &.-is-first {
+      margin-top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
     }
   }
 }

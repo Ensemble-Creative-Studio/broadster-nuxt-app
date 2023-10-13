@@ -40,16 +40,20 @@ const query = groq`*[_type == "productions"][0]
 
 const { data: productions } = useSanityQuery(query)
 
+let ctx
+
 onMounted(() => {
-  gsap.to('.l-productions', {
-    opacity: 1,
-    ease: 'power3.out',
-    delay: 1,
+  ctx = gsap.context(() => {
+    gsap.to('.l-productions', {
+      autoAlpha: 1,
+      ease: 'power3.out',
+      delay: 1,
+    })
   })
 })
 
 onBeforeUnmount(() => {
-  gsap.killTweensOf('.l-productions')
+  ctx.revert()
 })
 
 onBeforeRouteLeave((to, from, next) => {
@@ -69,7 +73,8 @@ onBeforeRouteLeave((to, from, next) => {
     <Hero
       title="Productions"
       :video="productions?.videoUrl"
-      scrollToTarget=".l-productions__section"
+      :scrollToTarget="'.l-productions__section'"
+      :scrollToOffset="-100"
       class="-is-hidden-in-footer"
     />
     <ProductionsSection

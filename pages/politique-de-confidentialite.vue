@@ -5,12 +5,20 @@ const query = groq`*[_type == "policy"][0]`
 
 const { data: policy } = useSanityQuery(query)
 
+let ctx
+
 onMounted(() => {
-  gsap.to('.l-policy', {
-    opacity: 1,
-    ease: 'power3.out',
-    delay: 1,
+  ctx = gsap.context(() => {
+    gsap.to('.l-policy', {
+      autoAlpha: 1,
+      ease: 'power3.out',
+      delay: 1,
+    })
   })
+})
+
+onUnmounted(() => {
+  ctx.revert()
 })
 
 onBeforeRouteLeave((to, from, next) => {

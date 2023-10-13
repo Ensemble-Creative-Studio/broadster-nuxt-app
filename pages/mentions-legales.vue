@@ -5,12 +5,20 @@ const query = groq`*[_type == "legal"][0]`
 
 const { data: legal } = useSanityQuery(query)
 
+let ctx
+
 onMounted(() => {
-  gsap.to('.l-legal', {
-    opacity: 1,
-    ease: 'power3.out',
-    delay: 1,
+  ctx = gsap.context(() => {
+    gsap.to('.l-legal', {
+      autoAlpha: 1,
+      ease: 'power3.out',
+      delay: 1,
+    })
   })
+})
+
+onUnmounted(() => {
+  ctx.revert()
 })
 
 onBeforeRouteLeave((to, from, next) => {
