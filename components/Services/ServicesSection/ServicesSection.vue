@@ -39,21 +39,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div
-    class="c-services-section"
-    :class="
-      ([
-        section.layout === 'sbm'
-          ? '-is-sbm'
-          : section.layout === 'smb'
-          ? '-is-smb'
-          : section.layout === 'bsm'
-          ? '-is-bsm'
-          : '-is-smb',
-      ],
-      '-has-index-' + index)
-    "
-  >
+  <div class="c-services-section" :class="'-has-index-' + index + ' -is-' + section.layout">
     <div class="c-services-section__container u-wrapper">
       <h2 class="o-title">{{ section.title }}</h2>
       <div class="c-services-section__grid">
