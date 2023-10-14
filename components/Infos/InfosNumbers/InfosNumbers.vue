@@ -1,6 +1,9 @@
 <script setup>
 import { gsap } from 'gsap'
 import { CustomEase } from 'gsap/CustomEase'
+import { ForceWait } from '/utils/ForceWait'
+
+const fw = new ForceWait()
 
 CustomEase.create('title', '0.16, 0.6, 0.38, 0.85')
 CustomEase.create('video', '0.17, 0.52, 0.44, 0.86')
@@ -16,7 +19,8 @@ const props = defineProps({
 const $$base = shallowRef()
 const $$item = shallowRef()
 
-onMounted(() => {
+onMounted(async () => {
+  await fw.delay(500)
   ctx = gsap.context(() => {
     let tl = gsap.timeline({
       scrollTrigger: {
@@ -58,6 +62,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   ctx.revert()
+  fw.kill()
 })
 </script>
 
