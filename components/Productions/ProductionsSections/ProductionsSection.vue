@@ -32,7 +32,8 @@ onMounted(() => {
       ease: 'ease.inOut',
       scrollTrigger: {
         trigger: `.-has-index-${props.index} .c-productions-section__slider`,
-        start: '0% 50%',
+        start: '0% 75%',
+        // markers: true
       },
     })
 

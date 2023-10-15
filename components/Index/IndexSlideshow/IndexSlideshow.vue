@@ -1,6 +1,9 @@
 <script setup>
 import { gsap } from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import { ForceWait } from '/utils/ForceWait'
+
+const fw = new ForceWait()
 
 const props = defineProps({
   featuredFilms: {
@@ -14,12 +17,84 @@ const $$baseline = shallowRef()
 
 const lenis = inject('lenisCtx')
 
-let timeout
-let tl
+let ctx
+let interval
+
+onMounted(async () => {
+  window.addEventListener('resize', setHeight)
+  setHeight()
+  createInterval(5000)
+
+  await fw.delay(500)
+  ctx = gsap.context(() => {
+    let tl = gsap.timeline({
+      defaults: {
+        duration: 1,
+        ease: 'expo.out',
+      },
+    })
+
+    tl.to('.c-slideshow', {
+      autoAlpha: 1,
+    }).to(
+      '.c-slideshow-video__meta',
+      {
+        autoAlpha: 1,
+      },
+      '-=0.2'
+    )
+
+    let currentProgress = -1
+    let progress
+
+    ScrollTrigger.create({
+      trigger: '.c-slideshow',
+      pin: true,
+      end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
+      onUpdate: async (self) => {
+        if (self.progress < 0.3) {
+          progress = 0
+        } else if (self.progress < 0.6) {
+          progress = 1
+        } else {
+          progress = 2
+        }
+
+        if (progress !== currentProgress) {
+          currentProgress = progress
+          setIndex(progress)
+          clearInterval(interval)
+
+          await fw.delay(100)
+          createInterval(5000)
+        }
+      },
+      onLeave: () => {
+        clearInterval(interval)
+      },
+      onEnterBack: () => {
+        createInterval(5000)
+      },
+    })
+  })
+})
+
+onBeforeUnmount(() => {
+  ctx.revert()
+  fw.kill()
+  window.removeEventListener('resize', setHeight)
+  clearInterval(interval)
+})
+
+function createInterval(delay) {
+  interval = setInterval(() => {
+    incrementIndex()
+  }, delay)
+}
 
 function incrementIndex() {
   const value = ((index.value + 1) * (window.innerHeight * 2)) / 3
-  lenis.value.scrollTo(value)
+  lenis.value.scrollTo(index.value !== 2 ? value : '.c-footer')
 }
 
 function setIndex(i) {
@@ -45,67 +120,6 @@ function setIndex(i) {
   }
 }
 
-onMounted(() => {
-  window.addEventListener('resize', setHeight)
-  setHeight()
-
-  timeout = setTimeout(() => {
-    tl = gsap.timeline({
-      defaults: {
-        duration: 1,
-        ease: 'expo.out',
-      },
-    })
-
-    tl.to('.c-slideshow', {
-      autoAlpha: 1,
-    }).to(
-      '.c-slideshow-video__meta',
-      {
-        autoAlpha: 1,
-      },
-      '-=0.2'
-    )
-
-    let currentProgressFlag = -1
-
-    ScrollTrigger.create({
-      trigger: '.c-slideshow',
-      pin: true,
-      end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
-      onUpdate: (self) => {
-        let progressFlag = -1
-
-        if (self.progress < 0.3) {
-          progressFlag = 0
-        } else if (self.progress < 0.6) {
-          progressFlag = 1
-        } else {
-          progressFlag = 2
-        }
-
-        if (progressFlag !== currentProgressFlag) {
-          setIndex(progressFlag)
-          currentProgressFlag = progressFlag
-        }
-      },
-    })
-  }, 500)
-})
-
-onBeforeUnmount(() => {
-  clearTimeout(timeout)
-
-  ScrollTrigger.getAll().forEach((trigger) => {
-    trigger.kill()
-  })
-
-  tl.kill()
-  tl = null
-
-  window.removeEventListener('resize', setHeight)
-})
-
 function setHeight() {
   const vh = window.innerHeight * 0.01
   document.documentElement.style.setProperty('--vh', `${vh}px`)
@@ -118,7 +132,6 @@ function setHeight() {
       class="c-slideshow-video"
       v-for="(item, i) in featuredFilms"
       :class="[modifiers[index], i === index ? '-is-visible' : '']"
-      @click="incrementIndex"
     >
       <video
         class="c-slideshow-video__source"
