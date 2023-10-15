@@ -1,6 +1,7 @@
 <script setup>
 import { gsap } from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+
 import { ForceWait } from '/utils/ForceWait'
 
 const fw = new ForceWait()
@@ -23,7 +24,7 @@ let interval
 onMounted(async () => {
   window.addEventListener('resize', setHeight)
   setHeight()
-  createInterval(5000)
+  // createInterval(5000)
 
   await fw.delay(500)
   ctx = gsap.context(() => {
@@ -76,20 +77,42 @@ onMounted(async () => {
         createInterval(5000)
       },
     })
+
+    // ScrollTrigger.observe({
+    //   target: window, // can be any element (selector text is fine)
+    //   type: 'wheel, touch, pointer',
+    //   preventDefault: true,
+    //   onUp: () => previous(),
+    //   onDown: () => next(),
+    // })
   })
 })
+
+// function previous() {
+//   console.log('previous')
+// }
+
+// function next() {
+//   console.log('next')
+// }
 
 onBeforeUnmount(() => {
   ctx.revert()
   fw.kill()
   window.removeEventListener('resize', setHeight)
   clearInterval(interval)
+  interval = null
+
+  console.log('interval cleared');
 })
 
 function createInterval(delay) {
   interval = setInterval(() => {
     incrementIndex()
+    console.log('interval fired');
   }, delay)
+
+  console.log('interval created');
 }
 
 function incrementIndex() {

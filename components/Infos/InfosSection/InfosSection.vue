@@ -1,6 +1,7 @@
 <script setup>
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+let ctx
 
 const props = defineProps({
   blocks: {
@@ -11,20 +12,20 @@ const props = defineProps({
 const $$base = shallowRef()
 
 onMounted(() => {
-  gsap.to($$base.value, {
-    autoAlpha: 1,
-    duration: 0.5,
-    scrollTrigger: {
-      trigger: $$base.value,
-      // markers: true,
-    },
+  ctx = gsap.context(() => {
+    gsap.to($$base.value, {
+      autoAlpha: 1,
+      duration: 0.5,
+      scrollTrigger: {
+        trigger: $$base.value,
+        // markers: true,
+      },
+    })
   })
 })
 
 onBeforeUnmount(() => {
-  ScrollTrigger.getAll().forEach((trigger) => {
-    trigger.kill()
-  })
+  ctx.revert()
 })
 </script>
 
@@ -82,6 +83,11 @@ onBeforeUnmount(() => {
   height: 100vh;
   display: flex;
   align-items: flex-end;
+  @include mq($until: desktop) {
+    display: block;
+    align-items: unset;
+    height: auto;
+  }
   &__grid {
     @include grid(12, 1.2rem, 1.2rem);
     align-items: stretch;
@@ -117,7 +123,7 @@ onBeforeUnmount(() => {
       justify-content: space-between;
       @include mq($until: desktop) {
         grid-column: auto / span 12;
-        &:not(&.-is-mobile) {
+        &:not(.-is-mobile) {
           order: 3;
         }
       }

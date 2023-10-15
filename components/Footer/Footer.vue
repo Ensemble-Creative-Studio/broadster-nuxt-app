@@ -89,6 +89,9 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
 .c-footer {
   padding-bottom: 2.4rem;
   margin-top: 1.2rem;
+  @include mq($until: tablet) {
+    padding-bottom: 1.2rem;
+  }
   &__container {
     font-size: 1.6rem;
     @include grid(12, 1.2rem, 1.2rem);
