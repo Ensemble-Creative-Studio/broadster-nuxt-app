@@ -1,6 +1,9 @@
 <script setup>
 import { gsap } from 'gsap'
 import { ForceWait } from '/utils/ForceWait'
+import { useMediaQuery } from '@vueuse/core'
+
+const isMobile = useMediaQuery('(max-width: 481px)')
 
 const fw = new ForceWait()
 
@@ -25,19 +28,21 @@ let ctx
 onMounted(async () => {
   await fw.delay(500)
   ctx = gsap.context(() => {
-    let tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.c-footer',
-        // markers: true,
-        start: '0% 75%',
-        onLeaveBack: () => {
-          tl.reverse()
+    if (isMobile.value) {
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.c-footer',
+          // markers: true,
+          start: '0% 75%',
+          onLeaveBack: () => {
+            tl.reverse()
+          },
         },
-      },
-    })
+      })
 
-    if (props.elemsToHide) {
-      tl.to(props.elemsToHide, { opacity: 0, duration: 0.5 })
+      if (props.elemsToHide) {
+        tl.to(props.elemsToHide, { opacity: 0, duration: 0.5 })
+      }
     }
   })
 })
