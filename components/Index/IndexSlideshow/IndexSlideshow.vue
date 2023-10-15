@@ -86,7 +86,8 @@ onBeforeUnmount(() => {
 })
 
 function createInterval(delay) {
-  clearInterval(interval) // Clear the existing interval if it exists
+  clearInterval(interval)
+  
   interval = setInterval(() => {
     incrementIndex()
     console.log('interval fired')
@@ -205,28 +206,40 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       opacity: 1;
       visibility: visible;
     }
-    &.-is-mobile {
-      width: 17vw;
-      height: 30vw;
+    &.-is-wide {
+      width: 60vw;
+      height: 34vw;
+      @include mq($until: medium) {
+        width: 70vw;
+        height: 39vw;
+      }
       @include mq($until: tablet) {
-        width: 50vw;
-        height: 89vw;
+        width: 90vw;
+        height: 51vw;
       }
     }
     &.-is-square {
-      width: 30vw;
-      height: 23vw;
+      width: 40vw;
+      height: 30vw;
+      @include mq($until: medium) {
+        width: 50vw;
+        height: 38vw;
+      }
       @include mq($until: tablet) {
         width: 70vw;
         height: 53vw;
       }
     }
-    &.-is-wide {
-      width: 50vw;
-      height: 28vw;
+    &.-is-mobile {
+      width: 19vw;
+      height: 34vw;
+      @include mq($until: medium) {
+        width: 25vw;
+        height: 44vw;
+      }
       @include mq($until: tablet) {
-        width: 90vw;
-        height: 51vw;
+        width: 50vw;
+        height: 89vw;
       }
     }
     &__source {
@@ -245,11 +258,11 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       left: 3.6rem;
       width: calc(100% - 6.4rem);
       opacity: 0;
-      @include mq($until: large) {
+      @include mq($until: medium) {
         bottom: 2.4rem;
         left: 2.4rem;
       }
-      @include mq($until: medium) {
+      @include mq($until: tablet) {
         bottom: 1rem;
         left: 1rem;
       }
@@ -293,7 +306,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       opacity: 0;
       transform: translateY(5rem);
       will-change: transform;
-      @include mq($until: medium) {
+      @include mq($until: desktop) {
         left: 1.2rem;
         bottom: 1.2rem;
       }
