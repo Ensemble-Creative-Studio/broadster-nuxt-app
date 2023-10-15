@@ -77,24 +77,8 @@ onMounted(async () => {
         createInterval(5000)
       },
     })
-
-    // ScrollTrigger.observe({
-    //   target: window, // can be any element (selector text is fine)
-    //   type: 'wheel, touch, pointer',
-    //   preventDefault: true,
-    //   onUp: () => previous(),
-    //   onDown: () => next(),
-    // })
   })
 })
-
-// function previous() {
-//   console.log('previous')
-// }
-
-// function next() {
-//   console.log('next')
-// }
 
 onBeforeUnmount(() => {
   ctx.revert()
@@ -103,16 +87,17 @@ onBeforeUnmount(() => {
   clearInterval(interval)
   interval = null
 
-  console.log('interval cleared');
+  console.log('interval cleared')
 })
 
 function createInterval(delay) {
+  clearInterval(interval) // Clear the existing interval if it exists
   interval = setInterval(() => {
     incrementIndex()
-    console.log('interval fired');
+    console.log('interval fired')
   }, delay)
 
-  console.log('interval created');
+  console.log('interval created')
 }
 
 function incrementIndex() {
