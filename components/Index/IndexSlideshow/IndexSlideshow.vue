@@ -13,19 +13,31 @@ const props = defineProps({
 })
 
 const modifiers = ['-is-wide', '-is-square', '-is-mobile']
-const index = shallowRef(0)
+const index = ref(0)
 const $$baseline = shallowRef()
 
 const lenis = inject('lenisCtx')
 
 let ctx
 let interval
+let result
+
+watch(index, () => {
+  console.log('index changed')
+})
 
 onMounted(async () => {
+  window.addEventListener('wheel', function (event) {
+    isTrackPad(event)
+  })
   window.addEventListener('resize', setHeight)
+
   setHeight()
+  createInterval(5000)
 
   await fw.delay(500)
+  setIndex(0)
+
   ctx = gsap.context(() => {
     let tl = gsap.timeline({
       defaults: {
@@ -44,17 +56,23 @@ onMounted(async () => {
       '-=0.2'
     )
 
-    let currentProgress = -1
-    let progress
+    let currentProgress = 0
+    let progress = 0
+
+    let realProgress = 0
 
     ScrollTrigger.create({
       trigger: '.c-slideshow',
       pin: true,
       end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
       onUpdate: (self) => {
-        if (self.progress < 0.3) {
+        console.log(self)
+
+        realProgress = result === 'trackpad' ? self.progress : self.progress
+
+        if (realProgress < 0.3) {
           progress = 0
-        } else if (self.progress < 0.6) {
+        } else if (realProgress < 0.6) {
           progress = 1
         } else {
           progress = 2
@@ -79,18 +97,31 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   ctx.revert()
   fw.kill()
+
   window.removeEventListener('resize', setHeight)
+  window.removeEventListener('wheel', function (event) {
+    isTrackPad(event)
+  })
+
+  console.log('interval cleared')
   clearInterval(interval)
   interval = null
-  console.log('interval cleared')
 })
+
+function isTrackPad(e) {
+  const { deltaY } = e
+  if (deltaY && !Number.isInteger(deltaY)) {
+    result = 'mouse'
+  } else {
+    result = 'trackpad'
+  }
+}
 
 function createInterval(delay) {
   clearInterval(interval)
-  
+
   interval = setInterval(() => {
     incrementIndex()
-    console.log('interval fired')
   }, delay)
 
   console.log('interval created')
@@ -103,6 +134,8 @@ function incrementIndex() {
 
 function setIndex(i) {
   index.value = i
+
+  console.log(i);
 
   gsap.to($$baseline.value[i], {
     autoAlpha: 1,
