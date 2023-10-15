@@ -1,8 +1,6 @@
 <script setup>
 import { gsap } from 'gsap'
-import { ForceWait } from '/utils/ForceWait'
 
-const fw = new ForceWait()
 const route = useRoute()
 let ctx
 
@@ -42,8 +40,7 @@ onMounted(() => {
       '.c-hero-video',
       {
         transform: 'translate(-50%, -50%) scale(1)',
-        onComplete: async () => {
-          await fw.delay(750)
+        onComplete: () => {
           if (window.scrollY < 100) {
             lenis.value.scrollTo(props.scrollToTarget, {
               offset: props.scrollToOffset,
@@ -58,7 +55,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   ctx.revert()
-  fw.kill()
 })
 </script>
 

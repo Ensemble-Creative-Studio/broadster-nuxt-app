@@ -24,7 +24,6 @@ let interval
 onMounted(async () => {
   window.addEventListener('resize', setHeight)
   setHeight()
-  // createInterval(5000)
 
   await fw.delay(500)
   ctx = gsap.context(() => {
@@ -52,7 +51,7 @@ onMounted(async () => {
       trigger: '.c-slideshow',
       pin: true,
       end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
-      onUpdate: async (self) => {
+      onUpdate: (self) => {
         if (self.progress < 0.3) {
           progress = 0
         } else if (self.progress < 0.6) {
@@ -64,9 +63,6 @@ onMounted(async () => {
         if (progress !== currentProgress) {
           currentProgress = progress
           setIndex(progress)
-          clearInterval(interval)
-
-          await fw.delay(100)
           createInterval(5000)
         }
       },
@@ -86,7 +82,6 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', setHeight)
   clearInterval(interval)
   interval = null
-
   console.log('interval cleared')
 })
 
