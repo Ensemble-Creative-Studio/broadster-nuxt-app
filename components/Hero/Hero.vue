@@ -1,8 +1,8 @@
 <script setup>
-import { gsap } from 'gsap'
+import { ForceWait } from '/utils/ForceWait'
 
+const fw = new ForceWait()
 const route = useRoute()
-let ctx
 
 const props = defineProps({
   title: {
@@ -23,50 +23,22 @@ const props = defineProps({
 
 const lenis = inject('lenisCtx')
 
-onMounted(() => {
-  ctx = gsap.context(() => {
-    let tl = gsap.timeline({
-      defaults: {
-        duration: 2,
-        ease: 'expo.out',
-      },
+onMounted(async () => {
+  await fw.delay(3000)
+  if (window.scrollY < 100) {
+    lenis.value.scrollTo(props.scrollToTarget, {
+      offset: props.scrollToOffset,
     })
-
-    tl.to('.c-hero__title', {
-      autoAlpha: 1,
-      transform: 'translate(-50%, -75%) scale(1)',
-      delay: 1,
-    }).to(
-      '.c-hero-video',
-      {
-        transform: 'translate(-50%, -50%) scale(1)',
-        onComplete: () => {
-          if (window.scrollY < 100) {
-            lenis.value.scrollTo(props.scrollToTarget, {
-              offset: props.scrollToOffset,
-            })
-          }
-        },
-      },
-      '-=2.1'
-    )
-  })
+  }
 })
 
 onBeforeUnmount(() => {
-  ctx.revert()
+  fw.kill()
 })
 </script>
 
 <template>
-  <div
-    class="c-hero"
-    :class="{
-      '-is-productions': route.name === 'productions',
-      '-is-services': route.name === 'services',
-      '-is-infos': route.name === 'infos',
-    }"
-  >
+  <div class="c-hero" :class="`-is-${route.name}`">
     <h1 class="c-hero__title o-section-title">{{ title }}</h1>
     <div class="c-hero-video">
       <video
@@ -95,13 +67,14 @@ onBeforeUnmount(() => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, 500%) scale(0.5);
-    opacity: 0;
+    animation: titleTranslateFromBottom 2s 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   &-video {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, 500%) scale(0);
+    animation: videoTranslateFromBottom 2s 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     z-index: -1;
     border-radius: 0.4rem;
     overflow: hidden;
@@ -121,6 +94,24 @@ onBeforeUnmount(() => {
       opacity: 1;
       visibility: visible;
     }
+  }
+}
+
+@keyframes videoTranslateFromBottom {
+  0% {
+    transform: translate(-50%, 500%) scale(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes titleTranslateFromBottom {
+  0% {
+    transform: translate(-50%, 500%) scale(0.5);
+  }
+  100% {
+    transform: translate(-50%, -75%) scale(1);
   }
 }
 </style>
