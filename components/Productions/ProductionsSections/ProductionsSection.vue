@@ -1,7 +1,10 @@
 <script setup>
 import { gsap } from 'gsap'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/css'
+import { Navigation } from 'swiper/modules';
+import 'swiper/swiper-bundle.css'
+
+const modules = [Navigation]
 
 let ctx
 let mm = gsap.matchMedia(),
@@ -91,13 +94,32 @@ onBeforeUnmount(() => {
         class="c-productions-section__film -is-featured"
         ref="$$featuredFilm"
       />
-      <h2 class="c-productions-section__title o-title">{{ section.title }}</h2>
+      <header class="c-productions-section__header">
+        <h2 class="c-productions-section__title o-title">{{ section.title }}</h2>
+        <div class="c-productions-section-navigation">
+          <button class="c-productions-section-navigation-button -is-prev">
+            <svg class="c-productions-section-navigation-button__icon" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 9.375L0.625 5M0.625 5L5 0.625M0.625 5L9.375 5" stroke="black" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="c-productions-section-navigation-button -is-next">
+            <svg class="c-productions-section-navigation-button__icon" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 9.375L0.625 5M0.625 5L5 0.625M0.625 5L9.375 5" stroke="black" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+      </div>
+      </header>
       <div class="c-productions-section__slider">
         <Swiper
+          :modules="[...modules]"
           :space-between="12"
           :grab-cursor="true"
           :free-mode="true"
           :slides-per-view="1.1"
+          :navigation="{
+            nextEl: '.c-productions-section-navigation-button.-is-next',
+            prevEl: '.c-productions-section-navigation-button.-is-prev',
+          }"
           :breakpoints="{
             768: {
               slidesPerView: 2.5,
@@ -131,13 +153,58 @@ onBeforeUnmount(() => {
       margin-bottom: 16rem;
     }
   }
-  &__title {
+  &__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
     margin-top: 28rem;
     @include mq($until: medium) {
       margin-top: 21rem;
     }
     @include mq($until: tablet) {
       margin-top: 16rem;
+    }
+    @include mq($until: mobile) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  &-navigation {
+    display: flex;
+    align-items: center;
+    @include mq($until: mobile) {
+      margin-top: 1.2rem;
+    }
+    &-button {
+      $button: &;
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: 3rem;
+      height: 3rem;
+      border: .1rem solid $black;
+      border-radius: .4rem;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity 1s ease;
+      &:not(:last-child) {
+        margin-right: 1.2rem;
+      }
+      &.swiper-button-disabled {
+        opacity: .3;
+        pointer-events: none;
+      }
+      &__icon {
+        transform: translate(-50%, -50%);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1rem;
+        height: 1rem;
+        #{$button}.-is-next & {
+          transform: translate(-50%, -50%) rotate(180deg);
+        }
+      }
     }
   }
   &__slider {

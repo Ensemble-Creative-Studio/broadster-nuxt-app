@@ -224,53 +224,83 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     bottom: 3rem;
     left: 3.6rem;
     width: calc(100% - 6.4rem);
-    @include mq($until: small) {
-      position: relative;
-      bottom: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
     @include mq($until: mobile) {
       height: 100%;
     }
     #{$self}.-is-featured & {
       opacity: 0;
+			@include mq($until: small) {
+				position: relative;
+				bottom: 0;
+				left: 0;
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+			}
     }
     #{$self}:not(.-is-featured) & {
       transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: translateY(100%);
-      @include mq($until: small) {
+      @include mq($until: medium) {
         transform: translateY(0%) !important;
         flex: 1;
+				position: relative;
+				bottom: 0;
+				left: 0;
+				display: flex;
+				flex-direction: column;
+				width: 100%;
       }
     }
   }
   &__details {
-    @include mq($until: small) {
-      order: 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-    }
+		#{$self}.-is-featured & {
+			@include mq($until: small) {
+				order: 2;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				height: 100%;
+				}
+		}
+		#{$self}:not(.-is-featured) & {
+			@include mq($until: medium) {
+				order: 2;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				height: 100%;
+				}
+		}
   }
   &__title,
   &__description {
     color: $white;
-    @include mq($until: small) {
-      color: $black;
-    }
+		#{$self}.-is-featured & {
+			@include mq($until: small) {
+				color: $black;
+			}
+		}
+		#{$self}:not(.-is-featured) & {
+			@include mq($until: medium) {
+				color: $black;
+			}
+		}
   }
   &__title {
     max-width: 35ch;
-    @include mq($until: small) {
-      margin-top: 1rem;
-      max-width: 100%;
-    }
+		#{$self}.-is-featured & {
+			@include mq($until: small) {
+				margin-top: 1rem;
+				max-width: 100%;
+			}
+		}
     #{$self}:not(.-is-featured) & {
-      @include mq($from: small) {
+			@include mq($until: medium) {
+				margin-top: 1rem;
+				max-width: 100%;
+			}
+      @include mq($from: medium) {
         transform: translateY(0%);
         position: absolute;
         bottom: 100%;
@@ -289,13 +319,13 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       max-width: 100%;
     }
     #{$self}:not(.-is-featured) & {
-      @include mq($from: small) {
+      @include mq($from: medium) {
         transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
         transform: translateY(calc(50%));
       }
     }
     #{$self}:hover:not(.-is-featured) & {
-      @include mq($from: small) {
+      @include mq($from: medium) {
         transform: translateY(calc(0%));
       }
     }
@@ -304,46 +334,68 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
-    margin-top: .8rem;
-    @include mq($until: small) {
-      order: 1;
-      margin-top: 0;
-    }
+		#{$self}.-is-featured & {
+			margin-top: 0.5rem;
+			@include mq($from: small) {
+				margin-top: 1.8rem;
+			}
+		}
     #{$self}:not(.-is-featured) & {
-      @include mq($from: small) {
+      @include mq($from: medium) {
         transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
         transform: translateY(calc(50%));
       }
     }
     #{$self}:hover:not(.-is-featured) & {
-      @include mq($from: small) {
+      @include mq($from: medium) {
         transform: translateY(calc(0%));
       }
+			@include mq($from: medium) {
+				order: 1;
+				margin-top: 0;
+			}
     }
     & > * {
-			margin-top: 1rem;
-      @include mq($until: small) {
-        margin-top: 0.5rem;
-      }
+			#{$self}:not(.-is-featured) & {
+				margin-top: 1.8rem;
+				@include mq($until: medium) {
+					margin-top: 0.5rem;
+				}
+			}
     }
     & > *:not(:last-child) {
-      margin-right: 1rem;
-      @include mq($until: small) {
-        margin-right: 0.5rem;
-      }
+			#{$self}:not(.-is-featured) & {
+				margin-right: 0.5rem;
+			}
+			#{$self}.-is-featured & {
+				margin-right: 0.5rem;
+				@include mq($until: small) {
+					margin-right: 0.5rem;
+				}
+			}
     }
   }
   &-play-button {
     cursor: pointer;
     transition: 0.5s transform $cubic;
     will-change: transform;
-    @include mq($until: small) {
-      background-color: $black;
-      color: $white;
-    }
-    &:hover {
-      transform: scale(1.05);
-    }
+		#{$self}:not(.-is-featured) & {
+			@include mq($until: medium) {
+				background-color: $black;
+				color: $white;
+			}
+		}
+		#{$self}.-is-featured & {
+			@include mq($until: small) {
+				background-color: $black;
+				color: $white;
+			}
+		}
+		@include mq($from: medium) {
+			&:hover {
+				transform: scale(1.05);
+			}
+		}
     &__text {
       margin-left: 1rem;
     }
