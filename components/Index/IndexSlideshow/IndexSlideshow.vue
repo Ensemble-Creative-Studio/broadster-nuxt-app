@@ -20,11 +20,6 @@ const lenis = inject('lenisCtx')
 
 let ctx
 let interval
-let result
-
-watch(index, () => {
-  console.log('index changed')
-})
 
 onMounted(async () => {
   window.addEventListener('wheel', function (event) {
@@ -59,15 +54,11 @@ onMounted(async () => {
     let currentProgress = 0
     let progress = 0
 
-    let realProgress = 0
-
     ScrollTrigger.create({
       trigger: '.c-slideshow',
       pin: true,
       end: '+=' + window.innerHeight * 2, // TODO - Make innerHeight reactive
       onUpdate: (self) => {
-        console.log(self)
-
         if (self.progress < 0.3) {
           progress = 0
         } else if (self.progress > 0.3 && self.progress < 0.6) {
@@ -101,20 +92,9 @@ onBeforeUnmount(() => {
   window.removeEventListener('wheel', function (event) {
     isTrackPad(event)
   })
-
-  console.log('interval cleared')
   clearInterval(interval)
   interval = null
 })
-
-function isTrackPad(e) {
-  const { deltaY } = e
-  if (deltaY && !Number.isInteger(deltaY)) {
-    result = 'mouse'
-  } else {
-    result = 'trackpad'
-  }
-}
 
 function createInterval(delay) {
   clearInterval(interval)
@@ -122,8 +102,6 @@ function createInterval(delay) {
   interval = setInterval(() => {
     incrementIndex()
   }, delay)
-
-  console.log('interval created')
 }
 
 function incrementIndex() {
@@ -133,8 +111,6 @@ function incrementIndex() {
 
 function setIndex(i) {
   index.value = i
-
-  console.log(i);
 
   gsap.to($$baseline.value[i], {
     autoAlpha: 1,
@@ -163,7 +139,6 @@ function setHeight() {
 
 function stopAndStart() {
   lenis.value.stop()
-  console.log(lenis.value);
   setTimeout(() => {
     lenis.value.start()
   }, 750)

@@ -34,9 +34,6 @@ onMounted(async () => {
       stagger: 0.15,
       y: 0,
       autoAlpha: 1,
-      onStart: () => {
-        console.log('go')
-      },
     })
     tl.to(
       '.c-index-summary-card__thumbnail',
