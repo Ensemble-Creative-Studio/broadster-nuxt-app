@@ -54,11 +54,11 @@ onMounted(() => {
             duration: 1,
             autoAlpha: 1,
             ease: 'expo.out',
-            delay: isDesktop ? 0.5 : 0.25,
+            delay: isDesktop ? 0.85 : 0.25,
             scrollTrigger: {
               trigger: `.-has-index-${props.index}`,
               // markers: true,
-              start: isDesktop ? '20% 50%' : '0% 30%',
+              start: isDesktop ? '20% 80%' : '0% 30%',
             },
           }
         )
@@ -67,12 +67,12 @@ onMounted(() => {
           `.-has-index-${props.index} .c-productions-section__film.-is-featured .c-film__media`,
           {
             scale: 1,
-            duration: 1.5,
+            duration: 2.5,
             ease: 'expo.out',
             scrollTrigger: {
               trigger: `.-has-index-${props.index}`,
-              // markers: true,
-              start: isDesktop ? '20% 50%' : '0% 30%',
+            //   markers: true,
+              start: isDesktop ? '20% 80%' : '0% 30%',
             },
           }
         )
@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
       />
       <header class="c-productions-section__header">
         <h2 class="c-productions-section__title o-title">{{ section.title }}</h2>
-        <div class="c-productions-section-navigation">
+        <div class="c-productions-section-navigation" v-if="hasEnoughFilms">
           <button class="c-productions-section-navigation-button -is-prev">
             <svg class="c-productions-section-navigation-button__icon" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5 9.375L0.625 5M0.625 5L5 0.625M0.625 5L9.375 5" stroke="black" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>

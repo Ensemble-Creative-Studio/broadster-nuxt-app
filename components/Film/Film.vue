@@ -171,7 +171,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       height: auto;
     }
     #{$self}.-is-featured & {
-      transform: scale(0.7);
+      transform: scale(0.5);
     }
   }
   &__overlay,
