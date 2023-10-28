@@ -125,13 +125,13 @@ function onCreditsClick() {
             <span class="c-film-credits-button__text">Crédits</span>
           </button>
           <span
-            class="o-button -has-dark-grey-background"
+            class="c-film-credits__tag o-button -has-dark-grey-background"
             v-for="category in film.categories"
             v-if="film.categories"
           >
             {{ category.title }}
           </span>
-          <span class="o-button -has-dark-grey-background" v-if="film.duration">
+          <span class="c-film-credits__tag o-button -has-dark-grey-background" v-if="film.duration">
             {{ film.duration }}
           </span>
         </footer>
@@ -152,13 +152,11 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     height: 100%;
     width: 100%;
-    @include mq($until: medium) {
+    @include mq($until: small) {
       padding: 0;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-    }
-    @include mq($until: mobile) {
     }
   }
   &__media {
@@ -166,7 +164,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     height: 100%;
     width: 100%;
     aspect-ratio: 66 / 43.5;
-    @include mq($until: medium) {
+    @include mq($until: small) {
       aspect-ratio: 3 / 2;
     }
     @include mq($until: mobile) {
@@ -191,7 +189,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
       visibility 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
       background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-    @include mq($until: medium) {
+    @include mq($until: small) {
       display: none;
     }
     #{$self}:hover & {
@@ -202,7 +200,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     }
   }
   &__thumbnail {
-    @include mq($until: medium) {
+    @include mq($until: small) {
       position: relative;
       min-height: 100%;
     }
@@ -226,7 +224,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     bottom: 3rem;
     left: 3.6rem;
     width: calc(100% - 6.4rem);
-    @include mq($until: medium) {
+    @include mq($until: small) {
       position: relative;
       bottom: 0;
       left: 0;
@@ -243,14 +241,14 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     #{$self}:not(.-is-featured) & {
       transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: translateY(100%);
-      @include mq($until: medium) {
+      @include mq($until: small) {
         transform: translateY(0%) !important;
         flex: 1;
       }
     }
   }
   &__details {
-    @include mq($until: medium) {
+    @include mq($until: small) {
       order: 2;
       display: flex;
       flex-direction: column;
@@ -261,18 +259,18 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
   &__title,
   &__description {
     color: $white;
-    @include mq($until: medium) {
+    @include mq($until: small) {
       color: $black;
     }
   }
   &__title {
     max-width: 35ch;
-    @include mq($until: medium) {
+    @include mq($until: small) {
       margin-top: 1rem;
       max-width: 100%;
     }
     #{$self}:not(.-is-featured) & {
-      @include mq($from: medium) {
+      @include mq($from: small) {
         transform: translateY(0%);
         position: absolute;
         bottom: 100%;
@@ -284,21 +282,20 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     margin-top: 1.2rem;
     max-width: 50ch;
     transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-    @include mq($until: medium) {
+    @include mq($until: small) {
       flex: auto;
       display: flex;
       align-items: flex-end;
       max-width: 100%;
     }
     #{$self}:not(.-is-featured) & {
-      @include mq($from: medium) {
+      @include mq($from: small) {
         transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
-
         transform: translateY(calc(50%));
       }
     }
     #{$self}:hover:not(.-is-featured) & {
-      @include mq($from: medium) {
+      @include mq($from: small) {
         transform: translateY(calc(0%));
       }
     }
@@ -307,30 +304,31 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
-    margin-top: 1.8rem;
-    @include mq($until: medium) {
+    margin-top: .8rem;
+    @include mq($until: small) {
       order: 1;
       margin-top: 0;
     }
     #{$self}:not(.-is-featured) & {
-      @include mq($from: medium) {
+      @include mq($from: small) {
         transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
         transform: translateY(calc(50%));
       }
     }
     #{$self}:hover:not(.-is-featured) & {
-      @include mq($from: medium) {
+      @include mq($from: small) {
         transform: translateY(calc(0%));
       }
     }
     & > * {
-      @include mq($until: medium) {
+			margin-top: 1rem;
+      @include mq($until: small) {
         margin-top: 0.5rem;
       }
     }
     & > *:not(:last-child) {
       margin-right: 1rem;
-      @include mq($until: medium) {
+      @include mq($until: small) {
         margin-right: 0.5rem;
       }
     }
@@ -339,7 +337,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
     transition: 0.5s transform $cubic;
     will-change: transform;
-    @include mq($until: medium) {
+    @include mq($until: small) {
       background-color: $black;
       color: $white;
     }
@@ -350,14 +348,16 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       margin-left: 1rem;
     }
   }
-  &-credits-button {
-    cursor: pointer;
-    background-color: $black;
-    color: $white;
-    transition: 0.5s transform $cubic;
-    will-change: transform;
-    &:hover {
-      transform: scale(1.05);
+  &-credits {
+    &-button {
+			cursor: pointer;
+			background-color: $black;
+			color: $white;
+			transition: 0.5s transform $cubic;
+			will-change: transform;
+			&:hover {
+				transform: scale(1.05);
+			}
     }
   }
 }

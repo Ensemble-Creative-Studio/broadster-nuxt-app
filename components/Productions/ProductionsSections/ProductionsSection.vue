@@ -191,6 +191,9 @@ onBeforeUnmount(() => {
       max-width: 60%;
       margin: 0 auto;
       @include mq($until: medium) {
+        max-width: 70%;
+      }
+      @include mq($until: small) {
         max-width: 100%;
         max-height: initial;
         height: auto;
