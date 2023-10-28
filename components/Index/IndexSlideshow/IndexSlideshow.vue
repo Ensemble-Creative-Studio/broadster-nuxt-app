@@ -68,13 +68,11 @@ onMounted(async () => {
       onUpdate: (self) => {
         console.log(self)
 
-        realProgress = result === 'trackpad' ? self.progress : self.progress
-
-        if (realProgress < 0.3) {
+        if (self.progress < 0.3) {
           progress = 0
-        } else if (realProgress < 0.6) {
+        } else if (self.progress > 0.3 && self.progress < 0.6) {
           progress = 1
-        } else {
+        } else if (self.progress > 0.6) {
           progress = 2
         }
 
@@ -82,6 +80,7 @@ onMounted(async () => {
           currentProgress = progress
           setIndex(progress)
           createInterval(5000)
+          stopAndStart()
         }
       },
       onLeave: () => {
@@ -160,6 +159,14 @@ function setIndex(i) {
 function setHeight() {
   const vh = window.innerHeight * 0.01
   document.documentElement.style.setProperty('--vh', `${vh}px`)
+}
+
+function stopAndStart() {
+  lenis.value.stop()
+  console.log(lenis.value);
+  setTimeout(() => {
+    lenis.value.start()
+  }, 750)
 }
 </script>
 
