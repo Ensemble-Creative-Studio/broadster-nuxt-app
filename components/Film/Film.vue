@@ -189,8 +189,15 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
       visibility 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
       background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-    @include mq($until: small) {
-      display: none;
+    #{$self}:not(.-is-featured) & {
+      @include mq($until: medium) {
+        display: none;
+      }
+    }
+    #{$self}.-is-featured & {
+      @include mq($until: small) {
+        display: none;
+      }
     }
     #{$self}:hover & {
       background-color: rgba($dark-grey, 0.6);
