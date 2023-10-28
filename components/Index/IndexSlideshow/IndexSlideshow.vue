@@ -28,7 +28,7 @@ onMounted(async () => {
   window.addEventListener('resize', setHeight)
 
   setHeight()
-  createInterval(5000)
+  createInterval(4000)
 
   await fw.delay(500)
   setIndex(0)
@@ -70,7 +70,7 @@ onMounted(async () => {
         if (progress !== currentProgress) {
           currentProgress = progress
           setIndex(progress)
-          createInterval(5000)
+          createInterval(4000)
           stopAndStart()
         }
       },
@@ -78,7 +78,7 @@ onMounted(async () => {
         clearInterval(interval)
       },
       onEnterBack: () => {
-        createInterval(5000)
+        createInterval(4000)
       },
     })
   })
