@@ -173,6 +173,9 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     @include mq($until: mobile) {
+      display: none;
+
+      // Styles in case we need to reactive
       margin-top: 1.2rem;
     }
     &-button {
