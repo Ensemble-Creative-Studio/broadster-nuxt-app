@@ -266,8 +266,8 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
 				order: 2;
 				display: flex;
 				flex-direction: column;
-				justify-content: space-between;
-				height: 100%;
+				// justify-content: space-between;
+				// height: 100%;
 				}
 		}
 		#{$self}:not(.-is-featured) & {
@@ -275,8 +275,8 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
 				order: 2;
 				display: flex;
 				flex-direction: column;
-				justify-content: space-between;
-				height: 100%;
+				// justify-content: space-between;
+				// height: 100%;
 				}
 		}
   }
@@ -298,13 +298,13 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     max-width: 35ch;
 		#{$self}.-is-featured & {
 			@include mq($until: small) {
-				margin-top: 1rem;
+				margin-top: 1.2rem;
 				max-width: 100%;
 			}
 		}
     #{$self}:not(.-is-featured) & {
 			@include mq($until: medium) {
-				margin-top: 1rem;
+				margin-top: 1.2rem;
 				max-width: 100%;
 			}
       @include mq($from: medium) {
@@ -341,10 +341,10 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
+    margin-top: 0.5rem;
 		#{$self}.-is-featured & {
-			margin-top: 0.5rem;
 			@include mq($from: small) {
-				margin-top: 1.8rem;
+				margin-top: 0;
 			}
 		}
     #{$self}:not(.-is-featured) & {
@@ -363,19 +363,26 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
 			}
     }
     & > * {
+      margin-top: 1.8rem;
 			#{$self}:not(.-is-featured) & {
-				margin-top: 1.8rem;
 				@include mq($until: medium) {
+					margin-top: 0.5rem;
+				}
+			}
+      #{$self}.-is-featured & {
+				@include mq($until: small) {
 					margin-top: 0.5rem;
 				}
 			}
     }
     & > *:not(:last-child) {
+      margin-right: 1rem;
 			#{$self}:not(.-is-featured) & {
-				margin-right: 0.5rem;
+        @include mq($until: medium) {
+					margin-right: 0.5rem;
+				}
 			}
 			#{$self}.-is-featured & {
-				margin-right: 0.5rem;
 				@include mq($until: small) {
 					margin-right: 0.5rem;
 				}

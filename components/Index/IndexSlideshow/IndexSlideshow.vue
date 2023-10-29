@@ -109,19 +109,25 @@ function setIndex(i) {
   gsap.to($$baseline.value[i], {
     autoAlpha: 1,
     transform: 'translateY(0)',
+    ease: 'expo.out',
+    duration: 1.5,
   })
 
   if (i > 0) {
     gsap.to($$baseline.value[i - 1], {
       opacity: 0,
-      transform: 'translateY(-5rem)',
+      transform: 'translateY(-14rem)',
+      ease: 'expo.out',
+      duration: 1.5,
     })
   }
 
   if (i < 2) {
     gsap.to($$baseline.value[i + 1], {
       opacity: 0,
-      transform: 'translateY(5rem)',
+      transform: 'translateY(14rem)',
+      ease: 'expo.out',
+      duration: 1.5,
     })
   }
 }
@@ -313,7 +319,7 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
       left: 2.4rem;
       bottom: 2.4rem;
       opacity: 0;
-      transform: translateY(5rem);
+      transform: translateY(14rem);
       will-change: transform;
       @include mq($until: desktop) {
         left: 1.2rem;

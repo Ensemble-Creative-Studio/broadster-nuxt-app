@@ -58,7 +58,7 @@ onMounted(() => {
             scrollTrigger: {
               trigger: `.-has-index-${props.index}`,
               // markers: true,
-              start: isDesktop ? '20% 80%' : '0% 30%',
+              start: isDesktop ? '20% 80%' : '0% 50%',
             },
           }
         )
@@ -71,8 +71,8 @@ onMounted(() => {
             ease: 'expo.out',
             scrollTrigger: {
               trigger: `.-has-index-${props.index}`,
-            //   markers: true,
-              start: isDesktop ? '20% 80%' : '0% 30%',
+              // markers: true,
+              start: isDesktop ? '20% 80%' : '0% 50%',
             },
           }
         )
