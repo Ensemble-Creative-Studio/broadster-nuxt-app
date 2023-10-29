@@ -22,9 +22,6 @@ let ctx
 let interval
 
 onMounted(async () => {
-  window.addEventListener('wheel', function (event) {
-    isTrackPad(event)
-  })
   window.addEventListener('resize', setHeight)
 
   setHeight()
@@ -89,9 +86,6 @@ onBeforeUnmount(() => {
   fw.kill()
 
   window.removeEventListener('resize', setHeight)
-  window.removeEventListener('wheel', function (event) {
-    isTrackPad(event)
-  })
   clearInterval(interval)
   interval = null
 })

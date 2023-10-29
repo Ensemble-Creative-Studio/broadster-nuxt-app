@@ -29,7 +29,7 @@ onMounted(async () => {
       scrollTrigger: {
         trigger: $$base.value,
         // markers: true,
-        start: '5% 50%',
+        start: '0% 75%',
       },
     })
   })
