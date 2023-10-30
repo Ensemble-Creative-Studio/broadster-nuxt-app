@@ -6,6 +6,9 @@ import 'swiper/swiper-bundle.css'
 
 const modules = [Navigation]
 
+const $$prev = shallowRef(null)
+const $$next = shallowRef(null)
+
 let ctx
 let mm = gsap.matchMedia(),
   breakpoint = 992
@@ -97,12 +100,12 @@ onBeforeUnmount(() => {
       <header class="c-productions-section__header">
         <h2 class="c-productions-section__title o-title">{{ section.title }}</h2>
         <div class="c-productions-section-navigation" v-if="hasEnoughFilms">
-          <button class="c-productions-section-navigation-button -is-prev">
+          <button class="c-productions-section-navigation-button -is-prev" ref="$$prev">
             <svg class="c-productions-section-navigation-button__icon" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5 9.375L0.625 5M0.625 5L5 0.625M0.625 5L9.375 5" stroke="black" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <button class="c-productions-section-navigation-button -is-next">
+          <button class="c-productions-section-navigation-button -is-next" ref="$$next">
             <svg class="c-productions-section-navigation-button__icon" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5 9.375L0.625 5M0.625 5L5 0.625M0.625 5L9.375 5" stroke="black" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -116,8 +119,8 @@ onBeforeUnmount(() => {
           :grab-cursor="true"
           :slides-per-view="1.1"
           :navigation="{
-            nextEl: '.c-productions-section-navigation-button.-is-next',
-            prevEl: '.c-productions-section-navigation-button.-is-prev',
+            nextEl: $$next,
+            prevEl: $$prev,
           }"
           :breakpoints="{
             768: {
