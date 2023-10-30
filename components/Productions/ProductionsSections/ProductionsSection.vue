@@ -114,7 +114,6 @@ onBeforeUnmount(() => {
           :modules="[...modules]"
           :space-between="12"
           :grab-cursor="true"
-          :free-mode="true"
           :slides-per-view="1.1"
           :navigation="{
             nextEl: '.c-productions-section-navigation-button.-is-next',
