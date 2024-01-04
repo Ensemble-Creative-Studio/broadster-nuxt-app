@@ -2,7 +2,21 @@
 
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  modules: ['@nuxtjs/sanity', '@vueuse/nuxt', 'nuxt-lazy-load'],
+  modules: ['@nuxtjs/sanity', '@vueuse/nuxt', 'nuxt-lazy-load', '@nuxtjs/i18n'],
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        name: 'English'
+      },
+      {
+        code: 'fr',
+        name: 'Français'
+      }
+    ],
+    defaultLocale: 'fr',
+    strategy: 'prefix',
+  },
   lazyLoad: {
     images: true,
     videos: true,

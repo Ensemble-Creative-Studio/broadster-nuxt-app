@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(CustomEase)
 
 const route = useRoute()
+
 const isVideoPlayerOpen = useState('isVideoPlayerOpen')
 
 let lenisRef = shallowRef(null)

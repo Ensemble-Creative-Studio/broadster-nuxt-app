@@ -1,18 +1,30 @@
+<script setup>
+const { locale } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
+</script>
+
 <template>
   <header class="c-header">
     <div class="c-header__container u-wrapper">
-      <NuxtLink to="/">
+      <NuxtLink :to="`/${locale}/`">
         <HeaderLogo />
       </NuxtLink>
       <ul class="c-header-menu">
         <li class="c-header-menu__item">
-          <NuxtLink to="/productions" title="">Productions</NuxtLink>
+          <NuxtLink :to="`/${locale}/productions`" title="">Productions</NuxtLink>
         </li>
         <li class="c-header-menu__item">
-          <NuxtLink to="/services" title="">Services</NuxtLink>
+          <NuxtLink :to="`/${locale}/services`" title="">Services</NuxtLink>
         </li>
         <li class="c-header-menu__item">
-          <NuxtLink to="/infos" title="">Infos</NuxtLink>
+          <NuxtLink :to="`/${locale}/infos`" title="">Infos</NuxtLink>
+        </li>
+        <li class="c-header-menu__item -is-locale-switch">
+          <NuxtLink
+            :to="switchLocalePath(locale === 'fr' ? 'en' : 'fr')"
+          >
+            {{ locale === 'fr' ? 'en' : 'fr' }}
+          </NuxtLink>
         </li>
       </ul>
     </div>
@@ -51,6 +63,15 @@ $cubic: cubic-bezier(0.16, 1, 0.3, 1);
         &:hover {
           opacity: 0.5;
         }
+      }
+      &.-is-locale-switch {
+        font-family: $the-future-mono;
+        font-size: 1.2rem;
+        font-weight: 100;
+        border: .1rem solid $black;
+        border-radius: .4rem;
+        padding: 0.5rem;
+        text-transform: uppercase;
       }
       &:not(:first-child) {
         margin-left: 2.4rem;

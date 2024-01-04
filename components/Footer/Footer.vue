@@ -1,11 +1,11 @@
 <script setup>
 import { gsap } from 'gsap'
-import { ForceWait } from '/utils/ForceWait'
 import { useMediaQuery } from '@vueuse/core'
+import { wait } from '/utils/wait'
+
+const { locale } = useI18n()
 
 const isMobile = useMediaQuery('(max-width: 481px)')
-
-const fw = new ForceWait()
 
 const props = defineProps({
   elemsToHide: {
@@ -26,7 +26,7 @@ const { data: footer } = useSanityQuery(query)
 let ctx
 
 onMounted(async () => {
-  await fw.delay(500)
+  await wait(500)
   ctx = gsap.context(() => {
     if (isMobile.value) {
       let tl = gsap.timeline({
@@ -73,12 +73,12 @@ onBeforeUnmount(() => {
       <div class="c-footer-row">
         <ul>
           <li>
-            <NuxtLink to="/mentions-legales" class="c-footer-row__link">
+            <NuxtLink :to="`/${locale}/mentions-legales`" class="c-footer-row__link">
               Mentions Légales
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/politique-de-confidentialite" class="c-footer-row__link">
+            <NuxtLink :to="`/${locale}/politique-de-confidentialite`" class="c-footer-row__link">
               Politique de confidentialité
             </NuxtLink>
           </li>
