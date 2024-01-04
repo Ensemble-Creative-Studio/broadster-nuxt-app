@@ -5,9 +5,9 @@ const currentFilm = useState('currentFilm')
 const isVideoPlayerOpen = useState('isVideoPlayerOpen', () => false)
 const isVideoCreditsOpen = useState('isVideoCreditsOpen', () => false)
 
-const $$base = ref(null)
-const $$video = ref(null)
-const $$timeline = ref(null)
+const $$base = shallowRef(null)
+const $$video = shallowRef(null)
+const $$timeline = shallowRef(null)
 
 const isPlaying = ref(false)
 const isMuted = ref(false)
@@ -85,10 +85,6 @@ function onVideoLoadedData() {
   videoDuration.value = $$video.value.duration
   videoFormatedDuration.value = formatTime(videoDuration.value)
 }
-
-// WIP //
-
-//
 
 watch(isPlaying, (isPlaying) => {
   if (isPlaying) {
