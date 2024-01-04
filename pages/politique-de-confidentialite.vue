@@ -1,7 +1,6 @@
 <script setup>
 import { gsap } from 'gsap'
-
-const query = groq`*[_type == "policy"][0]`
+import { query } from '@/groq/policy'
 
 const { data: policy } = useSanityQuery(query)
 

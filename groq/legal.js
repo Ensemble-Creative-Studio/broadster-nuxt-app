@@ -1,0 +1,1 @@
+export const query = groq`*[_type == "legal"][0]`

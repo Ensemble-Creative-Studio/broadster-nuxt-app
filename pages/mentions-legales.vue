@@ -1,7 +1,6 @@
 <script setup>
 import { gsap } from 'gsap'
-
-const query = groq`*[_type == "legal"][0]`
+import { query } from '@/groq/legal'
 
 const { data: legal } = useSanityQuery(query)
 

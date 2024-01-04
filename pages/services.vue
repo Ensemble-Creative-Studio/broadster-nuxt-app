@@ -1,16 +1,6 @@
 <script setup>
 import { gsap } from 'gsap'
-
-const query = groq`*[_type == "services"][0]
-  {
-    title,
-    videoUrl,
-    placeholderImage,
-    sections[]{
-      ...,
-    },
-  }
-`
+import { query } from '@/groq/services'
 
 const { data: services } = useSanityQuery(query)
 

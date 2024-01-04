@@ -1,0 +1,19 @@
+export const query = groq`*[_type == "home"][0]
+  {
+    featuredFilms[]{
+      film->{
+        categories[]->{
+          title,
+        },
+        title,
+        loopUrl,
+        duration,
+      },
+      baseline,
+    },
+    links[]{
+      title,
+      videoUrl,
+    },
+  }
+`
