@@ -1,13 +1,14 @@
 <script setup>
 import { gsap } from 'gsap'
 import { CustomEase } from 'gsap/CustomEase'
-import { ForceWait } from '/utils/ForceWait'
+import { wait } from '/utils/wait'
 
 CustomEase.create('title', '0.16, 0.6, 0.38, 0.85')
 CustomEase.create('video', '0.17, 0.52, 0.44, 0.86')
 
-const fw = new ForceWait()
+const { locale } = useI18n()
 const slugs = ['productions', 'services', 'infos']
+
 let ctx
 
 const props = defineProps({
@@ -19,7 +20,7 @@ const props = defineProps({
 const $$trigger = shallowRef()
 
 onMounted(async () => {
-  await fw.delay(500)
+  await wait(500)
   ctx = gsap.context(() => {
     let tl = gsap.timeline({
       scrollTrigger: {
@@ -55,7 +56,7 @@ onBeforeUnmount(() => {
       <IndexSummaryCard
         v-for="(link, i) in links"
         :data="link"
-        :slug="slugs[i]"
+        :slug="`${locale}/${slugs[i]}`"
         class="c-index-summary__card"
         :key="i"
       />

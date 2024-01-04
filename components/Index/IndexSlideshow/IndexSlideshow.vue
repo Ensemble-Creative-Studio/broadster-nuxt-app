@@ -1,10 +1,7 @@
 <script setup>
 import { gsap } from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-
-import { ForceWait } from '/utils/ForceWait'
-
-const fw = new ForceWait()
+import { wait } from '/utils/wait'
 
 const props = defineProps({
   featuredFilms: {
@@ -27,7 +24,7 @@ onMounted(async () => {
   setHeight()
   createInterval(4000)
 
-  await fw.delay(500)
+  await wait(500)
   setIndex(0)
 
   ctx = gsap.context(() => {

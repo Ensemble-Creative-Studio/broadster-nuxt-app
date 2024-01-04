@@ -1,9 +1,7 @@
 <script setup>
 import { gsap } from 'gsap'
 import { CustomEase } from 'gsap/CustomEase'
-import { ForceWait } from '/utils/ForceWait'
-
-const fw = new ForceWait()
+import { wait } from '/utils/wait'
 
 CustomEase.create('title', '0.16, 0.6, 0.38, 0.85')
 
@@ -18,7 +16,7 @@ const props = defineProps({
 const $$base = shallowRef()
 
 onMounted(async () => {
-  await fw.delay(500)
+  await wait(500)
   ctx = gsap.context(() => {
     gsap.to('.c-infos-clients-item__title', {
       stagger: 0.075,
